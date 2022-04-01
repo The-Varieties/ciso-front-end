@@ -1,3 +1,8 @@
+# Before starting
+* Make sure download Node JS first 
+* And after that run `npm install` to install all the installed libraries
+* Finally just read through all these texts
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
