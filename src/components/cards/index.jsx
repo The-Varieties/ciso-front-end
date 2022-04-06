@@ -20,7 +20,7 @@ function Card(props) {
     }
 
     return (
-        <div className={`py-10 px-10 w-fit h-fit bg-white rounded-lg shadow-lg shadow-black/50 ${props.hasOnClick ? "cursor-pointer" : "cursor-auto"}`} onClick={goNextPage} >
+        <div className={`pb-12 pt-7 px-10 w-full h-full bg-white rounded-lg shadow-lg shadow-black/50 ${props.hasOnClick ? "cursor-pointer" : "cursor-auto"}`} onClick={goNextPage} >
             {props.cardContent}
         </div>
     )

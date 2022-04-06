@@ -13,13 +13,23 @@ function Dashboard(){
         </div>
     )
 
+    const cardArr = [];
+
+    for (let i = 0; i < 3; i++) {
+        cardArr.push(
+            <div className="my-10">
+                <Card cardContent = {content} hasOnClick = {true} nextPageRoute = {"/data-vis-page"} />
+            </div>
+        );
+    }
+
     return (
         <div className="h-screen">
             <p>This is dashboard</p>
 
-            <div className="flex items-center h-full">
+            <div className="grid grid-cols-3 gap-8 items-center h-full">
                 {/* Can make a loop to draw the card depend on the given map of instances list*/}
-                <Card cardContent = {content} hasOnClick = {true} nextPageRoute = {"/data-vis-page"} />
+                {cardArr}
             </div>
         </div>
     )
