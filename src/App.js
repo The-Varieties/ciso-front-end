@@ -1,11 +1,10 @@
-import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './pages/dashboard';
 import DataVisPage from './pages/dataVisPage';
 
 function App() {
   return (
-    <div className="App mx-16 my-10">
+    <div className="mx-16">
       <BrowserRouter>
         <Routes>
           <Route path = '/' element={<Dashboard />} />

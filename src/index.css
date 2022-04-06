@@ -9,7 +9,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @apply bg-primary h-full;
+  @apply bg-primary h-full;  
+}
+
+body #root {
+  min-height: 100vh;
+  @apply my-5
 }
 
 * { 

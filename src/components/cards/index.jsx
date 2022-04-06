@@ -3,10 +3,24 @@
 
 //Parameter
 //cardContent: HTML codes of things to include inside of the card
+//hasOnClick: bool
+//nextPageRoute: route
+
+// Card clickable, route to given page
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Card(props) {
+    let navigate = useNavigate();
+
+    const goNextPage = () => {
+        if (props.hasOnClick)
+            navigate(props.nextPageRoute);
+    }
+
     return (
-        <div className="py-10 w-content h-content bg-white rounded-lg shadow-lg shadow-black/50">
+        <div className={`py-10 px-10 w-fit h-fit bg-white rounded-lg shadow-lg shadow-black/50 ${props.hasOnClick ? "cursor-pointer" : "cursor-auto"}`} onClick={goNextPage} >
             {props.cardContent}
         </div>
     )
