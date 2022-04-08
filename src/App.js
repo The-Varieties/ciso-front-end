@@ -4,7 +4,7 @@ import DataVisPage from './pages/dataVisPage';
 
 function App() {
   return (
-    <div className="mx-16">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path = '/' element={<Dashboard />} />

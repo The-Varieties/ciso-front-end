@@ -46,7 +46,7 @@ function DataVisPage() {
     )
 
     return (
-        <div>
+        <div className="mx-16 my-5">
             <h1 className="w-fit">Top Component</h1>
 
             <div className="flex mt-10">
