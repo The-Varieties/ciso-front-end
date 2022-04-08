@@ -8,8 +8,8 @@ function BackArrow(props) {
     let navigate = useNavigate();
 
     return(
-        <div onClick={(e) => {navigate("/")}}>
-            <img src={backArrow} alt="Back Arrow" className="w-7 cursor-pointer" />
+        <div className="my-auto">
+            <img src={backArrow} alt="Back Arrow" className="h-7 cursor-pointer" onClick={(e) => {navigate("/")}}/>
         </div>
     )
 }

@@ -8,12 +8,11 @@
 //      - rightsizingRecommnedation
 
 import Card from "../../components/cards";
-
 import pie_chart from "../../assets/DummyImages/pie_chart.svg";
 import line_graph from "../../assets/DummyImages/line_graph.svg";
-import BackArrow from "../../components/backArrow";
 
 import { useEffect } from 'react';
+import RightSizingComponent from "../../components/rightSizingComponent";
 
 function DataVisPage() {
     useEffect(() => {
@@ -62,7 +61,7 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            <BackArrow />
+            <RightSizingComponent />
 
             <div className="flex mt-10">
                 <img src={pie_chart} alt="Dummy Pie Chart" className="w-5/12" />
