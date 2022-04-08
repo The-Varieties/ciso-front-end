@@ -1,17 +1,50 @@
-body{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @apply bg-primary h-full;  
+}
+
+body #root {
+  min-height: 100vh;
+  @apply my-5
+}
+
+* { 
+  @apply text-white;
+}
+
+
+/* body{
   padding: auto;
   margin:auto;
   background-color: #000080;
 }
-/* The navigation menu */
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-  
+
+@apply bg-primary h-full;  
 }
 
+body #root {
+  min-height: 100vh;
+  @apply my-5
+} */
+
+
+/* The navigation menu */
+/* .navbar {
+  overflow: hidden;
+  background-color: #333;
+} */
+
 /* Navigation links */
-.navbar a {
+/* .navbar a {
   float: left;
   font-size: 40px;
   color: white;
@@ -19,18 +52,18 @@ body{
   padding: 14px 16px;
   text-decoration: none;
   margin-left: 2%;
-}
+} */
 
 /* The subnavigation menu */
-.subnav {
+/* .subnav {
   float: right;
   overflow: hidden;
   margin-top: 20px;
   margin-right: 1%;
-}
+} */
 
 /* Subnav button */
-.subnav .subnavbtn {
+/* .subnav .subnavbtn {
   font-size: 20px;
   border: none;
   outline: none;
@@ -40,39 +73,39 @@ body{
   font-family: inherit;
   margin: 0;
   text-align: center;
-}
+} */
 
 /* Add a red background color to navigation links on hover */
-.navbar a:hover, .subnav:hover .subnavbtn {
+/* .navbar a:hover, .subnav:hover .subnavbtn {
   background-color: red;
-}
+} */
 
 /* Style the subnav content - positioned absolute */
-.subnav-content {
+/* .subnav-content {
   display: none;
   position: absolute;
   left: 0;
   background-color: red;
   width: 100%;
   z-index: 1;
-}
+} */
 
 /* Style the subnav links */
-.subnav-content a {
+/* .subnav-content a {
   float: left;
   color: white;
   text-decoration: none;
   font-size: 16px;
-}
+} */
 
 /* Add a grey background color on hover */
-.subnav-content a:hover {
+/* .subnav-content a:hover {
   background-color: #eee;
   color: black;
-}
+} */
 
 /* When you move the mouse over the subnav container, open the subnav content */
-.subnav:hover .subnav-content {
+/* .subnav:hover .subnav-content {
   display: block;
 }
 
@@ -96,20 +129,11 @@ body{
 .instance a{
   text-decoration: none;
   color: black;
-}
+} */
 
-/* Responsive columns */
-@media screen and (max-width: 500px) {
-  .instance {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-
-.instance-text {
+/* .instance-text {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
-}
+} */
