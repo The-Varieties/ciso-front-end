@@ -5,18 +5,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 body {
+  min-height: 100vh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @apply bg-primary h-full;  
+  -moz-osx-font-smoothing: grayscale;  
+  /* @apply bg-gradient-to-tr from-[#003665] to-[#0E185F] h-full; */
+  @apply bg-gradient-to-tr from-[#090F3D] to-[#0E185F] bg-no-repeat;
 }
-
-body #root {
-  min-height: 100vh;
-  /* @apply my-5 */
-}
-
-/* * { 
-  @apply text-white;
-} */

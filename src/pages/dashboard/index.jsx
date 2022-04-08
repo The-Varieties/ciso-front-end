@@ -17,7 +17,7 @@ function Dashboard(){
     }
 
     return (
-        <div className="h-screen">
+        <div>
             <div className="navbar">
                 <a href="#">NeXphos</a>
                     <div className="subnav">
@@ -38,7 +38,7 @@ function Dashboard(){
                     </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-8 items-center h-full mx-16">
+            <div className="grid grid-cols-3 gap-8 items-center h-full mx-16 mt-10">
                 {contentMap.values.map((instance, index) => (
                     <div className="my-10" key={index}>
                         <Card cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>
