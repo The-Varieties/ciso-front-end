@@ -8,6 +8,8 @@ import React from 'react';
 import Card from "../../components/cards";
 import './index.css';
 
+//<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 function Dashboard(){    
     const contentMap = {name: "instanceList", values: [
             {name: "Instance 1", id: "de8q9dn9", ipAddress: "192.168.77.43", instanceStatus: "Optimized"},
@@ -15,6 +17,8 @@ function Dashboard(){
             {name: "Instance 3", id: "f32fplr4", ipAddress: "172.168.9.98", instanceStatus: "Underutilized"},
         ]
     }
+
+    
 
     return (
         <div className="h-screen">
@@ -50,3 +54,4 @@ function Dashboard(){
 }
 
 export default Dashboard;
+
