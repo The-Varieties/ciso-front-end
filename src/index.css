@@ -9,6 +9,6 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
-  /* @apply bg-gradient-to-tr from-[#003665] to-[#0E185F] h-full; */
+  /* @apply bg-gradient-to-tr from-[#003665] to-[#0E185F] bg-no-repeat; */
   @apply bg-gradient-to-tr from-[#090F3D] to-[#0E185F] bg-no-repeat;
 }
