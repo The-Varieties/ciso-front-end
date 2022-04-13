@@ -7,8 +7,7 @@
 import React from 'react';
 import Card from "../../components/cards";
 import './index.css';
-
-//<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+//import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 
 function Dashboard(){    
     const contentMap = {name: "instanceList", values: [
@@ -35,7 +34,6 @@ function Dashboard(){
                         <button className="subnavbtn">Instance Module <i className="fa fa-caret-down" /></button>
                         <div className="subnav-content">
                             <a href="#">Add Instance</a>
-                            <a href="#">Delete Instance</a>
                             <a href="#">Database</a>
                             <a href="#">Financial System</a>
                         </div>
