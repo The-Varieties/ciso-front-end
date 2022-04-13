@@ -4,11 +4,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+html, body {
+  min-height: 100%;
+  overflow: auto;
+}
+
+html {
+  @apply bg-gradient-to-tr from-[#090F3D] to-[#0E185F] bg-no-repeat;
+}
+
 body {
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
   /* @apply bg-gradient-to-tr from-[#003665] to-[#0E185F] bg-no-repeat; */
-  @apply bg-gradient-to-tr from-[#090F3D] to-[#0E185F] bg-no-repeat;
+  @apply bg-[url('assets/Images/bg_curve.svg')] bg-no-repeat bg-cover;
 }
