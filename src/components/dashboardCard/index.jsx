@@ -1,4 +1,4 @@
-import RightArrow from "../../assets/Icons/right_arrow.svg";
+
 import { useNavigate } from 'react-router-dom';
 
 function DashboardCard(props) {
@@ -34,7 +34,6 @@ function DashboardCard(props) {
                 <div className="absolute right-0 bottom-0">
                     <div className="flex cursor-pointer" onClick={goNextPage}>
                         <p className="italic">See More</p>
-                        <img src={RightArrow} alt="Next Arrow"/>
                     </div>
                 </div>
                 
