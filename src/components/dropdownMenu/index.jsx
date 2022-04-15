@@ -28,19 +28,19 @@ function DropdownMenu(props) {
         <div className="block">
             <div className="flex bg-white rounded-md h-10 w-fit px-5 mx-5 text-sm">
                 <div ref={dropdownRef} className="my-auto flex w-fit cursor-pointer" onClick={toogleDropdown}>
-                    <p>Instance State</p>
+                    <p>{props.menuTitle}</p>
                     <img src={DownArrow} alt="Down Arrow" className={`h-3 w-fit my-auto ml-1 ${rotatingAnimation}`}/>
-                </div>
-                <div className="my-auto ml-10 flex cursor-pointer">
-                    <p>Action</p>
-                    <img src={DownArrow} alt="Down Arrow" className={`h-3 w-fit my-auto ml-1`}/>
                 </div>
             </div>
 
             <div className={`relative mx-5 ${dropdownIsActive ? 'visible translate-y-2 opacity-1' : 'invisible translate-y-0 opacity-0'} transition-all duration-500 transform`}>
                 <nav className={`absolute h-fit w-36`} >
                     <div className="bg-white rounded-md shadow block px-5 pt-3 pb-5 text-sm" >
-                        <Link to={"/"} className="w-full">Test</Link>
+                        {props.dropdownList.values.map((instance, index) => (
+                            <div className="mb-5" key={index}>
+                                <Link to={instance.nextRoute} className="w-full">{instance.menuName}</Link>
+                            </div>       
+                        ))}           
                     </div>
                 </nav>
             </div>
