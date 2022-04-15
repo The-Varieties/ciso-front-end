@@ -8,16 +8,21 @@
 //      - rightsizingRecommnedation
 
 import Card from "../../components/cards";
-
 import pie_chart from "../../assets/DummyImages/pie_chart.svg";
 import line_graph from "../../assets/DummyImages/line_graph.svg";
 
+import { useEffect } from 'react';
+import RightSizingComponent from "../../components/rightSizingComponent";
+
 function DataVisPage() {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     const content = (
         <div>
-            <h2 className="text-black w-fit font-bold text-3xl">Recommendation</h2>
             <p className="text-black w-fit text-base">
-                Cupidatat in qui dolor magna laborum dolore deserunt mollit sunt. 
+                Instances Detail <br/> <br /> Cupidatat in qui dolor magna laborum dolore deserunt mollit sunt. 
                 Ullamco aliquip dolor ipsum cupidatat eu excepteur quis do incididunt. 
                 Aliqua sit qui eiusmod mollit cillum labore laborum tempor mollit et sit amet Lorem veniam. 
                 Nisi consequat reprehenderit ut magna ea anim anim duis sint sit eiusmod quis non. 
@@ -34,7 +39,16 @@ function DataVisPage() {
     const financialContent = (
         <div>
             <h2 className="text-black w-fit font-bold text-3xl">Financial Report</h2>
-            <p className="text-black w-fit text-base">Sunt deserunt mollit anim qui cupidatat sint exercitation enim et occaecat.</p>
+            <p className="text-black w-fit text-base">
+                Id sint aute nisi ipsum in minim elit et. 
+                Consequat proident sit nostrud irure commodo. 
+                Consectetur sit consectetur occaecat aliquip deserunt amet aute adipisicing in. 
+                Ut magna officia quis dolor.
+                Tempor duis consectetur nulla esse do fugiat culpa nostrud velit non cillum nisi aliquip. 
+                Id labore reprehenderit mollit nisi pariatur excepteur nostrud occaecat cupidatat. 
+                Ullamco fugiat ad ex veniam dolore enim tempor commodo adipisicing sunt anim. 
+                Adipisicing ea esse nulla aliqua. Ullamco veniam cillum dolore minim incididunt veniam qui id ullamco.
+            </p>
         </div>
     )
 
@@ -47,7 +61,7 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            <h1 className="w-fit">Top Component</h1>
+            <RightSizingComponent />
 
             <div className="flex mt-10">
                 <img src={pie_chart} alt="Dummy Pie Chart" className="w-5/12" />
