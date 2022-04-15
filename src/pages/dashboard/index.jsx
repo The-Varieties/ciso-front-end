@@ -51,7 +51,7 @@ function Dashboard(){
                 <div className={`grid grid-cols-3 gap-8 items-center h-full delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`} onLoad={onLoadFunc}>
                     {contentMap.values.map((instance, index) => (
                         <div className="my-10" key={index}>
-                            <DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>
+                            <DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>              
                         </div>
                     ))}
                 </div>
