@@ -3,21 +3,27 @@
 // - customFormButton
 
 import React from 'react';
+import './index.css';
 
 function AddInstance(props){
 
-    const d = () => {
-        if (props.hasOnClick)
-            navigate(props.nextPageRoute);
-    }
+
 
     return (
-        <div>
-            <p>asd</p>
-        </div>>
-        :
-        <div>
-        <p>asd</p>
+        <div class="AddingInstanceForm">
+        <form class="form"action="#">
+        <h1>Adding Instance</h1>
+            <div class="inputContainer">
+                <label for="" class="label">Instance Name: </label>
+                <input type="text" class="input"></input>
+            </div>
+            <div class="inputContainer">
+                <label for="" class="label">IP Address: </label>
+                <input type="text" class="input"></input>
+            </div>
+
+            <button type="submit" class="submitBtn" value="Add"></button >
+        </form>
         </div>
     )
 }
