@@ -12,7 +12,7 @@ function DashboardCard(props) {
     return (
         <div className={
             `py-5 px-10 w-full h-fit bg-white rounded-3xl shadow-lg shadow-black/50 bg-gradient-to-t 
-            ${props.cardContent.instanceStatus === "Optimized" ? "from-card-green to-card-green/20" : (props.cardContent.instanceStatus === "Underutilized" ? "from-card-yellow to-card-yellow/20" : "from-card-red to-card-red/20")}
+            ${props.cardContent.instanceStatus === "Optimized" ? "from-card-blue to-card-blue/20" : (props.cardContent.instanceStatus === "Underutilized" ? "from-card-yellow to-card-yellow/20" : "from-card-red to-card-red/20")}
         `}>
             <div className="relative pb-10">
                 <p>ID: {props.cardContent.id}</p>
