@@ -6,6 +6,7 @@
 
 import React from 'react';
 import Card from "../../components/cards";
+import DropdownMenu from '../../components/dropdownMenu';
 import './index.css';
 
 function Dashboard(){    
@@ -16,9 +17,17 @@ function Dashboard(){
         ]
     }
 
+    const instanceModuleDropdownList = {name: "instanceModuleDropdownList", values: [
+            {nextRoute: "/", menuName: "Add Instance"},
+            {nextRoute: "/", menuName: "Delete Instance"},
+            {nextRoute: "/", menuName: "Database"},
+            {nextRoute: "/", menuName: "Financial System"},
+        ]
+    }
+
     return (
         <div>
-            <div className="navbar">
+            {/* <div className="navbar">
                 <a href="#">NeXphos</a>
                     <div className="subnav">
                         <button className="subnavbtn">Profile <i className="fa fa-caret-down" /></button>
@@ -36,9 +45,19 @@ function Dashboard(){
                             <a href="#">Financial System</a>
                         </div>
                     </div>
+            </div> */}
+            <div className='flex mt-10 h-10'>
+                <div className="relative w-full">
+                    <div className="absolute top-0 right-0">
+                        <div className="flex mr-16">
+                            <DropdownMenu menuTitle="Instance Module" dropdownList={instanceModuleDropdownList} roundedCornerStyling={"rounded-md"} />
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div className="grid grid-cols-3 gap-8 items-center h-full mx-16 mt-10">
+            
+            
+            <div className="grid grid-cols-3 gap-8 items-center h-fit mx-16 mt-44">
                 {contentMap.values.map((instance, index) => (
                     <div className="my-10" key={index}>
                         <Card cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>
