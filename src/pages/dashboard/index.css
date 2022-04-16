@@ -69,3 +69,8 @@
 .subnav:hover .subnav-content {
     display: block;
 }
+
+.dropdownbar{
+    margin-top: 2%;
+    margin-left: 80%;
+}

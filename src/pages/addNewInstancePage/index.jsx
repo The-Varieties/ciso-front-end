@@ -8,7 +8,6 @@ import './index.css';
 function AddInstance(props){
 
 
-
     return (
         <div class="AddingInstanceForm">
         <form class="form"action="#">

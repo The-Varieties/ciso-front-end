@@ -8,6 +8,7 @@ import React from 'react';
 import DashboardCard from '../../components/dashboardCard';
 import './index.css';
 import { useState } from 'react';
+import InterfaceDropdownMenu from "../../components/interfacemenubar";
 
 function Dashboard(){
     const [loaded, setLoaded] = useState(false);
@@ -44,6 +45,10 @@ function Dashboard(){
                         </div>
                     </div>
             </div> */}
+
+            <div className="dropdownbar">
+                <InterfaceDropdownMenu />
+            </div>
 
             <div className='mx-16 mt-32'>
                 <h1 className={`text-white text-3xl font-bold delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-x-0" : "opacity-0 -translate-x-20"}`} onLoad={onLoadFunc}>Username's List of Instances</h1>
