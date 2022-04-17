@@ -66,5 +66,3 @@ function Dashboard(){
 }
 
 export default Dashboard;
-
-//instance.instanceStatus === "Optimized" ? "#4BE16C" : (instance.instanceStatus === "Underutilized" ? "#FDF44D" : "#FF2929")
