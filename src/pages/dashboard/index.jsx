@@ -57,7 +57,6 @@ function Dashboard(){
                     {contentMap.values.map((instance, index) => (
                         <div className="my-10" key={index}>
                             <DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>              
-                            <DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>
                         </div>
                     ))}
                 </div>
