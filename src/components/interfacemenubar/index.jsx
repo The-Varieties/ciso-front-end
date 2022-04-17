@@ -26,23 +26,25 @@ function InterfaceDropdownMenu(props) {
     
     return(
         <div className="block">
-            <div className="flex bg-white rounded-md h-10 w-fit px-5 mx-5 text-sm">
-                <div ref={dropdownRef} className="my-auto flex w-fit cursor-pointer" onClick={toogleDropdown}>
-                    <p>Instance Module</p>
+            <div className="flex bg-white rounded-md h-10 text-sm">
+                <div ref={dropdownRef} className="my-auto flex w-max cursor-pointer mx-auto" onClick={toogleDropdown}>
+                    <p className="font-semibold">Instance Module</p>
                     <img src={DownArrow} alt="Down Arrow" className={`h-3 w-fit my-auto ml-1 ${rotatingAnimation}`}/>
                 </div>
             </div>
 
-            <div className={`relative mx-5 ${dropdownIsActive ? 'visible translate-y-2 opacity-1' : 'invisible translate-y-0 opacity-0'} transition-all duration-500 transform`}>
-                <nav className={`absolute h-fit w-36`} >
-                    <div className="bg-white rounded-md shadow block px-5 pt-3 pb-5 text-sm" >
-                        <Link to={"/"} className="w-full">Adding Instance</Link>
-                    </div>
-                    <div className="bg-white rounded-md shadow block px-5 pt-3 pb-5 text-sm" >
-                        <Link to={"/"} className="w-full">Financial Report</Link>
-                    </div>
-                    <div className="bg-white rounded-md shadow block px-5 pt-3 pb-5 text-sm" >
-                        <Link to={"/"} className="w-full">Database</Link>
+            <div className={`relative ${dropdownIsActive ? 'visible translate-y-2 opacity-1' : 'invisible translate-y-0 opacity-0'} transition-all duration-500 transform`}>
+                <nav className={`absolute h-fit w-full`} >
+                    <div className="bg-white rounded-md shadow block py-5 text-sm text-center">
+                        <div className="mb-5">
+                            <Link to={"/add-new-instance"} className="w-full font-semibold">Adding Instance</Link>
+                        </div>
+                        <div className="mb-5">
+                            <Link to={"/"} className="w-full font-semibold">Financial Report</Link>
+                        </div>  
+                        <div>
+                            <Link to={"/"} className="w-full font-semibold">Database</Link>
+                        </div>  
                     </div>
                 </nav>
             </div>
