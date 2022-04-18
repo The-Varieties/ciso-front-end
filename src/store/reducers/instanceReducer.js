@@ -13,6 +13,6 @@ export default function(state = initialState, action) {
                 instance: action.payload,
                 loading: false
             }
-        default: return state
+        default: return {...state}
     }
 }
