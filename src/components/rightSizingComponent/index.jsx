@@ -35,7 +35,7 @@ function RightSizingComponent(props){
                     <div className="flex">
                         <img src={RefreshIcon} alt="Refresh Icon" className="h-6 cursor-pointer my-auto mr-5"/>
 
-                        <DropdownMenu menuTitle="Instace State" dropdownList={instanceDropdownList} roundedCornerStyling={"rounded-l-md"}/>
+                        <DropdownMenu menuTitle="Instance State" dropdownList={instanceDropdownList} roundedCornerStyling={"rounded-l-md"}/>
                         <DropdownMenu menuTitle="Action" dropdownList={actionDropdownList} roundedCornerStyling={"rounded-r-md"}/>
 
                         <svg xmlns="http://www.w3.org/2000/svg" className={`ml-5 h-7 my-auto ${rightsizingCat === 0 ? "stroke-green-500" : [rightsizingCat === 1 ? "stroke-yellow-300" : "stroke-red-600"]}`} viewBox="0 0 24 24" strokeWidth="2" fill="none">
