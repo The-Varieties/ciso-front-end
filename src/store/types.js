@@ -1,0 +1,2 @@
+export const GET_INSTANCE = 'GET_INSTANCE'
+export const INSTANCE_ERROR = 'INSTANCE_ERROR'
