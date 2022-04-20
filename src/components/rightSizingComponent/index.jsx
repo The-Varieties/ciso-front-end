@@ -24,9 +24,6 @@ function RightSizingComponent(props){
         setRightsizingCat(props.instance.instance.usage_cat);
     });
 
-    
-    console.log(rightsizingCat)
-
     const instanceDropdownList = {name: "instanceDropdownList", values: [
             {nextRoute: "/", menuName: "Start Instance"},
             {nextRoute: "/", menuName: "Stop Instance"},
@@ -65,8 +62,6 @@ function RightSizingComponent(props){
         </div>
     )
 }
-
-// export default RightSizingComponent;
 
 const mapStateToProps = (state) => ({instance: state.instance})
 

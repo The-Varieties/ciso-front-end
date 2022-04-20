@@ -1,8 +1,9 @@
-import { GET_INSTANCE } from "../types";
+import { GET_INSTANCE, GET_INSTANCES_LIST, DELETE_INSTANCE } from "../types";
 
 const initialState = {
     instance: [],
-    loading: true
+    loading: true,
+    instanceList: [],
 }
 
 export default function(state = initialState, action) {
@@ -12,6 +13,11 @@ export default function(state = initialState, action) {
                 ...state,
                 instance: action.payload,
                 loading: false
+            }
+        case GET_INSTANCES_LIST || DELETE_INSTANCE:
+            return{
+                ...state,
+                instanceList: action.payload,
             }
         default: return {...state}
     }
