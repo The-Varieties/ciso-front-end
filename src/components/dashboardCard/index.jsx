@@ -1,7 +1,7 @@
 import RightArrow from "../../assets/Icons/right_arrow.svg";
 import { useNavigate } from 'react-router-dom';
-import { BsTrashFill } from "react-icons/bs";
-import{ useState } from 'react';
+// import { BsTrashFill } from "react-icons/bs";
+import{ useEffect, useState } from 'react';
 
 function DashboardCard(props) {
     let navigate = useNavigate();
@@ -11,19 +11,19 @@ function DashboardCard(props) {
             navigate(props.nextPageRoute);
     }
 
+    // useEffect(() => {
+    //     props.deleteinstance;
+    // })
+
+    const deleteinstance = () => {
+        alert("The Cloud Infrastructure will be permanantly deleted!\n" + props.cardContent.id);
+    }
+
 //    const [instance,setinstance] = useState([])
 
 //    const deleteinstance = props.cardContent.id = () => {
 //        setinstance(instance.filter((id) => props.cardContent.id !== id));
 //    }<button onClick={() => deleteinstance(props.cardContent.id)}><BsTrashFill/></button>
-
-    const deleteinstance = () => {
-        alert("The Cloud Infrastructure will be permanantly deleted!");
-        if(props.deleteinstance){
-            
-        }
-        
-    }
 
 
     return (
@@ -39,7 +39,7 @@ function DashboardCard(props) {
 
                 <div className="absolute right-0 top-0">
                 
-                    <button onClick={deleteinstance}><BsTrashFill/></button>
+                    <button onClick={deleteinstance}>something</button>
                 </div>
 
                 <div className="absolute right-0 bottom-0">

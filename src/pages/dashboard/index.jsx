@@ -18,28 +18,10 @@ function Dashboard(){
         ]
     }
 
+    
+
     return (
         <div>
-            {/* <div className="navbar">
-                <a href="#">NeXphos</a>
-                    <div className="subnav">
-                        <button className="subnavbtn">Profile <i className="fa fa-caret-down" /></button>
-                        <div className="subnav-content">
-                            <a href="#bring">View Profile</a>
-                            <a href="#deliver">Logout</a>
-                        </div>
-                    </div>
-                    <div className="subnav">
-                        <button className="subnavbtn">Instance Module <i className="fa fa-caret-down" /></button>
-                        <div className="subnav-content">
-                            <a href="#">Add Instance</a>
-                            <a href="#">Delete Instance</a>
-                            <a href="#">Database</a>
-                            <a href="#">Financial System</a>
-                        </div>
-                    </div>
-            </div> */}
-
             <div className="dropdownbar mr-16"> 
                 <InterfaceDropdownMenu />
             </div>
@@ -50,7 +32,7 @@ function Dashboard(){
                 <div className={`grid grid-cols-3 gap-8 items-center h-full delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`} onLoad={onLoadFunc}>
                     {contentMap.values.map((instance, index) => (
                         <div className="my-10" key={index}>
-                            <DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"}/>              
+                            <DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"} />              
                         </div>
                     ))}
                 </div>
@@ -60,3 +42,23 @@ function Dashboard(){
 }
 
 export default Dashboard;
+
+{/* <div className="navbar">
+    <a href="#">NeXphos</a>
+        <div className="subnav">
+            <button className="subnavbtn">Profile <i className="fa fa-caret-down" /></button>
+            <div className="subnav-content">
+                <a href="#bring">View Profile</a>
+                <a href="#deliver">Logout</a>
+            </div>
+        </div>
+        <div className="subnav">
+            <button className="subnavbtn">Instance Module <i className="fa fa-caret-down" /></button>
+            <div className="subnav-content">
+                <a href="#">Add Instance</a>
+                <a href="#">Delete Instance</a>
+                <a href="#">Database</a>
+                <a href="#">Financial System</a>
+            </div>
+        </div>
+</div> */}
