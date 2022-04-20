@@ -9,18 +9,10 @@
 // Card clickable, route to given page
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function Card(props) {
-    let navigate = useNavigate();
-
-    const goNextPage = () => {
-        if (props.hasOnClick)
-            navigate(props.nextPageRoute);
-    }
-
     return (
-        <div className={`pt-7 px-10 w-full h-full bg-white rounded-lg shadow-lg shadow-black/50 ${props.hasOnClick ? "cursor-pointer" : "cursor-auto"}`} onClick={goNextPage} >
+        <div className={`pt-7 px-10 w-full h-full bg-white rounded-lg shadow-lg shadow-black/50`}>
             {props.nextPageRoute == "/data-vis-page" ?
                 <div className="pb-32">
                     <h1 className="font-bold text-3xl text-center pb-20">{props.cardContent.name}</h1>

@@ -2,7 +2,7 @@ import DownArrow from "../../assets/Icons/down_arrow.svg";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function DropdownMenu(props) {
+function InterfaceDropdownMenu(props) {
     const dropdownRef = useRef(null);
     const [dropdownIsActive, setActive] = useState(false);
     const toogleDropdown = () => {setActive(!dropdownIsActive)};
@@ -26,21 +26,25 @@ function DropdownMenu(props) {
     
     return(
         <div className="block">
-            <div className={`flex bg-white ${props.roundedCornerStyling} h-10 w-max px-11 text-sm`}>
-                <div ref={dropdownRef} className="my-auto flex w-fit cursor-pointer" onClick={toogleDropdown}>
-                    <p className="font-semibold">{props.menuTitle}</p>
+            <div className="flex bg-white rounded-md h-10 text-sm">
+                <div ref={dropdownRef} className="my-auto flex w-max cursor-pointer mx-auto" onClick={toogleDropdown}>
+                    <p className="font-semibold">Instance Module</p>
                     <img src={DownArrow} alt="Down Arrow" className={`h-3 w-fit my-auto ml-1 ${rotatingAnimation}`}/>
                 </div>
             </div>
 
             <div className={`relative ${dropdownIsActive ? 'visible translate-y-2 opacity-1' : 'invisible translate-y-0 opacity-0'} transition-all duration-500 transform`}>
                 <nav className={`absolute h-fit w-full`} >
-                    <div className="bg-white rounded-md shadow block px-5 pt-5 pb-0.5 text-sm" >
-                        {props.dropdownList.values.map((instance, index) => (
-                            <div className="mb-5 text-center" key={index}>
-                                <Link to={instance.nextRoute} className="w-full font-semibold">{instance.menuName}</Link>
-                            </div>  
-                        ))}           
+                    <div className="bg-white rounded-md shadow block py-5 text-sm text-center">
+                        <div className="mb-5">
+                            <Link to={"/add-new-instance"} className="w-full font-semibold">Adding Instance</Link>
+                        </div>
+                        <div className="mb-5">
+                            <Link to={"/"} className="w-full font-semibold">Financial Report</Link>
+                        </div>  
+                        <div>
+                            <Link to={"/"} className="w-full font-semibold">Database</Link>
+                        </div>  
                     </div>
                 </nav>
             </div>
@@ -48,4 +52,4 @@ function DropdownMenu(props) {
     )
 }
 
-export default DropdownMenu;
+export default InterfaceDropdownMenu;
