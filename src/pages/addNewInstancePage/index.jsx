@@ -35,6 +35,7 @@ function AddInstance(props){
                 </div>
 
                 <button  type="submit" class="addbtn" value="Add">Add Instance</button >
+                <button  type="button" class="cancelbtn" value="Cancel"  onClick="">Cancel</button >
             </form>
         </div>
     )
