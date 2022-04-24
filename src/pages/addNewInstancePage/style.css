@@ -1,0 +1,56 @@
+.AddingInstanceForm{
+  max-width: 40%;
+  margin:0 auto;
+  margin-top: 5%;
+  text-align: center;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #ddd;
+}
+
+.AddingInstanceForm label{
+  text-align: left;
+  display: block;
+  margin:10px;
+  font-size: 20px;
+
+}
+
+.AddingInstanceForm h2{
+  font-size: 30px;
+  color:#f1356d;
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+
+.AddingInstanceForm input{
+  width: 95%;
+  padding: 6px 10px;
+  margin:10px 10px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display:block;
+}
+
+.btnadd{
+  background: #f1356d;
+  color:#ffff;
+  padding: 2%;
+  border-radius: 8px;
+  cursor:pointer;
+  margin-top: 2%;
+  margin-left: 56%;
+  margin-bottom: 3%;
+}
+
+.cancelbtn{
+  background: #f1356d;
+  color:#ffff;
+  padding: 2%;
+  border-radius: 8px;
+  cursor:pointer;
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-bottom: 3%;
+}
