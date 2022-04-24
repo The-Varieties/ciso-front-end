@@ -1,15 +1,28 @@
-// It will draw the information (i) icon along with determining which category
-// the usage should be (under, optimized, over)
-
 import BackArrow from "../../components/backArrow";
 import RefreshIcon from "../../assets/Icons/refresh_icon.svg";
 import ProfileIcon from "../../assets/Icons/profile_icon.svg";
 import DropdownMenu from "../dropdownMenu";
+import {useDispatch, connect} from 'react-redux';
+import {getInstance} from '../../store/actions/instanceAction';
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 function RightSizingComponent(props){
     // 0 --> Optimized, 1 --> Under, 2 --> Over
     // This value can be changed to continuous value if needed
-    const rightsizingCat = 1;
+    // const dispatch = useDispatch();
+    const [rightsizingCat, setRightsizingCat] = useState();
+    
+    useEffect(() => {
+        // async function fetchData(){
+        //     const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category?instance=node_exporter`)
+        //     setRightsizingCat(res.data.usage_cat);
+        // }
+        // fetchData();
+
+        props.getInstance();
+        setRightsizingCat(props.instance.instance.usage_cat);
+    });
 
     const instanceDropdownList = {name: "instanceDropdownList", values: [
             {nextRoute: "/", menuName: "Start Instance"},
@@ -50,4 +63,6 @@ function RightSizingComponent(props){
     )
 }
 
-export default RightSizingComponent;
+const mapStateToProps = (state) => ({instance: state.instance})
+
+export default connect(mapStateToProps, {getInstance})(RightSizingComponent)
