@@ -59,7 +59,7 @@ function AddInstance(){
                 type="text"
                 required
                 />
-                <label>AccessKey: </label>
+                <label>Access Key: </label>
                 <input
                 type="text"
                 required
