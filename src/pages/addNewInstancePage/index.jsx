@@ -42,7 +42,7 @@ function AddInstance(){
 
     return (
         <div className="AddingInstanceForm">
-            <h2>Add New Instace</h2>
+            <h2>Add New Instance</h2>
             <form>
                 <label>Instance Name: </label>
                 <input
