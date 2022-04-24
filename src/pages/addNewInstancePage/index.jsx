@@ -2,40 +2,70 @@
 // - formInputField
 // - customFormButton
 
-import React from 'react';
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
 import './style.css';
 
-function AddInstance(props){
+function AddInstance(){
 
-    /*
-    const addinstance = (x)=>{
-        setAdding(x);
-    }*/
+    const [name,setname] = useState('');
+    const [ipaddress, setipadd] = useState('');
+    const [securitykey, setsecuritykey] = useState('');
+    const [accesskey, setaccesskey] = useState('');
+
+    const addName =(e)=>{
+        setname(e.target.value);
+    }
+
+    const addIP =(e)=>{
+        setipadd(e.target.value);
+    }
+
+    const addseckey =(e)=>{
+        setsecuritykey(e.target.value);
+    }
+
+    const addacckey =(e)=>{
+        setaccesskey(e.target.value);
+    }
+
+    const handlesubmit=(event)=>{
+        console.log(`
+        Name:${name}
+        IpAddress:${ipaddress}
+        Securitykey:${securitykey}
+        Accesskey:${accesskey}
+        `);
+        event.preventDefault();
+    }
 
 
     return (
-        <div class="AddingInstanceForm">
-            <form class="form"action="#">
-                <h1 className='text-center'>Adding Instance</h1>
-                <div class="inputContainer">
-                    <label for="" class="label">Instance Name: </label><br/>
-                    <input type="text" class="input"></input>
-                </div>
-                <div class="inputContainer">
-                    <label for="" class="label">IP Address: </label><br/>
-                    <input type="text" class="input"></input>
-                </div>
-                <div class="inputContainer">
-                    <label for="" class="label">Security Key: </label><br/>
-                    <input type="text" class="input"></input>
-                </div>
-                <div class="inputContainer">
-                    <label for="" class="label">Access Key: </label><br/>
-                    <input type="text" class="input"></input>
-                </div>
-
-                <button  type="submit" class="addbtn" value="Add">Add Instance</button >
-                <button  type="button" class="cancelbtn" value="Cancel"  onClick="">Cancel</button >
+        <div className="AddingInstanceForm">
+            <h2>Add New Instace</h2>
+            <form>
+                <label>Instance Name: </label>
+                <input
+                type="text"
+                required
+                />
+                <label>IP Address: </label>
+                <input
+                type="text"
+                required
+                />
+                <label>SecurityKey: </label>
+                <input
+                type="text"
+                required
+                />
+                <label>AccessKey: </label>
+                <input
+                type="text"
+                required
+                />
+                <button className='btnadd'>Add Instance</button>
+                <button className='cancelbtn'>Cancel</button>
             </form>
         </div>
     )
