@@ -1,10 +1,8 @@
 import RightArrow from "../../assets/Icons/right_arrow.svg";
 import { useNavigate } from 'react-router-dom';
-// import { BsTrashFill } from "react-icons/bs";
-import{ useReducer } from 'react';
+import { BsTrashFill } from "react-icons/bs";
 import { deleteInstance } from "../../store/actions/instanceAction";
 import { connect } from "react-redux";
-
 
 
 function DashboardCard(props) {
@@ -33,7 +31,7 @@ function DashboardCard(props) {
 
                 <div className="absolute right-0 top-0">
                 
-                    <button onClick={deleteinstance}>something</button>
+                    <button onClick={deleteinstance}><BsTrashFill/></button>
                 </div>
 
                 <div className="absolute right-0 bottom-0">
