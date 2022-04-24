@@ -54,7 +54,7 @@ function AddInstance(){
                 type="text"
                 required
                 />
-                <label>SecurityKey: </label>
+                <label>Security Key: </label>
                 <input
                 type="text"
                 required
