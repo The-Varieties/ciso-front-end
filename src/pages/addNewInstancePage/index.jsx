@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 // import ReactDOM from 'react-dom';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
 
 function AddInstance(){
 
@@ -35,6 +36,8 @@ function AddInstance(){
         event.preventDefault();
     }
 
+    let navigate = useNavigate();
+
 
     return (
         <div className="AddingInstanceForm">
@@ -61,7 +64,7 @@ function AddInstance(){
                 required
                 />
                 <button className='btnadd'>Add Instance</button>
-                <button className='cancelbtn'>Cancel</button>
+                <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
             </form>
         </div>
     )
