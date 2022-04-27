@@ -1,4 +1,4 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, DELETE_INSTANCE } from "../types";
+import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, DELETE_INSTANCE, ADD_NEW_INSTANCE } from "../types";
 import axios from 'axios';
 
 let contentMap = {name: "instanceList", values: [
@@ -24,11 +24,13 @@ export const getInstance = () => async dispatch => {
     }
 }
 
-export const getInstanceList = () => dispatch => {
+export const getInstanceList = () => async dispatch => {
     try{
+        const res = await axios.get(`http://localhost:8000/api/dashboard/instance/`)
+
         dispatch({
             type: GET_INSTANCES_LIST,
-            payload: contentMap
+            payload: res.data
         })
     }
     catch(e) {
@@ -39,14 +41,26 @@ export const getInstanceList = () => dispatch => {
     }
 }
 
-export const deleteInstance = (targetId) => dispatch => {
+export const deleteInstance = (targetId) => async dispatch => {
     try{
-        let index = contentMap.values.map(instance => instance.id).indexOf(targetId);
-        contentMap.values.splice(index, 1)
-        
+        const res = await axios.delete(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
+        console.log(res)
+    }
+    catch(e) {
         dispatch({
-            type: DELETE_INSTANCE,
-            payload: contentMap
+            type: INSTANCE_ERROR,
+            payload: console.log(e)
+        })
+    }
+}
+
+export const addNewInstance = (newInstanceMap) => async dispatch => {
+    try {
+        const res = await axios.post(`http://localhost:8000/api/dashboard/instance/`, newInstanceMap)
+
+        dispatch({
+            type: ADD_NEW_INSTANCE,
+            payload: res.data
         })
     }
     catch(e) {
