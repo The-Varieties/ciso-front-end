@@ -19,13 +19,12 @@ function Dashboard(props){
     }, [])
 
     useEffect(() => {
-        const interval = setInterval(async () => {props.getInstanceList();}, 3000)
+        props.getInstanceList();
         setContentMap(props.instanceList);
-        return() => {clearInterval(interval)};
     })
 
     return (
-        <div>
+        <div onLoad={onLoadFunc}>
             <div className="dropdownbar mr-16"> 
                 <InterfaceDropdownMenu />
             </div>

@@ -44,6 +44,7 @@ function AddInstance(props){
     const handlesubmit=(event)=>{
         event.preventDefault();
         props.addNewInstance(newInstanceMap);
+        navigate("/");
     }
 
     let navigate = useNavigate();
@@ -64,7 +65,7 @@ function AddInstance(props){
                 <label>Access Key: </label>
                 <input type="text" onChange={addacckey}/>
 
-                <button className='btnadd' onClick={handlesubmit}>Add Instance</button>
+                <button className='btnadd' onClick={handlesubmit} >Add Instance</button>
                 <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
             </form>
         </div>
