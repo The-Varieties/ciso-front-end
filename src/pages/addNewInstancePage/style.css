@@ -33,15 +33,18 @@
   display:block;
 }
 
+.clickbutton{
+  display: block;
+  position:relative;
+  margin: 4%;
+}
+
 .btnadd{
   background: #f1356d;
   color:#ffff;
   padding: 2%;
   border-radius: 8px;
   cursor:pointer;
-  margin-top: 2%;
-  margin-left: 56%;
-  margin-bottom: 3%;
 }
 
 .cancelbtn{
@@ -50,7 +53,5 @@
   padding: 2%;
   border-radius: 8px;
   cursor:pointer;
-  margin-top: 2%;
-  margin-left: 5%;
-  margin-bottom: 3%;
+  margin-left: 1%;
 }

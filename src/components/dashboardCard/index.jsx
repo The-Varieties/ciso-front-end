@@ -13,11 +13,6 @@ function DashboardCard(props) {
             navigate(props.nextPageRoute);
     }
 
-    const deleteinstance = () => {
-        alert("The Cloud Infrastructure will be permanantly deleted!\n" + props.cardContent.id);
-        props.deleteInstance(props.cardContent.id);
-    }
-
     return (
         <div className={
             `py-5 px-10 w-full h-fit bg-white rounded-3xl shadow-lg shadow-black/50 bg-gradient-to-t 
@@ -30,7 +25,7 @@ function DashboardCard(props) {
                 <p><span className="font-bold">IP Address: </span>{props.cardContent.ipAddress}</p>
 
                 <div className="absolute right-0 top-0">
-                    <button onClick={deleteinstance}><BsTrashFill/></button>
+                    <button onClick={(e) => { if (window.confirm('The Cloud Infrastructure Instance will be permanently deleted')) this.deleteItem(e) }}><BsTrashFill/></button>
                 </div>
 
                 <div className="absolute right-0 bottom-0">

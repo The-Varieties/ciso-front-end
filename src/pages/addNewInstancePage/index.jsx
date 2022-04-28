@@ -38,6 +38,10 @@ function AddInstance(){
 
     let navigate = useNavigate();
 
+    const addinstance = () => {
+        alert("A new instance has added!");
+    }
+
 
     return (
         <div className="AddingInstanceForm">
@@ -63,8 +67,10 @@ function AddInstance(){
                 type="text"
                 required
                 />
-                <button className='btnadd'>Add Instance</button>
-                <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
+                <div class="clickbutton">
+                    <button className='btnadd' onClick= {addinstance}>Add Instance</button>
+                    <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
+                </div>
             </form>
         </div>
     )

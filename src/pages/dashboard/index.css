@@ -72,5 +72,15 @@
 
 .dropdownbar{
     margin-top: 2%;
-    margin-left: 80%;
+    margin-left: 75%;
+}
+
+.navigation{
+    position:relative;
+}
+
+.icon-logo{
+    float: left;
+    width: 15%;
+    margin-left: 2%;
 }
