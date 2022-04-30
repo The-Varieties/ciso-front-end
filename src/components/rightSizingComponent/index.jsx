@@ -5,7 +5,7 @@ import DropdownMenu from "../dropdownMenu";
 import {connect} from 'react-redux';
 import {getInstance} from '../../store/actions/instanceAction';
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function RightSizingComponent(props){
     // 0 --> Optimized, 1 --> Under, 2 --> Over
@@ -48,7 +48,7 @@ function RightSizingComponent(props){
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
 
-                        <Link to="/profile"><img src={ProfileIcon} alt="Profile Icon" className="h-6 cursor-pointer ml-5 my-auto"/></Link>
+                        <Link to={"/profile"}><img src={ProfileIcon} alt="Profile Icon" className="h-6 cursor-pointer ml-5 my-auto"/></Link>
                     </div>
                 </div>
             </div>

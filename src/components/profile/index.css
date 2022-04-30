@@ -1,4 +1,88 @@
-.profile-img{
-    width: 20%;
-    border-radius: 60%;
+.container{
+    margin: 0 0;
+    padding: 0 0;
 }
+
+.backarrow{
+    margin:20px 20px;
+}
+
+.profile_detail img{
+    margin-top: 2%;
+    width: 15%;
+    border-radius: 60%;
+    border: 2px solid white;
+    margin-left: 42%;
+}
+
+.membername{
+    color: white;
+    text-align: center;
+    margin-top: 2%;
+    font-size: 20px;
+    margin-bottom: 1%;
+}
+
+hr{
+    width: 60%;
+    border: 2px solid white;
+    background-color: white;
+    margin-left: 18.5%;
+}
+
+.first-container{
+    float: left;
+    margin-left: 20%;
+    margin-top: 2%;
+    color: white;
+}
+
+.second-container{
+    float: right;
+    margin-right: 22.7%;
+    margin-top: 2%;
+    color: white;
+}
+
+.first-container .second-container h3{
+    margin-right: 65%;
+}
+
+.first-container p{
+    border: 2px solid white;
+    background-color: white;
+    text-align: left;
+    padding: 5% 7%;
+    width: 280px;
+    border-radius: 10px;
+    color: black;
+}
+
+.second-container p{
+    border: 2px solid white;
+    background-color: white;
+    text-align: left;
+    padding: 5% 7%;
+    width: 280px;
+    border-radius: 10px;
+    color: black;
+}
+
+.edit-button{
+    margin-top: 2%;
+    width: 60%;
+    padding:5px;
+    color:black;
+    background-color: yellow;
+    font-weight: bold;
+    margin-left: 18.5%;
+}
+
+.email{
+    margin-right:220px;
+}
+
+.username{
+    margin-right:190px;
+}
+
