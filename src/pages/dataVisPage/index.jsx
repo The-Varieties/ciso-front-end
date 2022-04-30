@@ -1,28 +1,66 @@
 import Card from "../../components/cards";
 import pie_chart from "../../assets/DummyImages/pie_chart.svg";
 import line_graph from "../../assets/DummyImages/line_graph.svg";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import RightSizingComponent from "../../components/rightSizingComponent";
+import RadioInput from "../../components/radioInput";
 
 function DataVisPage() {
+    const [checked, setChecked] = useState("RAM");
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
+    const toggleRadio = (e) => {
+        setChecked(e.target.value);
+    }
+
+    const instanceDetail = {'name': 'instanceDetail', 'value': [
+        {'title': 'Region', 'content': 'Asia Pacific (Jakarta)'},
+        {'title': 'Operating System', 'content': 'Linux'},
+        {'title': 'On-Demand Hourly Cost', 'content': '1.53'},
+        {'title': '1 YR Std Reserved Hourly Cost', 'content': '0.964'},
+        {'title': 'Pricing Plan', 'content': 'EC2 Instance Savings Plan'},
+        {'title': 'Reservation Term', 'content': '1 Year'},
+        {'title': 'Payment Option', 'content': 'No Upfront'},
+        {'title': 'EBS Volume Storage Type', 'content': 'General Purpose SSD (gp2)'},
+    ]}
+
     const content = (
         <div>
-            <p className="text-black w-fit text-base">
-                Instances Detail <br/> <br /> Cupidatat in qui dolor magna laborum dolore deserunt mollit sunt. 
-                Ullamco aliquip dolor ipsum cupidatat eu excepteur quis do incididunt. 
-                Aliqua sit qui eiusmod mollit cillum labore laborum tempor mollit et sit amet Lorem veniam. 
-                Nisi consequat reprehenderit ut magna ea anim anim duis sint sit eiusmod quis non. 
-                Duis adipisicing incididunt pariatur deserunt ad sunt. Ullamco laboris reprehenderit mollit minim Lorem duis do. 
-                Sunt qui est laboris laboris velit. Laboris tempor excepteur deserunt ipsum. 
-                Deserunt pariatur aliquip quis cillum consequat dolor aliqua ipsum. 
-                Ut ut et Lorem aliquip amet aliquip cupidatat Lorem proident proident tempor elit aliquip.
-                Aute est nostrud eu Lorem duis. Incididunt cillum ipsum velit culpa do consequat sunt exercitation tempor veniam. 
-                Elit cupidatat et labore veniam.
-            </p>
+            <h2 className="text-black w-fit font-bold text-3xl">Chosen Component</h2>
+
+            <div className="flex">
+                <div className="mt-5 flex align-baseline mr-12">
+                    <input type="radio" id="ram_radio" name="ram_radio" value="RAM" className="w-5 h-5 my-auto" checked={checked === "RAM"} onChange={toggleRadio}/>
+                    <label htmlFor="ram_radio" className="text-xl ml-2">RAM</label>
+                </div>
+
+                <div className="mt-5 flex align-baseline mr-12">
+                    <input type="radio" id="cpu_radio" name="cpu_radio" value="CPU" className="w-5 h-5 my-auto" checked={checked === "CPU"} onChange={toggleRadio}/>
+                    <label htmlFor="cpu_radio" className="text-xl ml-2">CPU</label>
+                </div>
+
+                <div className="mt-5 flex align-baseline mr-12">
+                    <input type="radio" id="disk_radio" name="disk_radio" value="Disk" className="w-5 h-5 my-auto" checked={checked === "Disk"} onChange={toggleRadio}/>
+                    <label htmlFor="disk_radio" className="text-xl ml-2">Disk</label>
+                </div>
+
+                <div className="mt-5 flex align-baseline mr-12">
+                    <input type="radio" id="network_radio" name="network_radio" value="Network" className="w-5 h-5 my-auto" checked={checked === "Network"} onChange={toggleRadio}/>
+                    <label htmlFor="network_radio" className="text-xl ml-2">Network</label>
+                </div>
+            </div>
+
+            <div className="py-10">
+                <div className="w-full border-t border-gray-500"></div>
+            </div>
+
+            <h2 className="text-black w-fit font-bold text-3xl mb-2">Instance Details</h2>
+            {instanceDetail && instanceDetail.value.map((instance, index) => (
+                <p><span className="font-bold">{instance.title}:</span> {instance.content}</p>
+            ))}
         </div>
     )
 
@@ -51,17 +89,29 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            <RightSizingComponent />
+            {/* <RightSizingComponent /> */}
 
-            <div className="flex mt-10">
-                <img src={pie_chart} alt="Dummy Pie Chart" className="w-5/12" />
-                <img src={line_graph} alt="Dummy Line Graph" className="w-7/12 ml-4"/>
+            <div className="flex mt-20">
+                <div className="w-4/12 ml-2">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours</h2>
+                    <img src={line_graph} alt="Dummy Line Graph"/>
+                </div>
+                
+                <div className="w-4/12">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days</h2>
+                    <img src={line_graph} alt="Dummy Line Graph"/>
+                </div>
+
+                <div className="w-4/12">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days</h2>
+                    <img src={line_graph} alt="Dummy Line Graph"/>
+                </div>
             </div>
 
-            <div className="mt-16 mb-10 grid grid-cols-5 gap-5">
-                <div className="col-span-3 row-span-2"> <Card cardContent = {content} /> </div>
-                <div className="col-span-2"> <Card cardContent = {financialContent} /> </div>
+            <div className="mt-20 mb-10 grid grid-cols-5 gap-5">
+                <div className="col-span-3"> <Card cardContent = {content} /> </div>
                 <div className="col-span-2"> <Card cardContent = {recommendationContent} /> </div>
+                <div className="col-span-5"> <Card cardContent = {financialContent} /> </div>
             </div>
         </div>
     )
