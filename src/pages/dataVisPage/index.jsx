@@ -27,6 +27,23 @@ function DataVisPage() {
         {'title': 'EBS Volume Storage Type', 'content': 'General Purpose SSD (gp2)'},
     ]}
 
+    const recommendationData = {'name': 'recommendationData', 'value': [
+        {
+            'title': 'Downsize RAM from 8GB to 2GB', 
+            'content':  `
+                            You might want to downsize your RAM from 8GB to 2GB to cut down some cost as shown on the Financial Report.
+                            Downsizing your RAM into the most optimal usage will not make your instance to be slower yet it is still in the range that is appropriate according to your usage.
+                        `
+        },
+        {
+            'title': 'Downsize CPU from 4 CPUs to 2 CPUs', 
+            'content':  `
+                            You might want to downsize your CPU from using 4 CPUs to 2 CPUs only to cut down some cost as shown on the Financial Report.
+                            Downsizing your CPU into the most optimal usage will not make your instance to be slower yet it is still in the range that is appropriate according to your usage.
+                        `
+        },
+    ]}
+
     const content = (
         <div>
             <h2 className="text-black w-fit font-bold text-3xl">Chosen Component</h2>
@@ -59,7 +76,7 @@ function DataVisPage() {
 
             <h2 className="text-black w-fit font-bold text-3xl mb-2">Instance Details</h2>
             {instanceDetail && instanceDetail.value.map((instance, index) => (
-                <p><span className="font-bold">{instance.title}:</span> {instance.content}</p>
+                <p key={index}><span className="font-bold">{instance.title}:</span> {instance.content}</p>
             ))}
         </div>
     )
@@ -82,8 +99,14 @@ function DataVisPage() {
 
     const recommendationContent = (
         <div>
-            <h2 className="text-black w-fit font-bold text-3xl">Recommendation</h2>
-            <p className="text-black w-fit text-base">Duis deserunt reprehenderit magna minim pariatur deserunt elit enim sit. Nisi esse exercitation aute id reprehenderit duis cupidatat eu aliqua. Incididunt velit ut nisi officia non labore occaecat ex in. Consectetur mollit deserunt cillum deserunt non aliqua anim mollit aliquip aliqua dolore ad duis voluptate. Eiusmod in proident aute voluptate ipsum aute elit minim occaecat qui consectetur.</p>
+            <h2 className="text-black w-fit font-bold font-italic text-3xl">Recommendation </h2>
+
+            {recommendationData && recommendationData.value.map((recommendation, index) => (
+                <div className="mt-5" key={index}>
+                    <h2 className="text-indigo-800 w-fit font-black text-xl">{recommendation.title}</h2>
+                    <p className="text-black w-fit text-base">{recommendation.content}</p>
+                </div>
+            ))}
         </div>
     )
 
