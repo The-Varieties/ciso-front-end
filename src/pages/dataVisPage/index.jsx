@@ -81,19 +81,72 @@ function DataVisPage() {
         </div>
     )
 
+    const financeTable = (
+        <table>
+            <tbody>
+                <tr>
+                    <td className="font-bold italic">Current Spending</td>
+                </tr>
+                <tr>
+                    <td>Amazon Elastic Block Storage (EBS)</td>
+                    <td className="text-right w-32">703.73 USD</td>
+                </tr>
+                <tr>
+                    <td>Amazon EC2 Instance Savings Plans Instances</td>
+                    <td className="text-right">3.00 USD</td>
+                </tr>
+                <tr>
+                    <td className="font-bold italic text-right">Sub-total:</td>
+                    <td className="font-bold text-right">706.73 USD</td>
+                </tr>
+                <tr className="h-2"></tr>
+                <tr>
+                    <td className="font-bold italic">Recommended Rightsizing with Spending</td>
+                </tr>
+                <tr>
+                    <td>Reduce Number of Allocated CPUs to 2 CPUs</td>
+                    <td className="text-right">-100.00 USD</td>
+                </tr>
+                <tr>
+                    <td className="font-bold italic text-right">Sub-total:</td>
+                    <td className="font-bold text-right">-100.00 USD</td>
+                </tr>
+                <tr className="h-2"></tr>
+                <tr>
+                    <td className="font-bold italic">Spending After Rightsizing</td>
+                </tr>
+                <tr>
+                    <td>Current Spending</td>
+                    <td className="text-right">706.73 USD</td>
+                </tr>
+                <tr>
+                    <td>Recommended Rightsizing Spending</td>
+                    <td className="text-right">-100.00 USD</td>
+                </tr>
+                <tr>
+                    <td className="font-bold italic text-right">Sub-total:</td>
+                    <td className="font-bold text-right">606.73 USD</td>
+                </tr>
+            </tbody>
+        </table>
+    )
+
     const financialContent = (
         <div>
-            <h2 className="text-black w-fit font-bold text-3xl">Financial Report</h2>
-            <p className="text-black w-fit text-base">
-                Id sint aute nisi ipsum in minim elit et. 
-                Consequat proident sit nostrud irure commodo. 
-                Consectetur sit consectetur occaecat aliquip deserunt amet aute adipisicing in. 
-                Ut magna officia quis dolor.
-                Tempor duis consectetur nulla esse do fugiat culpa nostrud velit non cillum nisi aliquip. 
-                Id labore reprehenderit mollit nisi pariatur excepteur nostrud occaecat cupidatat. 
-                Ullamco fugiat ad ex veniam dolore enim tempor commodo adipisicing sunt anim. 
-                Adipisicing ea esse nulla aliqua. Ullamco veniam cillum dolore minim incididunt veniam qui id ullamco.
-            </p>
+            <h2 className="w-fit font-bold text-3xl mb-2">Financial Report (Year)</h2>
+            <div className="flex w-full">
+                {financeTable}
+
+                <div className="flex mx-auto my-auto">
+                    <div className="block">
+                        <p className="font-bold text-3xl">You can save your</p>
+                        <p className="text-right font-bold text-3xl">budget up to</p>
+                    </div>
+                    <p className="font-bold text-7xl ml-2">14.15%</p>
+                </div>
+            </div>
+            
+
         </div>
     )
 
