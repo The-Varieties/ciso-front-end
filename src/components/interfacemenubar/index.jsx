@@ -40,10 +40,10 @@ function InterfaceDropdownMenu(props) {
                             <Link to={"/add-new-instance"} className="w-full font-semibold">Adding Instance</Link>
                         </div>
                         <div className="mb-5">
-                            <Link to={"/"} className="w-full font-semibold">Financial Report</Link>
+                            <Link to={"/financial-report"} className="w-full font-semibold">Financial Report</Link>
                         </div>  
                         <div>
-                            <Link to={"/"} className="w-full font-semibold">Database</Link>
+                            <Link to={"/database-page"} className="w-full font-semibold">Database</Link>
                         </div>  
                     </div>
                 </nav>

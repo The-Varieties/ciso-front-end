@@ -1,11 +1,9 @@
-// It will show the financial report of the instance by taking the data as parameter
 import React from "react";
-import financialimg from '../../assets/Images/financialreport.png'
-import './index.css';
+import database from '../../assets/Images/database.png';
 import BackArrow from "../../components/backArrow";
 
 
-function FinancialReport(){
+function DatabasePage(){
 
 
     return(
@@ -16,10 +14,10 @@ function FinancialReport(){
             </div>
 
             <div className="mx-40">
-                <img src={financialimg}></img>
+                <img src={database}></img>
             </div>
         </div>
     )
 }
 
-export default FinancialReport;
+export default DatabasePage;
