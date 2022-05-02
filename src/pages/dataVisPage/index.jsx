@@ -4,9 +4,12 @@ import line_graph from "../../assets/DummyImages/line_graph.svg";
 import { useEffect, useState } from 'react';
 import RightSizingComponent from "../../components/rightSizingComponent";
 import RadioInput from "../../components/radioInput";
+import {Chart as ChartJS} from 'chart.js/auto'
+import { Chart, Line } from 'react-chartjs-2'
 
 function DataVisPage() {
-    const [checked, setChecked] = useState("RAM");
+    const [checked, setChecked] = useState("CPU");
+    const [chosenRadio, setChosenRadio] = useState(0)
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -14,6 +17,12 @@ function DataVisPage() {
 
     const toggleRadio = (e) => {
         setChecked(e.target.value);
+
+        if(e.target.value == 'CPU') {
+            setChosenRadio(0)
+        } else if(e.target.value == 'Memory') {
+            setChosenRadio(1)
+        }
     }
 
     const instanceDetail = {'name': 'instanceDetail', 'value': [
@@ -50,23 +59,13 @@ function DataVisPage() {
 
             <div className="flex">
                 <div className="mt-5 flex align-baseline mr-12">
-                    <input type="radio" id="ram_radio" name="ram_radio" value="RAM" className="w-5 h-5 my-auto" checked={checked === "RAM"} onChange={toggleRadio}/>
-                    <label htmlFor="ram_radio" className="text-xl ml-2">RAM</label>
-                </div>
-
-                <div className="mt-5 flex align-baseline mr-12">
                     <input type="radio" id="cpu_radio" name="cpu_radio" value="CPU" className="w-5 h-5 my-auto" checked={checked === "CPU"} onChange={toggleRadio}/>
-                    <label htmlFor="cpu_radio" className="text-xl ml-2">CPU</label>
+                    <label htmlFor="cpu_radio" className="text-lg ml-2">CPU</label>
                 </div>
 
                 <div className="mt-5 flex align-baseline mr-12">
-                    <input type="radio" id="disk_radio" name="disk_radio" value="Disk" className="w-5 h-5 my-auto" checked={checked === "Disk"} onChange={toggleRadio}/>
-                    <label htmlFor="disk_radio" className="text-xl ml-2">Disk</label>
-                </div>
-
-                <div className="mt-5 flex align-baseline mr-12">
-                    <input type="radio" id="network_radio" name="network_radio" value="Network" className="w-5 h-5 my-auto" checked={checked === "Network"} onChange={toggleRadio}/>
-                    <label htmlFor="network_radio" className="text-xl ml-2">Network</label>
+                    <input type="radio" id="memory_radio" name="memory_radio" value="Memory" className="w-5 h-5 my-auto" checked={checked === "Memory"} onChange={toggleRadio}/>
+                    <label htmlFor="memory_radio" className="text-lg ml-2">Memory</label>
                 </div>
             </div>
 
@@ -163,23 +162,167 @@ function DataVisPage() {
         </div>
     )
 
+    const data_be = {
+        'name': 'CPU',
+        'values':[
+            {
+                'time': 'CPU% Last 24 Hours',
+                'labels': ["12PM", "1PM", "2PM", "3PM", "4PM", "5PM"],
+                'data': [
+                    {
+                        "sub": "Total", 
+                        "value": [90, 98, 97, 92, 99, 95]
+                    },
+                    {
+                        "sub": "System", 
+                        "value": [1, 12, 23, 34, 45, 56]
+                    },
+                    {
+                        "sub": "User", 
+                        "value": [32, 32, 12, 34, 12, 20]
+                    },
+                    {
+                        "sub": "lowait", 
+                        "value": [1, 5, 10, 15, 20, 34]
+                    }
+                ]
+            },
+            {
+                'time': 'Last 7 Days',
+                'labels': ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                'data': [
+                    {
+                        "sub": "Total", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    },
+                    {
+                        "sub": "System", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    },
+                    {
+                        "sub": "User", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    },
+                    {
+                        "sub": "lowait", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    }
+                ]
+            },
+            {
+                'time': 'Last 30 Days',
+                'labels': ["21-04", "22-04", "23-04", "24-04", "25-04", "26-04"],
+                'data': [
+                    {
+                        "sub": "Total", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    },
+                    {
+                        "sub": "System", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    },
+                    {
+                        "sub": "User", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    },
+                    {
+                        "sub": "lowait", 
+                        "value": [12, 34, 54, 12, 99, 34]
+                    }
+                ]
+            },
+        ]
+    }
+
+    const vis_24 = (
+        <Line
+            data = {{
+                labels: data_be['values'][0]['labels'],
+                datasets: [
+                    {
+                        label: data_be['values'][0]['data'][0]['sub'],
+                        data: data_be['values'][0]['data'][0]['value'],
+                        borderColor: "rgb(135, 100, 69)",
+                        tension: 0.2
+                    },
+                    {
+                        label: data_be['values'][0]['data'][1]['sub'],
+                        data: data_be['values'][0]['data'][1]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(202, 150, 92, 0.1)',
+                        borderColor: "rgb(202, 150, 92)",
+                        tension: 0.2
+                    },
+                    {
+                        label: data_be['values'][0]['data'][2]['sub'],
+                        data: data_be['values'][0]['data'][2]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(238, 195, 115, 0.1)',
+                        borderColor: "rgb(238, 195, 115)",
+                        tension: 0.2
+                    },
+                    {
+                        label: data_be['values'][0]['data'][3]['sub'],
+                        data: data_be['values'][0]['data'][3]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(244, 223, 186, 0.1)',
+                        borderColor: "rgb(244, 223, 186)",
+                        tension: 0.2
+                    }
+                ]
+            }}
+            options= {{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            padding: 30
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            color: 'rgba(47,79,79,0.3)',
+                            borderColor: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(47,79,79,0.3)',
+                            borderColor: 'white'
+                        },
+                        ticks: {
+                            color: 'white',
+                        }
+                    }
+                }
+            }}
+        />
+    )
+
     return (
         <div className="mx-16 my-5">
             {/* <RightSizingComponent /> */}
 
-            <div className="flex mt-20">
-                <div className="w-4/12 ml-2">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours</h2>
-                    <img src={line_graph} alt="Dummy Line Graph"/>
+            <div className="block mt-20">
+                <div className="w-full ml-2">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked}%</h2>
+                    <div className="h-72">{vis_24}</div>
                 </div>
                 
-                <div className="w-4/12">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days</h2>
+                <div className="w-4/12 mt-10">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked}%</h2>
                     <img src={line_graph} alt="Dummy Line Graph"/>
                 </div>
 
-                <div className="w-4/12">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days</h2>
+                <div className="w-4/12 mt-10">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked}%</h2>
                     <img src={line_graph} alt="Dummy Line Graph"/>
                 </div>
             </div>
