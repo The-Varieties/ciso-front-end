@@ -189,45 +189,61 @@ function DataVisPage() {
             },
             {
                 'time': 'Last 7 Days',
-                'labels': ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                'labels': ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                 'data': [
                     {
                         "sub": "Total", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [55, 55, 54, 55, 55, 56, 57]
                     },
                     {
                         "sub": "System", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [12, 12, 13, 15, 22, 15, 12]
                     },
                     {
                         "sub": "User", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [33, 34, 44, 33, 32, 34, 31]
                     },
                     {
                         "sub": "lowait", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [5, 10, 7, 2, 4, 5, 6, 2]
                     }
                 ]
             },
             {
                 'time': 'Last 30 Days',
-                'labels': ["21-04", "22-04", "23-04", "24-04", "25-04", "26-04"],
+                'labels': [
+                    "01-04", "02-04", "03-04", "04-04", "05-04", "06-04", "07-04", "08-04", "09-04", "10-04",
+                    "11-04", "12-04", "13-04", "14-04", "15-04", "16-04", "17-04", "18-04", "19-04", "20-04",
+                    "21-04", "22-04", "23-04", "24-04", "25-04", "26-04", "27-04", "28-04", "29-04", "30-04",
+                ],
                 'data': [
                     {
                         "sub": "Total", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [
+                            20, 21, 22, 21, 22, 22, 23, 21, 22, 22, 22, 22, 22, 22, 21,
+                            21, 22, 21, 22, 20, 21, 22, 21, 22, 23, 23, 21, 20, 22, 24,
+                        ]
                     },
                     {
                         "sub": "System", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [
+                            3, 4, 5, 4, 3, 2, 2, 3, 4, 5, 4, 3, 2, 2, 1,
+                            6, 5, 4, 2, 1, 1, 2, 1, 2, 3, 3, 1, 3, 2, 4,
+                        ]
                     },
                     {
                         "sub": "User", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [
+                            6, 4, 5, 4, 6, 7, 7, 6, 4, 5, 4, 6, 2, 4, 1,
+                            6, 5, 4, 8, 9, 9, 9, 6, 5, 4, 3, 2, 3, 2, 4,
+                        ]
                     },
                     {
                         "sub": "lowait", 
-                        "value": [12, 34, 54, 12, 99, 34]
+                        "value": [
+                            5, 15, 5, 15, 5, 15, 5, 15, 5, 15, 5, 15, 5, 15, 15,
+                            15, 5, 15, 15, 5, 5, 15, 15, 15, 15, 5, 5, 15, 5, 5,
+                        ]
                     }
                 ]
             },
@@ -243,7 +259,8 @@ function DataVisPage() {
                         label: data_be['values'][0]['data'][0]['sub'],
                         data: data_be['values'][0]['data'][0]['value'],
                         borderColor: "rgb(135, 100, 69)",
-                        tension: 0.2
+                        tension: 0.2,
+                        pointRadius: 0
                     },
                     {
                         label: data_be['values'][0]['data'][1]['sub'],
@@ -251,7 +268,8 @@ function DataVisPage() {
                         fill: true,
                         backgroundColor: 'rgba(202, 150, 92, 0.1)',
                         borderColor: "rgb(202, 150, 92)",
-                        tension: 0.2
+                        tension: 0.2,
+                        pointRadius: 0
                     },
                     {
                         label: data_be['values'][0]['data'][2]['sub'],
@@ -259,7 +277,8 @@ function DataVisPage() {
                         fill: true,
                         backgroundColor: 'rgba(238, 195, 115, 0.1)',
                         borderColor: "rgb(238, 195, 115)",
-                        tension: 0.2
+                        tension: 0.2,
+                        pointRadius: 0
                     },
                     {
                         label: data_be['values'][0]['data'][3]['sub'],
@@ -267,7 +286,8 @@ function DataVisPage() {
                         fill: true,
                         backgroundColor: 'rgba(244, 223, 186, 0.1)',
                         borderColor: "rgb(244, 223, 186)",
-                        tension: 0.2
+                        tension: 0.2,
+                        pointRadius: 0
                     }
                 ]
             }}
@@ -291,6 +311,164 @@ function DataVisPage() {
                         ticks: {
                             color: 'white'
                         },
+                        min: 0,
+                        max: 100
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(47,79,79,0.3)',
+                            borderColor: 'white'
+                        },
+                        ticks: {
+                            color: 'white',
+                        }
+                    }
+                }
+            }}
+        />
+    )
+
+    const vis_7d = (
+        <Line
+            data = {{
+                labels: data_be['values'][1]['labels'],
+                datasets: [
+                    {
+                        label: data_be['values'][1]['data'][0]['sub'],
+                        data: data_be['values'][1]['data'][0]['value'],
+                        borderColor: "rgb(135, 100, 69)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    },
+                    {
+                        label: data_be['values'][1]['data'][1]['sub'],
+                        data: data_be['values'][1]['data'][1]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(202, 150, 92, 0.1)',
+                        borderColor: "rgb(202, 150, 92)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    },
+                    {
+                        label: data_be['values'][1]['data'][2]['sub'],
+                        data: data_be['values'][1]['data'][2]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(238, 195, 115, 0.1)',
+                        borderColor: "rgb(238, 195, 115)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    },
+                    {
+                        label: data_be['values'][1]['data'][3]['sub'],
+                        data: data_be['values'][1]['data'][3]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(244, 223, 186, 0.1)',
+                        borderColor: "rgb(244, 223, 186)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    }
+                ]
+            }}
+            options= {{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            padding: 30
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            color: 'rgba(47,79,79,0.3)',
+                            borderColor: 'white'
+                        },
+                        ticks: {
+                            color: 'white',
+                        },
+                        min: 0,
+                        max: 100
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(47,79,79,0.3)',
+                            borderColor: 'white'
+                        },
+                        ticks: {
+                            color: 'white',
+                        }
+                    }
+                }
+            }}
+        />
+    )
+
+    const vis_30d = (
+        <Line
+            data = {{
+                labels: data_be['values'][2]['labels'],
+                datasets: [
+                    {
+                        label: data_be['values'][2]['data'][0]['sub'],
+                        data: data_be['values'][2]['data'][0]['value'],
+                        borderColor: "rgb(135, 100, 69)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    },
+                    {
+                        label: data_be['values'][2]['data'][1]['sub'],
+                        data: data_be['values'][2]['data'][1]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(202, 150, 92, 0.1)',
+                        borderColor: "rgb(202, 150, 92)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    },
+                    {
+                        label: data_be['values'][2]['data'][2]['sub'],
+                        data: data_be['values'][2]['data'][2]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(238, 195, 115, 0.1)',
+                        borderColor: "rgb(238, 195, 115)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    },
+                    {
+                        label: data_be['values'][2]['data'][3]['sub'],
+                        data: data_be['values'][2]['data'][3]['value'],
+                        fill: true,
+                        backgroundColor: 'rgba(244, 223, 186, 0.1)',
+                        borderColor: "rgb(244, 223, 186)",
+                        tension: 0.5,
+                        pointRadius: 0
+                    }
+                ]
+            }}
+            options= {{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            padding: 30
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            color: 'rgba(47,79,79,0.3)',
+                            borderColor: 'white'
+                        },
+                        ticks: {
+                            color: 'white',
+                        },
+                        min: 0,
+                        max: 100
                     },
                     x: {
                         grid: {
@@ -316,14 +494,14 @@ function DataVisPage() {
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
-                <div className="w-4/12 mt-10">
+                <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked}%</h2>
-                    <img src={line_graph} alt="Dummy Line Graph"/>
+                    <div className="h-72">{vis_7d}</div>
                 </div>
 
-                <div className="w-4/12 mt-10">
+                <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked}%</h2>
-                    <img src={line_graph} alt="Dummy Line Graph"/>
+                    <div className="h-72">{vis_30d}</div>
                 </div>
             </div>
 
