@@ -9,10 +9,36 @@ import { Chart, Line } from 'react-chartjs-2'
 
 function DataVisPage() {
     const [checked, setChecked] = useState("CPU");
-    const [chosenRadio, setChosenRadio] = useState(0)
+    const [chosenRadio, setChosenRadio] = useState(0);
+    const [label24, setLabel24] = useState([]);
+    const [values24, setValues24] = useState([]);
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+
+        const valArr = [];
+
+        for(let i = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
+            const rawLabel = dataSampleFromEndpoint.results[0]['values'][i][0];
+            const splitLabel = rawLabel.split("T")[1].split("+")[0]
+
+            setLabel24(label24 => [...label24, splitLabel]);
+        }
+
+        for(let i = 0; i < dataSampleFromEndpoint.results.length; i++) {
+            for(let j = 0; j < dataSampleFromEndpoint.results[i]['values'].length; j++) {
+                const value = dataSampleFromEndpoint.results[i]['values'][j][1];
+
+                valArr.push(value);
+            }
+        }
+
+        const reshapedArr = [];
+        for(let i  = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
+            reshapedArr.push(valArr.splice(0, dataSampleFromEndpoint.results[0]['values'].length));
+        }
+
+        setValues24(values24 => [...values24, ...reshapedArr]);
     }, [])
 
     const toggleRadio = (e) => {
@@ -36,46 +62,29 @@ function DataVisPage() {
         {'title': 'EBS Volume Storage Type', 'content': 'General Purpose SSD (gp2)'},
     ]}
 
-    const recommendationData = {'name': 'recommendationData', 'value': [
-        {
-            'title': 'Downsize RAM from 8GB to 2GB', 
-            'content':  `
-                            You might want to downsize your RAM from 8GB to 2GB to cut down some cost as shown on the Financial Report.
-                            Downsizing your RAM into the most optimal usage will not make your instance to be slower yet it is still in the range that is appropriate according to your usage.
-                        `
-        },
-        {
-            'title': 'Downsize CPU from 4 CPUs to 2 CPUs', 
-            'content':  `
-                            You might want to downsize your CPU from using 4 CPUs to 2 CPUs only to cut down some cost as shown on the Financial Report.
-                            Downsizing your CPU into the most optimal usage will not make your instance to be slower yet it is still in the range that is appropriate according to your usage.
-                        `
-        },
-    ]}
-
     const content = (
         <div>
-            <h2 className="text-black w-fit font-bold text-3xl">Chosen Component</h2>
+            <h2 className="text-black w-fit font-bold text-2xl">Chosen Component</h2>
 
-            <div className="flex">
-                <div className="mt-5 flex align-baseline mr-12">
+            <div className="flex mt-2">
+                <div className="flex align-baseline mr-12">
                     <input type="radio" id="cpu_radio" name="cpu_radio" value="CPU" className="w-5 h-5 my-auto" checked={checked === "CPU"} onChange={toggleRadio}/>
-                    <label htmlFor="cpu_radio" className="text-lg ml-2">CPU</label>
+                    <label htmlFor="cpu_radio" className="text-base ml-2">CPU</label>
                 </div>
 
-                <div className="mt-5 flex align-baseline mr-12">
+                <div className="flex align-baseline mr-12">
                     <input type="radio" id="memory_radio" name="memory_radio" value="Memory" className="w-5 h-5 my-auto" checked={checked === "Memory"} onChange={toggleRadio}/>
-                    <label htmlFor="memory_radio" className="text-lg ml-2">Memory</label>
+                    <label htmlFor="memory_radio" className="text-base ml-2">Memory</label>
                 </div>
             </div>
 
-            <div className="py-10">
+            <div className="py-8">
                 <div className="w-full border-t border-gray-500"></div>
             </div>
 
-            <h2 className="text-black w-fit font-bold text-3xl mb-2">Instance Details</h2>
+            <h2 className="text-black w-fit font-bold text-2xl mb-2">Instance Details</h2>
             {instanceDetail && instanceDetail.value.map((instance, index) => (
-                <p key={index}><span className="font-bold">{instance.title}:</span> {instance.content}</p>
+                <p key={index} className="text-base"><span className="font-bold">{instance.title}:</span> {instance.content}</p>
             ))}
         </div>
     )
@@ -132,7 +141,7 @@ function DataVisPage() {
 
     const financialContent = (
         <div>
-            <h2 className="w-fit font-bold text-3xl mb-2">Financial Report (Year)</h2>
+            <h2 className="w-fit font-bold text-2xl mb-2">Financial Report (Year)</h2>
             <div className="flex w-full">
                 {financeTable}
 
@@ -149,16 +158,46 @@ function DataVisPage() {
         </div>
     )
 
+    const recommendationData = {
+        "cpu": 3.014285714285677,
+        "ram": 32.334294715948076,
+        "usage_cat": 1,
+        "recommendations": [
+            {
+                "recommendation": "Downsize the underutilized EC2 instance",
+                "details": "Downsize the EC2 instances by selecting the right instance family to fit the current workload, so it will reduce operation costs",
+                "steps": [
+                    "Navigate to the EC2 dashboard in your AWS",
+                    "Select the underutilized instance and stop it",
+                    "Change the current instance type to downsize it",
+                    "After choosing the right instance type, then apply it",
+                    "Start the EC2 instance again"
+                ]
+            }
+        ]
+    }
+
     const recommendationContent = (
         <div>
-            <h2 className="text-black w-fit font-bold font-italic text-3xl">Recommendation </h2>
+            <h2 className="text-black w-fit font-bold font-italic text-2xl">Recommendation</h2>
 
-            {recommendationData && recommendationData.value.map((recommendation, index) => (
-                <div className="mt-5" key={index}>
-                    <h2 className="text-indigo-800 w-fit font-black text-xl">{recommendation.title}</h2>
-                    <p className="text-black w-fit text-base">{recommendation.content}</p>
-                </div>
-            ))}
+            {recommendationData && recommendationData.recommendations.map((recommendation, index) => {
+                const stepsArr = [];
+
+                for(let i = 0; i < recommendation.steps.length; i++) {
+                    stepsArr.push(<li className="text-sm">{recommendation.steps[i]}</li>)
+                }
+                
+                return (
+                    <div className="mt-2" key={index}>
+                        <h2 className="text-indigo-800 w-fit font-black text-base">{recommendation.recommendation}</h2>
+                        <p className="text-black w-fit text-sm">{recommendation.details}</p>
+                        <p className="text-black w-fit text-sm italic font-bold">How-to:</p>
+                        <div className="ml-1"> {stepsArr} </div>
+                        
+                    </div>
+                )
+            })}
         </div>
     )
 
@@ -250,44 +289,132 @@ function DataVisPage() {
         ]
     }
 
+    const dataSampleFromEndpoint = {
+        "name": "cpu",
+        "time": "last 24 hours",
+        "hostname": "node",
+        "results": [
+            {
+                "sub": "system",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "0.11460402696608946"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "0.4461703738680719"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "0.4543584379358438"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "0.4019177126917713"
+                    ]
+                ]
+            },
+            {
+                "sub": "user",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "0.22050527786796537"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "0.8206391604522963"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "1.0756624825662482"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "1.0872733612273362"
+                    ]
+                ]
+            },
+            {
+                "sub": "iowait",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "0.026527739087301588"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "0.05123537678782476"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "0.03720362622036261"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "0.04735006973500697"
+                    ]
+                ]
+            },
+            {
+                "sub": "idle",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "6.829833821434583"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "2.051405812124374"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "2.306032078103226"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "2.2845536959553714"
+                    ]
+                ]
+            }
+        ]
+    }
+
     const vis_24 = (
         <Line
             data = {{
-                labels: data_be['values'][0]['labels'],
+                labels: label24,
                 datasets: [
                     {
-                        label: data_be['values'][0]['data'][0]['sub'],
-                        data: data_be['values'][0]['data'][0]['value'],
+                        label: dataSampleFromEndpoint.results[0]['sub'],
+                        data: values24[0],
                         borderColor: "rgb(135, 100, 69)",
-                        tension: 0.2,
-                        pointRadius: 0
+                        tension: 0.2
                     },
                     {
-                        label: data_be['values'][0]['data'][1]['sub'],
-                        data: data_be['values'][0]['data'][1]['value'],
+                        label: dataSampleFromEndpoint.results[1]['sub'],
+                        data: values24[1],
                         fill: true,
                         backgroundColor: 'rgba(202, 150, 92, 0.1)',
                         borderColor: "rgb(202, 150, 92)",
-                        tension: 0.2,
-                        pointRadius: 0
+                        tension: 0.2
                     },
                     {
-                        label: data_be['values'][0]['data'][2]['sub'],
-                        data: data_be['values'][0]['data'][2]['value'],
+                        label: dataSampleFromEndpoint.results[2]['sub'],
+                        data: values24[2],
                         fill: true,
                         backgroundColor: 'rgba(238, 195, 115, 0.1)',
                         borderColor: "rgb(238, 195, 115)",
-                        tension: 0.2,
-                        pointRadius: 0
+                        tension: 0.2
                     },
                     {
-                        label: data_be['values'][0]['data'][3]['sub'],
-                        data: data_be['values'][0]['data'][3]['value'],
+                        label: dataSampleFromEndpoint.results[3]['sub'],
+                        data: values24[3],
                         fill: true,
                         backgroundColor: 'rgba(244, 223, 186, 0.1)',
                         borderColor: "rgb(244, 223, 186)",
-                        tension: 0.2,
-                        pointRadius: 0
+                        tension: 0.2
                     }
                 ]
             }}
@@ -310,9 +437,7 @@ function DataVisPage() {
                         },
                         ticks: {
                             color: 'white'
-                        },
-                        min: 0,
-                        max: 100
+                        }
                     },
                     x: {
                         grid: {
@@ -415,8 +540,7 @@ function DataVisPage() {
                         label: data_be['values'][2]['data'][0]['sub'],
                         data: data_be['values'][2]['data'][0]['value'],
                         borderColor: "rgb(135, 100, 69)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     },
                     {
                         label: data_be['values'][2]['data'][1]['sub'],
@@ -486,7 +610,7 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            {/* <RightSizingComponent /> */}
+            <RightSizingComponent />
 
             <div className="block mt-20">
                 <div className="w-full ml-2">
