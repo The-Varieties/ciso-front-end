@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import RightSizingComponent from "../../components/rightSizingComponent";
 import RadioInput from "../../components/radioInput";
 import {Chart as ChartJS} from 'chart.js/auto'
-import { Chart, Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
+import { Chart } from 'chart.js'
 
 function DataVisPage() {
     const [checked, setChecked] = useState("CPU");
     const [chosenRadio, setChosenRadio] = useState(0);
     const [label24, setLabel24] = useState([]);
     const [values24, setValues24] = useState([]);
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -185,7 +187,7 @@ function DataVisPage() {
                 const stepsArr = [];
 
                 for(let i = 0; i < recommendation.steps.length; i++) {
-                    stepsArr.push(<li className="text-sm">{recommendation.steps[i]}</li>)
+                    stepsArr.push(<li className="text-sm" key={i}>{recommendation.steps[i]}</li>)
                 }
                 
                 return (
@@ -381,6 +383,31 @@ function DataVisPage() {
         ]
     }
 
+    Chart.register({
+        id: 'annotationLine',
+        afterDraw: function(chart, easing) {
+            if(chart.tooltip._active && chart.tooltip._active.length) {
+                const context = chart.ctx;
+                const x = chart.tooltip._active[0].element.x;
+                const topY = chart.scales.y.top;
+                const bottomY = chart.scales.y.bottom;
+
+                for(let i = 0; i < chart.tooltip.labelColors.length; i++) {
+                    chart.tooltip.labelColors[i]['backgroundColor'] = chart.tooltip.labelColors[i]['borderColor']
+                }
+       
+                context.save();
+                context.beginPath();
+                context.moveTo(x, topY);
+                context.lineTo(x, bottomY);
+                context.lineWidth = 2;
+                context.strokeStyle = 'rgba(255,255,255,0.8)';
+                context.stroke();
+                context.restore();
+            }
+        }
+    });
+
     const vis_24 = (
         <Line
             data = {{
@@ -419,14 +446,22 @@ function DataVisPage() {
                 ]
             }}
             options= {{
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'right',
                         labels: {
-                            padding: 30
+                            padding: 30,
+                            color: 'white'
                         }
+                    },
+                    tooltip: {
+                        displayColors: true
                     }
                 },
                 scales: {
@@ -448,6 +483,15 @@ function DataVisPage() {
                             color: 'white',
                         }
                     }
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    position: 'cursor'
+                },
+                hover: {
+                    mode: 'point',
+                    intersect: false
                 }
             }}
         />
@@ -501,8 +545,9 @@ function DataVisPage() {
                     legend: {
                         position: 'right',
                         labels: {
-                            padding: 30
-                        }
+                            padding: 30,
+                            color: 'white'
+                        }                        
                     }
                 },
                 scales: {
@@ -578,7 +623,8 @@ function DataVisPage() {
                     legend: {
                         position: 'right',
                         labels: {
-                            padding: 30
+                            padding: 30,
+                            color: 'white'
                         }
                     }
                 },
@@ -610,7 +656,7 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            <RightSizingComponent />
+            {/* <RightSizingComponent /> */}
 
             <div className="block mt-20">
                 <div className="w-full ml-2">
