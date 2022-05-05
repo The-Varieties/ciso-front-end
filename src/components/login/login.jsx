@@ -1,12 +1,16 @@
 import React from "react";
 import './index.css';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
 
 
     return(
         <div className="justify-content-center">
+            <div class="icon">
+                <img src={logo}></img>
+            </div>
             <h1 class="title">
                 Sign in to your account
             </h1>

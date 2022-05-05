@@ -3,9 +3,16 @@
   color: white;
   font-size: 35px;
   text-align: center;
-  margin-top: 11%;
+  margin-top: 2%;
   font-family:sans-serif;
   font-weight: bold;
+}
+
+.icon{
+  margin-left: auto;
+  margin-right: auto;
+  width: 480px;
+  margin-top: 5%;
 }
 
 .sentenses{

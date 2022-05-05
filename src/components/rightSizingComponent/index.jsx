@@ -31,6 +31,12 @@ function RightSizingComponent(props){
         ]
     }
 
+    const profileDropdownList ={name:"profileDropdownList", values:[
+            {nextRoute:"/profile", menuName: "Profile"},
+            {nextRoute: "/", menuName:"Log Out"},
+        ]
+    }
+
     return(
         <div className="flex h-10 mt-6">
             <BackArrow />

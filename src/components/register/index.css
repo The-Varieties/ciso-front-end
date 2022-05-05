@@ -3,7 +3,7 @@
     color: white;
     font-size: 35px;
     text-align: center;
-    margin-top: 11%;
+    margin-top: 2%;
     font-family:sans-serif;
     font-weight: bold;
   }
@@ -37,8 +37,9 @@
     margin: 10px;
   }
   
-  .logintable input[type="text"],
-  .logintable input[type="password"] {
+  .registertable input[type="text"],
+  .registertable input[type="password"],
+  .registertable input[type="email"] {
     height: 50px;
     text-align: left;
     border-radius: 8px;
@@ -46,14 +47,14 @@
     margin-top: 10px;
   }
   
-  input[type="submit"] {
+  .registertable input[type="submit"] {
     margin-top: 10px;
     cursor: pointer;
     font-size: 18px;
     background: yellow;
     border-radius: 5px;
     color: black;
-    padding: 8px 200px;
+    padding: 8px 215px;
     font-weight: bold;
   }
   
@@ -77,6 +78,7 @@
   .registerlink a{
     color: yellow;
     cursor: pointer;
+    padding-bottom: 40px;
   }
   
   .registerlink a:hover{
