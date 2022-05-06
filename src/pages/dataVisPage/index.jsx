@@ -1,7 +1,7 @@
 import Card from "../../components/cards";
 import pie_chart from "../../assets/DummyImages/pie_chart.svg";
 import line_graph from "../../assets/DummyImages/line_graph.svg";
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import RightSizingComponent from "../../components/rightSizingComponent";
 import RadioInput from "../../components/radioInput";
 import {Chart as ChartJS} from 'chart.js/auto'
@@ -20,27 +20,40 @@ function DataVisPage() {
 
         const valArr = [];
 
-        for(let i = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
-            const rawLabel = dataSampleFromEndpoint.results[0]['values'][i][0];
-            const splitLabel = rawLabel.split("T")[1].split("+")[0]
+        let chosenData;
 
-            setLabel24(label24 => [...label24, splitLabel]);
+        if(chosenRadio === 0) {
+            chosenData = dataSampleFromEndpoint;
+        } else {
+            chosenData = memoryDataSample;
         }
 
-        for(let i = 0; i < dataSampleFromEndpoint.results.length; i++) {
-            for(let j = 0; j < dataSampleFromEndpoint.results[i]['values'].length; j++) {
-                const value = dataSampleFromEndpoint.results[i]['values'][j][1];
+        for(let i = 0; i < chosenData.results.length; i++) {
+            for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
+                const value = chosenData.results[i]['values'][j][1];
 
                 valArr.push(value);
             }
         }
 
         const reshapedArr = [];
-        for(let i  = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
-            reshapedArr.push(valArr.splice(0, dataSampleFromEndpoint.results[0]['values'].length));
+
+        for(let i  = 0; i < chosenData.results.length; i++) {
+            reshapedArr.push(valArr.splice(0, chosenData.results[0]['values'].length));
         }
 
         setValues24(values24 => [...values24, ...reshapedArr]);
+    }, [chosenRadio])
+
+    console.log(values24);
+
+    useEffect(() => {
+        for(let i = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
+            const rawLabel = dataSampleFromEndpoint.results[0]['values'][i][0];
+            const splitLabel = rawLabel.split("T")[1].split("+")[0]
+
+            setLabel24(label24 => [...label24, splitLabel]);
+        }
     }, [])
 
     const toggleRadio = (e) => {
@@ -48,8 +61,10 @@ function DataVisPage() {
 
         if(e.target.value == 'CPU') {
             setChosenRadio(0)
+            setValues24([])
         } else if(e.target.value == 'Memory') {
             setChosenRadio(1)
+            setValues24([])
         }
     }
 
@@ -288,6 +303,98 @@ function DataVisPage() {
                     }
                 ]
             },
+        ]
+    }
+
+    const memoryDataSample = {
+        "name": "memory",
+        "time": "last 24 hours",
+        "hostname": "node",
+        "results": [
+            {
+                "sub": "system",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "0.22"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "0.23"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "0.22"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "0.21"
+                    ]
+                ]
+            },
+            {
+                "sub": "user",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "0.21"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "0.31"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "1.50"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "1.08"
+                    ]
+                ]
+            },
+            {
+                "sub": "iowait",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "0.02"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "0.03"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "0.04"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "0.02"
+                    ]
+                ]
+            },
+            {
+                "sub": "idle",
+                "values": [
+                    [
+                        "2022-05-03T14:11:19+07:00",
+                        "4.5"
+                    ],
+                    [
+                        "2022-05-03T15:11:19+07:00",
+                        "3.4"
+                    ],
+                    [
+                        "2022-05-03T16:11:19+07:00",
+                        "2.3"
+                    ],
+                    [
+                        "2022-05-03T17:11:19+07:00",
+                        "1.2"
+                    ]
+                ]
+            }
         ]
     }
 
@@ -664,7 +771,7 @@ function DataVisPage() {
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
-                <div className="w-full mt-10">
+                {/* <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked}%</h2>
                     <div className="h-72">{vis_7d}</div>
                 </div>
@@ -672,7 +779,7 @@ function DataVisPage() {
                 <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked}%</h2>
                     <div className="h-72">{vis_30d}</div>
-                </div>
+                </div> */}
             </div>
 
             <div className="mt-20 mb-10 grid grid-cols-5 gap-5">
