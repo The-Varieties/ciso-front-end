@@ -6,7 +6,7 @@ function BackArrow(props) {
 
     return(
         <div className="my-auto">
-            <img src={backArrow} alt="Back Arrow" className="h-7 cursor-pointer" onClick={(e) => {navigate("/")}}/>
+            <img src={backArrow} alt="Back Arrow" className="h-7 cursor-pointer" onClick={(e) => {navigate(props.backPath)}}/>
         </div>
     )
 }
