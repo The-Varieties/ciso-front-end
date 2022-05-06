@@ -34,7 +34,7 @@ function Dashboard(props){
 
 
             <div className='mx-16 mt-24'>
-                <h1 className={`text-white text-3xl font-bold delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-x-0" : "opacity-0 -translate-x-20"}`} onLoad={onLoadFunc}>Username's List of Instances</h1>
+                <h1 className={`w-fit text-white text-3xl font-bold delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-x-0" : "opacity-0 -translate-x-20"}`} onLoad={onLoadFunc}>Username's List of Instances</h1>
 
                 <div className={`grid grid-cols-3 gap-8 items-center h-full delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`} onLoad={onLoadFunc}>
                     {contentMap && contentMap.values.map((instance, index) => (
