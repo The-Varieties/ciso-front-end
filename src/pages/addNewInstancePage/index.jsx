@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 // import ReactDOM from 'react-dom';
-import './style.css';
+import './index.css';
 import { useNavigate } from 'react-router-dom';
 
 function AddInstance(){
