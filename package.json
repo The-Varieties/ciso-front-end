@@ -10,6 +10,7 @@
     "create-react-native": "^1.1.0",
     "create-react-native-app": "^3.8.0",
     "react": "^18.0.0",
+    "react-confirm-alert": "^2.8.0",
     "react-dom": "^18.0.0",
     "react-icons": "^4.3.1",
     "react-redux": "^8.0.0",
