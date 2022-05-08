@@ -1,4 +1,4 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, DELETE_INSTANCE, ADD_NEW_INSTANCE } from "../types";
+import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE } from "../types";
 import axios from 'axios';
 
 
@@ -38,8 +38,7 @@ export const getInstanceList = () => async dispatch => {
 
 export const deleteInstance = (targetId) => async dispatch => {
     try{
-        const res = await axios.delete(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
-        console.log(res)
+        await axios.delete(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
     }
     catch(e) {
         dispatch({

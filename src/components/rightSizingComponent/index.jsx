@@ -2,19 +2,9 @@ import BackArrow from "../../components/backArrow";
 import RefreshIcon from "../../assets/Icons/refresh_icon.svg";
 import ProfileIcon from "../../assets/Icons/profile_icon.svg";
 import DropdownMenu from "../dropdownMenu";
-import {connect} from 'react-redux';
-import {getInstance} from '../../store/actions/instanceAction';
-import { useEffect, useState } from "react";
 
 function RightSizingComponent(props){
-    // 0 --> Optimized, 1 --> Under, 2 --> Over
-    // This value can be changed to continuous value if needed
-    const [rightsizingCat, setRightsizingCat] = useState();
-    
-    useEffect(() => {
-        props.getInstance(props.instanceName);
-        setRightsizingCat(props.instance.instance.usage_cat);
-    }, [props]);
+    const rightsizingCat = props.rightsizingCat;
 
     const instanceDropdownList = {name: "instanceDropdownList", values: [
             {nextRoute: "/", menuName: "Start Instance"},
@@ -55,6 +45,6 @@ function RightSizingComponent(props){
     )
 }
 
-const mapStateToProps = (state) => ({instance: state.instance})
 
-export default connect(mapStateToProps, {getInstance})(RightSizingComponent)
+
+export default RightSizingComponent;

@@ -12,7 +12,7 @@ export default function InstanceReducer(state = initialState, action) {
             return {
                 ...state,
                 instance: action.payload,
-                loading: false
+                loading: false,
             }
         case GET_INSTANCES_LIST || ADD_NEW_INSTANCE:
             return{

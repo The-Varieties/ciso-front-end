@@ -1,15 +1,14 @@
 import Card from "../../components/cards";
-import pie_chart from "../../assets/DummyImages/pie_chart.svg";
-import line_graph from "../../assets/DummyImages/line_graph.svg";
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import RightSizingComponent from "../../components/rightSizingComponent";
-import RadioInput from "../../components/radioInput";
-import {Chart as ChartJS} from 'chart.js/auto'
-import { Line } from 'react-chartjs-2'
-import { Chart } from 'chart.js'
+import 'chart.js/auto';
+import { Line } from 'react-chartjs-2';
+import { Chart } from 'chart.js';
 import { useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+import {getInstance} from '../../store/actions/instanceAction';
 
-function DataVisPage() {
+function DataVisPage(props) {
     const [checked, setChecked] = useState("CPU");
     const [chosenRadio, setChosenRadio] = useState(0);
     const [label24, setLabel24] = useState([]);
@@ -18,7 +17,8 @@ function DataVisPage() {
     const [values30, setValues30] = useState([]);
     const {state} = useLocation();
     const {instanceName} = state;
-
+    const [rightsizingCat, setRightsizingCat] = useState([]);
+    const [recommendationsList, setRecommendationsList] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -40,8 +40,6 @@ function DataVisPage() {
             chosenDummy_7 = data_be_memory_dummy_7;
             chosenDummy_30 = data_be_memory_dummy_30;
         }
-
-        console.log(chosenDummy_7.values[0].data[0]['value'])
 
         for(let i = 0; i < chosenData.results.length; i++) {
             for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
@@ -97,15 +95,24 @@ function DataVisPage() {
         }
     }, [])
 
+    useEffect(() => {
+        props.getInstance(instanceName);
+        setRightsizingCat(props.instance.instance.usage_cat);
+
+        if(props.instance.instance.recommendations) {
+            setRecommendationsList(...recommendationsList, props.instance.instance.recommendations);
+        }
+    }, [props.instance.instance.usage_cat])
+    
     const toggleRadio = (e) => {
         setChecked(e.target.value);
 
-        if(e.target.value == 'CPU') {
+        if(e.target.value === 'CPU') {
             setChosenRadio(0)
             setValues24([])
             setValues7([])
             setValues30([])
-        } else if(e.target.value == 'Memory') {
+        } else if(e.target.value === 'Memory') {
             setChosenRadio(1)
             setValues24([])
             setValues7([])
@@ -220,46 +227,30 @@ function DataVisPage() {
         </div>
     )
 
-    const recommendationData = {
-        "cpu": 3.014285714285677,
-        "ram": 32.334294715948076,
-        "usage_cat": 1,
-        "recommendations": [
-            {
-                "recommendation": "Downsize the underutilized EC2 instance",
-                "details": "Downsize the EC2 instances by selecting the right instance family to fit the current workload, so it will reduce operation costs",
-                "steps": [
-                    "Navigate to the EC2 dashboard in your AWS",
-                    "Select the underutilized instance and stop it",
-                    "Change the current instance type to downsize it",
-                    "After choosing the right instance type, then apply it",
-                    "Start the EC2 instance again"
-                ]
-            }
-        ]
-    }
-
     const recommendationContent = (
         <div>
             <h2 className="text-black w-fit font-bold font-italic text-2xl">Recommendation</h2>
 
-            {recommendationData && recommendationData.recommendations.map((recommendation, index) => {
-                const stepsArr = [];
-
-                for(let i = 0; i < recommendation.steps.length; i++) {
-                    stepsArr.push(<li className="text-sm" key={i}>{recommendation.steps[i]}</li>)
-                }
-                
-                return (
-                    <div className="mt-2" key={index}>
-                        <h2 className="text-indigo-800 w-fit font-black text-base">{recommendation.recommendation}</h2>
-                        <p className="text-black w-fit text-sm">{recommendation.details}</p>
-                        <p className="text-black w-fit text-sm italic font-bold">How-to:</p>
-                        <div className="ml-1"> {stepsArr} </div>
-                        
-                    </div>
-                )
-            })}
+            {(recommendationsList.length != 0 ? 
+                recommendationsList.map((recommendation, index) => {
+                    const stepsArr = [];
+    
+                    for(let i = 0; i < recommendation.steps.length; i++) {
+                        stepsArr.push(<li className="text-sm" key={i}>{recommendation.steps[i]}</li>)
+                    }
+                    
+                    return (
+                        <div className="mt-3" key={index}>
+                            <h2 className="text-indigo-800 w-fit font-black text-base">{recommendation.recommendation}</h2>
+                            <p className="text-black w-fit text-sm">{recommendation.details}</p>
+                            <p className="text-black w-fit text-sm italic font-bold">How-to:</p>
+                            <div className="ml-1"> {stepsArr} </div>
+                        </div>
+                    )
+                })
+            : 
+                null
+            )}
         </div>
     )
 
@@ -877,7 +868,7 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            <RightSizingComponent instanceName = {instanceName} />
+            <RightSizingComponent rightsizingCat = {rightsizingCat} />
 
             <div className="block mt-20">
                 <div className="w-full ml-2">
@@ -905,4 +896,6 @@ function DataVisPage() {
     )
 }
 
-export default DataVisPage;
+const mapStateToProps = (state) => ({instance: state.instance})
+
+export default connect(mapStateToProps, {getInstance})(DataVisPage);
