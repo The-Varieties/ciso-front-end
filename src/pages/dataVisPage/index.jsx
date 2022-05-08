@@ -7,26 +7,41 @@ import RadioInput from "../../components/radioInput";
 import {Chart as ChartJS} from 'chart.js/auto'
 import { Line } from 'react-chartjs-2'
 import { Chart } from 'chart.js'
+import { useLocation } from "react-router-dom";
 
 function DataVisPage() {
     const [checked, setChecked] = useState("CPU");
     const [chosenRadio, setChosenRadio] = useState(0);
     const [label24, setLabel24] = useState([]);
     const [values24, setValues24] = useState([]);
+    const [values7, setValues7] = useState([]);
+    const [values30, setValues30] = useState([]);
+    const {state} = useLocation();
+    const {instanceName} = state;
 
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
         const valArr = [];
+        const valArr7 = [];
+        const valArr30 = [];
 
         let chosenData;
+        let chosenDummy_7;
+        let chosenDummy_30;
 
         if(chosenRadio === 0) {
             chosenData = dataSampleFromEndpoint;
+            chosenDummy_7 = data_be_7;
+            chosenDummy_30 = data_be_30;
         } else {
             chosenData = memoryDataSample;
+            chosenDummy_7 = data_be_memory_dummy_7;
+            chosenDummy_30 = data_be_memory_dummy_30;
         }
+
+        console.log(chosenDummy_7.values[0].data[0]['value'])
 
         for(let i = 0; i < chosenData.results.length; i++) {
             for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
@@ -36,16 +51,42 @@ function DataVisPage() {
             }
         }
 
+        for(let i = 0; i < chosenDummy_7.values[0].data.length; i++) {
+            for(let j = 0; j < chosenDummy_7.values[0].data[i]['value'].length; j++) {
+                const value = chosenDummy_7.values[0].data[i]['value'][j];
+
+                valArr7.push(value);
+            }
+        }
+
+        for(let i = 0; i < chosenDummy_30.values[0].data.length; i++) {
+            for(let j = 0; j < chosenDummy_30.values[0].data[i]['value'].length; j++) {
+                const value = chosenDummy_30.values[0].data[i]['value'][j];
+
+                valArr30.push(value);
+            }
+        }
+
         const reshapedArr = [];
+        const reshapedArr7 = [];
+        const reshapedArr30 = [];
 
         for(let i  = 0; i < chosenData.results.length; i++) {
             reshapedArr.push(valArr.splice(0, chosenData.results[0]['values'].length));
         }
 
-        setValues24(values24 => [...values24, ...reshapedArr]);
-    }, [chosenRadio])
+        for(let i  = 0; i < chosenDummy_7.values[0].data.length; i++) {
+            reshapedArr7.push(valArr7.splice(0, chosenDummy_7.values[0].data[i]['value'].length));
+        }
 
-    console.log(values24);
+        for(let i  = 0; i < chosenDummy_30.values[0].data.length; i++) {
+            reshapedArr30.push(valArr30.splice(0, chosenDummy_30.values[0].data[i]['value'].length));
+        }
+
+        setValues24(values24 => [...values24, ...reshapedArr]);
+        setValues7(values7 => [...values7, ...reshapedArr7]);
+        setValues30(values30 => [...values30, ...reshapedArr30]);
+    }, [chosenRadio])
 
     useEffect(() => {
         for(let i = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
@@ -62,9 +103,13 @@ function DataVisPage() {
         if(e.target.value == 'CPU') {
             setChosenRadio(0)
             setValues24([])
+            setValues7([])
+            setValues30([])
         } else if(e.target.value == 'Memory') {
             setChosenRadio(1)
             setValues24([])
+            setValues7([])
+            setValues30([])
         }
     }
 
@@ -218,53 +263,37 @@ function DataVisPage() {
         </div>
     )
 
-    const data_be = {
+    const data_be_7 = {
         'name': 'CPU',
         'values':[
-            {
-                'time': 'CPU% Last 24 Hours',
-                'labels': ["12PM", "1PM", "2PM", "3PM", "4PM", "5PM"],
-                'data': [
-                    {
-                        "sub": "Total", 
-                        "value": [90, 98, 97, 92, 99, 95]
-                    },
-                    {
-                        "sub": "System", 
-                        "value": [1, 12, 23, 34, 45, 56]
-                    },
-                    {
-                        "sub": "User", 
-                        "value": [32, 32, 12, 34, 12, 20]
-                    },
-                    {
-                        "sub": "lowait", 
-                        "value": [1, 5, 10, 15, 20, 34]
-                    }
-                ]
-            },
             {
                 'time': 'Last 7 Days',
                 'labels': ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                 'data': [
                     {
-                        "sub": "Total", 
+                        "sub": "system", 
                         "value": [55, 55, 54, 55, 55, 56, 57]
                     },
                     {
-                        "sub": "System", 
+                        "sub": "user", 
                         "value": [12, 12, 13, 15, 22, 15, 12]
                     },
                     {
-                        "sub": "User", 
+                        "sub": "iowait", 
                         "value": [33, 34, 44, 33, 32, 34, 31]
                     },
                     {
-                        "sub": "lowait", 
+                        "sub": "idle", 
                         "value": [5, 10, 7, 2, 4, 5, 6, 2]
                     }
                 ]
-            },
+            }
+        ]
+    }
+
+    const data_be_30 = {
+        'name': 'CPU',
+        'values':[
             {
                 'time': 'Last 30 Days',
                 'labels': [
@@ -274,31 +303,103 @@ function DataVisPage() {
                 ],
                 'data': [
                     {
-                        "sub": "Total", 
+                        "sub": "system", 
                         "value": [
                             20, 21, 22, 21, 22, 22, 23, 21, 22, 22, 22, 22, 22, 22, 21,
                             21, 22, 21, 22, 20, 21, 22, 21, 22, 23, 23, 21, 20, 22, 24,
                         ]
                     },
                     {
-                        "sub": "System", 
+                        "sub": "user", 
                         "value": [
                             3, 4, 5, 4, 3, 2, 2, 3, 4, 5, 4, 3, 2, 2, 1,
                             6, 5, 4, 2, 1, 1, 2, 1, 2, 3, 3, 1, 3, 2, 4,
                         ]
                     },
                     {
-                        "sub": "User", 
+                        "sub": "iowait", 
                         "value": [
                             6, 4, 5, 4, 6, 7, 7, 6, 4, 5, 4, 6, 2, 4, 1,
                             6, 5, 4, 8, 9, 9, 9, 6, 5, 4, 3, 2, 3, 2, 4,
                         ]
                     },
                     {
-                        "sub": "lowait", 
+                        "sub": "idle", 
                         "value": [
                             5, 15, 5, 15, 5, 15, 5, 15, 5, 15, 5, 15, 5, 15, 15,
                             15, 5, 15, 15, 5, 5, 15, 15, 15, 15, 5, 5, 15, 5, 5,
+                        ]
+                    }
+                ]
+            },
+        ]
+    }
+
+    const data_be_memory_dummy_7 = {
+        'name': 'Memory',
+        'values':[
+            {
+                'time': 'Last 7 Days',
+                'labels': ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                'data': [
+                    {
+                        "sub": "system", 
+                        "value": [22, 23, 21, 22, 21, 23, 22]
+                    },
+                    {
+                        "sub": "user", 
+                        "value": [32, 31, 31, 30, 32, 33, 34]
+                    },
+                    {
+                        "sub": "iowait", 
+                        "value": [11, 12, 11, 11, 11, 11, 21]
+                    },
+                    {
+                        "sub": "idle", 
+                        "value": [32, 21, 25, 28, 23, 21, 25, 27]
+                    }
+                ]
+            }
+        ]
+    }
+
+    const data_be_memory_dummy_30 = {
+        'name': 'Memory',
+        'values':[
+            {
+                'time': 'Last 30 Days',
+                'labels': [
+                    "01-04", "02-04", "03-04", "04-04", "05-04", "06-04", "07-04", "08-04", "09-04", "10-04",
+                    "11-04", "12-04", "13-04", "14-04", "15-04", "16-04", "17-04", "18-04", "19-04", "20-04",
+                    "21-04", "22-04", "23-04", "24-04", "25-04", "26-04", "27-04", "28-04", "29-04", "30-04",
+                ],
+                'data': [
+                    {
+                        "sub": "system", 
+                        "value": [
+                            13, 14, 15, 14, 13, 12, 12, 13, 14, 15, 14, 13, 12, 12, 11,
+                            26, 25, 24, 22, 21, 21, 22, 21, 22, 23, 23, 21, 23, 22, 24,
+                        ]
+                    },
+                    {
+                        "sub": "user", 
+                        "value": [
+                            15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+                            15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+                        ]
+                    },
+                    {
+                        "sub": "iowait", 
+                        "value": [
+                            46, 44, 45, 44, 46, 47, 47, 46, 44, 45, 44, 46, 42, 44, 41,
+                            36, 35, 34, 38, 39, 39, 39, 36, 35, 34, 33, 32, 33, 32, 34,
+                        ]
+                    },
+                    {
+                        "sub": "idle", 
+                        "value": [
+                            20, 21, 22, 21, 22, 22, 23, 21, 22, 22, 22, 22, 22, 22, 21,
+                            21, 22, 21, 22, 20, 21, 22, 21, 22, 23, 23, 21, 20, 22, 24,
                         ]
                     }
                 ]
@@ -502,13 +603,13 @@ function DataVisPage() {
                 for(let i = 0; i < chart.tooltip.labelColors.length; i++) {
                     chart.tooltip.labelColors[i]['backgroundColor'] = chart.tooltip.labelColors[i]['borderColor']
                 }
-       
+
                 context.save();
                 context.beginPath();
                 context.moveTo(x, topY);
                 context.lineTo(x, bottomY);
                 context.lineWidth = 2;
-                context.strokeStyle = 'rgba(255,255,255,0.8)';
+                context.strokeStyle = 'rgba(255,255,255,0.7)';
                 context.stroke();
                 context.restore();
             }
@@ -553,10 +654,6 @@ function DataVisPage() {
                 ]
             }}
             options= {{
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
@@ -566,9 +663,6 @@ function DataVisPage() {
                             padding: 30,
                             color: 'white'
                         }
-                    },
-                    tooltip: {
-                        displayColors: true
                     }
                 },
                 scales: {
@@ -591,13 +685,16 @@ function DataVisPage() {
                         }
                     }
                 },
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
                 tooltips: {
                     mode: 'index',
-                    intersect: false,
-                    position: 'cursor'
+                    intersect: false
                 },
                 hover: {
-                    mode: 'point',
+                    mode: 'index',
                     intersect: false
                 }
             }}
@@ -607,41 +704,37 @@ function DataVisPage() {
     const vis_7d = (
         <Line
             data = {{
-                labels: data_be['values'][1]['labels'],
+                labels: data_be_7['values'][0]['labels'],
                 datasets: [
                     {
-                        label: data_be['values'][1]['data'][0]['sub'],
-                        data: data_be['values'][1]['data'][0]['value'],
+                        label: data_be_7['values'][0]['data'][0]['sub'],
+                        data: values7[0],
                         borderColor: "rgb(135, 100, 69)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     },
                     {
-                        label: data_be['values'][1]['data'][1]['sub'],
-                        data: data_be['values'][1]['data'][1]['value'],
+                        label: data_be_7['values'][0]['data'][1]['sub'],
+                        data: values7[1],
                         fill: true,
                         backgroundColor: 'rgba(202, 150, 92, 0.1)',
                         borderColor: "rgb(202, 150, 92)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     },
                     {
-                        label: data_be['values'][1]['data'][2]['sub'],
-                        data: data_be['values'][1]['data'][2]['value'],
+                        label: data_be_7['values'][0]['data'][2]['sub'],
+                        data: values7[2],
                         fill: true,
                         backgroundColor: 'rgba(238, 195, 115, 0.1)',
                         borderColor: "rgb(238, 195, 115)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     },
                     {
-                        label: data_be['values'][1]['data'][3]['sub'],
-                        data: data_be['values'][1]['data'][3]['value'],
+                        label: data_be_7['values'][0]['data'][3]['sub'],
+                        data: values7[3],
                         fill: true,
                         backgroundColor: 'rgba(244, 223, 186, 0.1)',
                         borderColor: "rgb(244, 223, 186)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     }
                 ]
             }}
@@ -666,8 +759,8 @@ function DataVisPage() {
                         ticks: {
                             color: 'white',
                         },
+                        max: 100,
                         min: 0,
-                        max: 100
                     },
                     x: {
                         grid: {
@@ -677,7 +770,19 @@ function DataVisPage() {
                         ticks: {
                             color: 'white',
                         }
-                    }
+                    },
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'index',
+                    intersect: false
                 }
             }}
         />
@@ -686,40 +791,37 @@ function DataVisPage() {
     const vis_30d = (
         <Line
             data = {{
-                labels: data_be['values'][2]['labels'],
+                labels: data_be_30['values'][0]['labels'],
                 datasets: [
                     {
-                        label: data_be['values'][2]['data'][0]['sub'],
-                        data: data_be['values'][2]['data'][0]['value'],
+                        label: data_be_30['values'][0]['data'][0]['sub'],
+                        data: values30[0],
                         borderColor: "rgb(135, 100, 69)",
                         tension: 0.5
                     },
                     {
-                        label: data_be['values'][2]['data'][1]['sub'],
-                        data: data_be['values'][2]['data'][1]['value'],
+                        label: data_be_30['values'][0]['data'][1]['sub'],
+                        data: values30[1],
                         fill: true,
                         backgroundColor: 'rgba(202, 150, 92, 0.1)',
                         borderColor: "rgb(202, 150, 92)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     },
                     {
-                        label: data_be['values'][2]['data'][2]['sub'],
-                        data: data_be['values'][2]['data'][2]['value'],
+                        label: data_be_30['values'][0]['data'][2]['sub'],
+                        data: values30[2],
                         fill: true,
                         backgroundColor: 'rgba(238, 195, 115, 0.1)',
                         borderColor: "rgb(238, 195, 115)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     },
                     {
-                        label: data_be['values'][2]['data'][3]['sub'],
-                        data: data_be['values'][2]['data'][3]['value'],
+                        label: data_be_30['values'][0]['data'][3]['sub'],
+                        data: values30[3],
                         fill: true,
                         backgroundColor: 'rgba(244, 223, 186, 0.1)',
                         borderColor: "rgb(244, 223, 186)",
-                        tension: 0.5,
-                        pointRadius: 0
+                        tension: 0.5
                     }
                 ]
             }}
@@ -756,6 +858,18 @@ function DataVisPage() {
                             color: 'white',
                         }
                     }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'index',
+                    intersect: false
                 }
             }}
         />
@@ -763,7 +877,7 @@ function DataVisPage() {
 
     return (
         <div className="mx-16 my-5">
-            {/* <RightSizingComponent /> */}
+            <RightSizingComponent instanceName = {instanceName} />
 
             <div className="block mt-20">
                 <div className="w-full ml-2">
@@ -771,7 +885,7 @@ function DataVisPage() {
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
-                {/* <div className="w-full mt-10">
+                <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked}%</h2>
                     <div className="h-72">{vis_7d}</div>
                 </div>
@@ -779,7 +893,7 @@ function DataVisPage() {
                 <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked}%</h2>
                     <div className="h-72">{vis_30d}</div>
-                </div> */}
+                </div>
             </div>
 
             <div className="mt-20 mb-10 grid grid-cols-5 gap-5">

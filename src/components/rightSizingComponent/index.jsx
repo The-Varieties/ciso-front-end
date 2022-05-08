@@ -12,7 +12,7 @@ function RightSizingComponent(props){
     const [rightsizingCat, setRightsizingCat] = useState();
     
     useEffect(() => {
-        props.getInstance();
+        props.getInstance(props.instanceName);
         setRightsizingCat(props.instance.instance.usage_cat);
     }, [props]);
 

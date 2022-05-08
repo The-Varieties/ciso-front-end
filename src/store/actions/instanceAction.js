@@ -2,9 +2,10 @@ import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, DELETE_INSTANCE, ADD_
 import axios from 'axios';
 
 
-export const getInstance = () => async dispatch => {
+export const getInstance = (instanceName) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category/?instance=Bryan`)
+        const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category/?instance=${instanceName}&time_interval`)
+
         dispatch({
             type: GET_INSTANCE,
             payload: res.data

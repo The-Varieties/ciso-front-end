@@ -10,7 +10,7 @@ function DashboardCard(props) {
 
     const goNextPage = () => {
         if (props.hasOnClick)
-            navigate(props.nextPageRoute);
+            navigate(props.nextPageRoute, { state: {instanceName: props.cardContent.instance_name}});
     }
 
     const deleteinstance = () => {
