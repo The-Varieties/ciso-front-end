@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 // import ReactDOM from 'react-dom';
-import './style.css';
+import './index.css';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addNewInstance } from '../../store/actions/instanceAction';
@@ -41,13 +41,14 @@ function AddInstance(props){
         });
     }
 
-    const handlesubmit=(event)=>{
+    let navigate = useNavigate();
+
+    const addinstance = (event) => {
         event.preventDefault();
         props.addNewInstance(newInstanceMap);
+        alert("A new instance has added!");
         navigate("/");
     }
-
-    let navigate = useNavigate();
 
     return (
         <div className="AddingInstanceForm">
@@ -63,10 +64,12 @@ function AddInstance(props){
                 <input type="text" onChange={addseckey}/>
 
                 <label>Access Key: </label>
-                <input type="text" onChange={addacckey}/>
+                <input type="text" />
 
-                <button className='btnadd' onClick={handlesubmit} >Add Instance</button>
-                <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
+                <div class="clickbutton">
+                    <button className='btnadd' onClick= {addinstance}>Add Instance</button>
+                    <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
+                </div>
             </form>
         </div>
     )

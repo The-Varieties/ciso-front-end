@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsTrashFill } from "react-icons/bs";
 import { deleteInstance } from "../../store/actions/instanceAction";
 import { connect } from "react-redux";
+import { confirmAlert } from 'react-confirm-alert';
+import '../../../node_modules/react-confirm-alert/src/react-confirm-alert.css';
 
 
 function DashboardCard(props) {
@@ -12,11 +14,22 @@ function DashboardCard(props) {
         if (props.hasOnClick)
             navigate(props.nextPageRoute, { state: {instanceName: props.cardContent.instance_name}});
     }
-
-    const deleteinstance = () => {
-        alert("The Cloud Infrastructure will be permanantly deleted!\n" + props.cardContent.instance_id);
-        props.deleteInstance(props.cardContent.instance_id);
-    }
+    
+    const submit = () => {
+        confirmAlert({
+          title: 'Warning',
+          message: 'The Cloud Infrastructure Instance will be permanently deleted!',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {props.deleteInstance(props.cardContent.instance_id);}
+            },
+            {
+              label: 'No',
+            }
+          ]
+        })
+    };
 
     return (
         <div className={
@@ -30,7 +43,7 @@ function DashboardCard(props) {
                 <p><span className="font-bold">IP Address: </span>{props.cardContent.instance_ipv4}</p>
 
                 <div className="absolute right-0 top-0">
-                    <button onClick={deleteinstance}><BsTrashFill/></button>
+                    <button onClick={submit}><BsTrashFill/></button>
                 </div>
 
                 <div className="absolute right-0 bottom-0">

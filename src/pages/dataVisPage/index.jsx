@@ -6,7 +6,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import {getInstance} from '../../store/actions/instanceAction';
+import { getInstance } from "../../store/actions/instanceAction";
 
 function DataVisPage(props) {
     const [checked, setChecked] = useState("CPU");
