@@ -1,10 +1,16 @@
 import React from "react";
 import './index.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
 
+    let navigate = useNavigate();
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        navigate("/");
+    }
 
     return(
         <div className="justify-content-center">
@@ -19,7 +25,7 @@ function LoginModule(){
             </p>
             
             <div className="logintable">
-            <form>
+            <form onSubmit={onSubmitHandler}>
                 <div className="input-container">
                 <label>User Name </label>
                 <input type="text" name="uname" required size="50"/>
