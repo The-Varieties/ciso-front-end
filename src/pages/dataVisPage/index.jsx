@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { getInstance, getDataVis } from "../../store/actions/instanceAction";
 
 function DataVisPage(props) {
-    const [checked, setChecked] = useState("CPU");
+    const [checked, setChecked] = useState("cpu");
     const [chosenRadio, setChosenRadio] = useState(0);
     const [label24, setLabel24] = useState([]);
     const [values24, setValues24] = useState([]);
@@ -30,7 +30,7 @@ function DataVisPage(props) {
     useEffect(() => {
         const intervalId = setInterval(() => {
             props.getInstance(instanceName);
-            props.getDataVis(instanceName, 'cpu')
+            props.getDataVis(instanceName, checked)
             setRightsizingCat(props.instance.usage_cat);
 
             if(props.instance.recommendations) {
@@ -56,12 +56,12 @@ function DataVisPage(props) {
             let chosenDummy_7;
             let chosenDummy_30;
 
+            chosenData = props.visualization;
+
             if(chosenRadio === 0) {
-                chosenData = props.visualization;
                 chosenDummy_7 = data_be_7;
                 chosenDummy_30 = data_be_30;
             } else {
-                chosenData = memoryDataSample;
                 chosenDummy_7 = data_be_memory_dummy_7;
                 chosenDummy_30 = data_be_memory_dummy_30;
             }
@@ -76,7 +76,6 @@ function DataVisPage(props) {
                 }
             }
             
-
             for(let i = 0; i < chosenDummy_7.values[0].data.length; i++) {
                 for(let j = 0; j < chosenDummy_7.values[0].data[i]['value'].length; j++) {
                     const value = chosenDummy_7.values[0].data[i]['value'][j];
@@ -118,105 +117,94 @@ function DataVisPage(props) {
             setValues24(values24 => [...values24, ...reshapedArr]);
             setValues7(values7 => [...values7, ...reshapedArr7]);
             setValues30(values30 => [...values30, ...reshapedArr30]);
-        }, 3000)
+        }, 2000)
 
         return () => clearInterval(intervalId);
     })
 
-    console.log(label24)
-
     useEffect(() => {
         if(props.visualization) {
-            setVis_24(
-                <Line
-                    data = {{
-                        labels: label24,
-                        datasets: [
-                            {
-                                label: props.visualization.results[0]['sub'],
-                                data: values24[0],
-                                borderColor: "rgb(135, 100, 69)",
-                                tension: 0.2
-                            },
-                            {
-                                label: props.visualization.results[1]['sub'],
-                                data: values24[1],
-                                fill: true,
-                                backgroundColor: 'rgba(202, 150, 92, 0.1)',
-                                borderColor: "rgb(202, 150, 92)",
-                                tension: 0.2
-                            },
-                            {
-                                label: props.visualization.results[2]['sub'],
-                                data: values24[2],
-                                fill: true,
-                                backgroundColor: 'rgba(238, 195, 115, 0.1)',
-                                borderColor: "rgb(238, 195, 115)",
-                                tension: 0.2
-                            },
-                            {
-                                label: props.visualization.results[3]['sub'],
-                                data: values24[3],
-                                fill: true,
-                                backgroundColor: 'rgba(244, 223, 186, 0.1)',
-                                borderColor: "rgb(244, 223, 186)",
-                                tension: 0.2
-                            }
-                        ]
-                    }}
-                    options= {{
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'right',
-                                labels: {
-                                    padding: 30,
-                                    color: 'white'
+            let data = []
+            let color_swatches = [
+                "rgb(135, 100, 69)",
+                "rgb(202, 150, 92)",
+                "rgb(238, 195, 115)",
+                "rgb(244, 223, 186)",
+            ]
+
+            for(let i = 0; i < props.visualization.results.length; i++) {
+                data.push({
+                    label: props.visualization.results[i]['sub'],
+                    data: values24[i],
+                    tension: 0.2,
+                    borderColor: color_swatches[i],
+                    fill: true,
+                })
+            }
+
+            {props.visualization.name != checked ? 
+                setVis_24(<h2 className="text-white">Loading...</h2>)
+            : 
+                setVis_24(
+                    <Line
+                        data = {{
+                            labels: label24,
+                            datasets: data,
+                        }}
+                        options= {{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'right',
+                                    labels: {
+                                        padding: 30,
+                                        color: 'white'
+                                    }
                                 }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                grid: {
-                                    color: 'rgba(47,79,79,0.3)',
-                                    borderColor: 'white'
+                            },
+                            scales: {
+                                y: {
+                                    grid: {
+                                        color: 'rgba(47,79,79,0.3)',
+                                        borderColor: 'white'
+                                    },
+                                    ticks: {
+                                        color: 'white'
+                                    }
                                 },
-                                ticks: {
-                                    color: 'white'
+                                x: {
+                                    grid: {
+                                        color: 'rgba(47,79,79,0.3)',
+                                        borderColor: 'white'
+                                    },
+                                    ticks: {
+                                        color: 'white',
+                                    }
                                 }
                             },
-                            x: {
-                                grid: {
-                                    color: 'rgba(47,79,79,0.3)',
-                                    borderColor: 'white'
-                                },
-                                ticks: {
-                                    color: 'white',
-                                }
+                            interaction: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            hover: {
+                                mode: 'index',
+                                intersect: false
                             }
-                        },
-                        interaction: {
-                            mode: 'index',
-                            intersect: false
-                        },
-                        tooltips: {
-                            mode: 'index',
-                            intersect: false
-                        },
-                        hover: {
-                            mode: 'index',
-                            intersect: false
-                        }
-                    }}
-                />
-            )
-        }
+                        }}
+                    />
+                )
+            }
+            }
     }, [values24])
     
     const toggleRadio = (e) => {
         setChecked(e.target.value);
-
+        
         if(e.target.value === 'CPU') {
             setChosenRadio(0)
             setValues24([])
@@ -228,6 +216,8 @@ function DataVisPage(props) {
             setValues7([])
             setValues30([])
         }
+
+        setVis_24(<h2 className="text-white">Loading...</h2>)
     }
 
     const instanceDetail = {'name': 'instanceDetail', 'value': [
@@ -247,13 +237,13 @@ function DataVisPage(props) {
 
             <div className="flex mt-2">
                 <div className="flex align-baseline mr-12">
-                    <input type="radio" id="cpu_radio" name="cpu_radio" value="CPU" className="w-5 h-5 my-auto" checked={checked === "CPU"} onChange={toggleRadio}/>
+                    <input type="radio" id="cpu_radio" name="cpu_radio" value="cpu" className="w-5 h-5 my-auto" checked={checked === "cpu"} onChange={toggleRadio}/>
                     <label htmlFor="cpu_radio" className="text-base ml-2">CPU</label>
                 </div>
 
                 <div className="flex align-baseline mr-12">
-                    <input type="radio" id="memory_radio" name="memory_radio" value="Memory" className="w-5 h-5 my-auto" checked={checked === "Memory"} onChange={toggleRadio}/>
-                    <label htmlFor="memory_radio" className="text-base ml-2">Memory</label>
+                    <input type="radio" id="ram_radio" name="ram_radio" value="ram" className="w-5 h-5 my-auto" checked={checked === "ram"} onChange={toggleRadio}/>
+                    <label htmlFor="ram_radio" className="text-base ml-2">RAM</label>
                 </div>
             </div>
 
@@ -508,98 +498,6 @@ function DataVisPage(props) {
         ]
     }
 
-    const memoryDataSample = {
-        "name": "memory",
-        "time": "last 24 hours",
-        "hostname": "node",
-        "results": [
-            {
-                "sub": "system",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "0.22"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "0.23"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "0.22"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "0.21"
-                    ]
-                ]
-            },
-            {
-                "sub": "user",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "0.21"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "0.31"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "1.50"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "1.08"
-                    ]
-                ]
-            },
-            {
-                "sub": "iowait",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "0.02"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "0.03"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "0.04"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "0.02"
-                    ]
-                ]
-            },
-            {
-                "sub": "idle",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "4.5"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "3.4"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "2.3"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "1.2"
-                    ]
-                ]
-            }
-        ]
-    }
-
     Chart.register({
         id: 'annotationLine',
         afterDraw: function(chart, easing) {
@@ -652,14 +550,14 @@ function DataVisPage(props) {
                         borderColor: "rgb(238, 195, 115)",
                         tension: 0.5
                     },
-                    {
-                        label: data_be_7['values'][0]['data'][3]['sub'],
-                        data: values7[3],
-                        fill: true,
-                        backgroundColor: 'rgba(244, 223, 186, 0.1)',
-                        borderColor: "rgb(244, 223, 186)",
-                        tension: 0.5
-                    }
+                    // {
+                    //     label: data_be_7['values'][0]['data'][3]['sub'],
+                    //     data: values7[3],
+                    //     fill: true,
+                    //     backgroundColor: 'rgba(244, 223, 186, 0.1)',
+                    //     borderColor: "rgb(244, 223, 186)",
+                    //     tension: 0.5
+                    // }
                 ]
             }}
             options= {{
@@ -805,11 +703,11 @@ function DataVisPage(props) {
 
             <div className="block mt-20">
                 <div className="w-full ml-2">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked}%</h2>
+                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked.toUpperCase()}%</h2>
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
-                <div className="w-full mt-10">
+                {/* <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked}%</h2>
                     <div className="h-72">{vis_7d}</div>
                 </div>
@@ -817,7 +715,7 @@ function DataVisPage(props) {
                 <div className="w-full mt-10">
                     <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked}%</h2>
                     <div className="h-72">{vis_30d}</div>
-                </div>
+                </div> */}
             </div>
 
             <div className="mt-20 mb-10 grid grid-cols-5 gap-5">
