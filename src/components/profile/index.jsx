@@ -7,7 +7,7 @@ function ProfilePage() {
   return (
     <div class="container">
         <div class="backarrow">
-            <BackArrow backPath = "/data-vis-page" />
+            <BackArrow backPath = "/dashboard/" />
         </div>
         <div class="profile_detail">
             <img src={profile} alt="Profile"/>

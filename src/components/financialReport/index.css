@@ -9,7 +9,7 @@
 }
 
 .choose_instance label{
-    padding-left: 5%;
+    padding-left: 3%;
     color: wheat;
     margin-right: 10px;
 }
@@ -24,8 +24,9 @@
     background-color: white;
     margin-top: 2%;
     padding:1%;
-    margin-left: 80px;
-    margin-right: 80px;
+    margin-left: 65px;
+    margin-right: 65px;
+    border-radius: 10px;
 }
 
 .check_spent{
@@ -50,12 +51,4 @@
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;
-}
-
-.instance_image{
-    margin-left: 75px;
-    margin-right: auto;
-    margin-top: 20px;
-    width: 90%;
-    margin-bottom: 20px;
 }
