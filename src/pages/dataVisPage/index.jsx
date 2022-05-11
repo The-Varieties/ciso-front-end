@@ -6,7 +6,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { getInstance } from "../../store/actions/instanceAction";
+import { getInstance, getDataVis } from "../../store/actions/instanceAction";
 
 function DataVisPage(props) {
     const [checked, setChecked] = useState("CPU");
@@ -18,91 +18,201 @@ function DataVisPage(props) {
     const {state} = useLocation();
     const {instanceName} = state;
     const [rightsizingCat, setRightsizingCat] = useState([]);
-    const [recommendationsList, setRecommendationsList] = useState([]);
+    const [recommendationsList, setRecommendationsList] = useState(null);
+    const [vis_24, setVis_24] = useState(<h2 className="text-white">Loading...</h2>);
+    // const [vis_7d, setVis_7d] = useState(<h2 className="text-white">Loading...</h2>);
+    // const [vis_30d, setVis_24d] = useState(<h2 className="text-white">Loading...</h2>);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-
-        const valArr = [];
-        const valArr7 = [];
-        const valArr30 = [];
-
-        let chosenData;
-        let chosenDummy_7;
-        let chosenDummy_30;
-
-        if(chosenRadio === 0) {
-            chosenData = dataSampleFromEndpoint;
-            chosenDummy_7 = data_be_7;
-            chosenDummy_30 = data_be_30;
-        } else {
-            chosenData = memoryDataSample;
-            chosenDummy_7 = data_be_memory_dummy_7;
-            chosenDummy_30 = data_be_memory_dummy_30;
-        }
-
-        for(let i = 0; i < chosenData.results.length; i++) {
-            for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
-                const value = chosenData.results[i]['values'][j][1];
-
-                valArr.push(value);
-            }
-        }
-
-        for(let i = 0; i < chosenDummy_7.values[0].data.length; i++) {
-            for(let j = 0; j < chosenDummy_7.values[0].data[i]['value'].length; j++) {
-                const value = chosenDummy_7.values[0].data[i]['value'][j];
-
-                valArr7.push(value);
-            }
-        }
-
-        for(let i = 0; i < chosenDummy_30.values[0].data.length; i++) {
-            for(let j = 0; j < chosenDummy_30.values[0].data[i]['value'].length; j++) {
-                const value = chosenDummy_30.values[0].data[i]['value'][j];
-
-                valArr30.push(value);
-            }
-        }
-
-        const reshapedArr = [];
-        const reshapedArr7 = [];
-        const reshapedArr30 = [];
-
-        for(let i  = 0; i < chosenData.results.length; i++) {
-            reshapedArr.push(valArr.splice(0, chosenData.results[0]['values'].length));
-        }
-
-        for(let i  = 0; i < chosenDummy_7.values[0].data.length; i++) {
-            reshapedArr7.push(valArr7.splice(0, chosenDummy_7.values[0].data[i]['value'].length));
-        }
-
-        for(let i  = 0; i < chosenDummy_30.values[0].data.length; i++) {
-            reshapedArr30.push(valArr30.splice(0, chosenDummy_30.values[0].data[i]['value'].length));
-        }
-
-        setValues24(values24 => [...values24, ...reshapedArr]);
-        setValues7(values7 => [...values7, ...reshapedArr7]);
-        setValues30(values30 => [...values30, ...reshapedArr30]);
-    }, [chosenRadio])
-
-    useEffect(() => {
-        for(let i = 0; i < dataSampleFromEndpoint.results[0]['values'].length; i++) {
-            const rawLabel = dataSampleFromEndpoint.results[0]['values'][i][0];
-            const splitLabel = rawLabel.split("T")[1].split("+")[0]
-
-            setLabel24(label24 => [...label24, splitLabel]);
-        }
     }, [])
 
     useEffect(() => {
-        props.getInstance(instanceName);
-        setRightsizingCat(props.instance.instance.usage_cat);
+        const intervalId = setInterval(() => {
+            props.getInstance(instanceName);
+            props.getDataVis(instanceName, 'cpu')
+            setRightsizingCat(props.instance.usage_cat);
 
-        if(props.instance.instance.recommendations) {
-            setRecommendationsList(...recommendationsList, props.instance.instance.recommendations);
+            if(props.instance.recommendations) {
+                setRecommendationsList(null)
+                setRecommendationsList(props.instance.recommendations);
+            }
+
+            if(props.visualization) {
+                setLabel24([])
+                for(let i = 0; i < props.visualization.results[0]['values'].length; i++) {
+                    const rawLabel = props.visualization.results[0]['values'][i][0];
+                    const splitLabel = rawLabel.split("T")[1].split("+")[0]
+        
+                    setLabel24(label24 => [...label24, splitLabel]);
+                }
+            }
+
+            const valArr = [];
+            const valArr7 = [];
+            const valArr30 = [];
+
+            let chosenData;
+            let chosenDummy_7;
+            let chosenDummy_30;
+
+            if(chosenRadio === 0) {
+                chosenData = props.visualization;
+                chosenDummy_7 = data_be_7;
+                chosenDummy_30 = data_be_30;
+            } else {
+                chosenData = memoryDataSample;
+                chosenDummy_7 = data_be_memory_dummy_7;
+                chosenDummy_30 = data_be_memory_dummy_30;
+            }
+
+            if(chosenData) {
+                for(let i = 0; i < chosenData.results.length; i++) {
+                    for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
+                        const value = chosenData.results[i]['values'][j][1];
+        
+                        valArr.push(value);
+                    }
+                }
+            }
+            
+
+            for(let i = 0; i < chosenDummy_7.values[0].data.length; i++) {
+                for(let j = 0; j < chosenDummy_7.values[0].data[i]['value'].length; j++) {
+                    const value = chosenDummy_7.values[0].data[i]['value'][j];
+
+                    valArr7.push(value);
+                }
+            }
+
+            for(let i = 0; i < chosenDummy_30.values[0].data.length; i++) {
+                for(let j = 0; j < chosenDummy_30.values[0].data[i]['value'].length; j++) {
+                    const value = chosenDummy_30.values[0].data[i]['value'][j];
+
+                    valArr30.push(value);
+                }
+            }
+
+            const reshapedArr = [];
+            const reshapedArr7 = [];
+            const reshapedArr30 = [];
+
+            if(chosenData) {
+                for(let i  = 0; i < chosenData.results.length; i++) {
+                    reshapedArr.push(valArr.splice(0, chosenData.results[0]['values'].length));
+                }
+            }
+            
+            for(let i  = 0; i < chosenDummy_7.values[0].data.length; i++) {
+                reshapedArr7.push(valArr7.splice(0, chosenDummy_7.values[0].data[i]['value'].length));
+            }
+
+            for(let i  = 0; i < chosenDummy_30.values[0].data.length; i++) {
+                reshapedArr30.push(valArr30.splice(0, chosenDummy_30.values[0].data[i]['value'].length));
+            }
+
+            setValues24([])
+            setValues7([])
+            setValues30([])
+
+            setValues24(values24 => [...values24, ...reshapedArr]);
+            setValues7(values7 => [...values7, ...reshapedArr7]);
+            setValues30(values30 => [...values30, ...reshapedArr30]);
+        }, 3000)
+
+        return () => clearInterval(intervalId);
+    })
+
+    console.log(label24)
+
+    useEffect(() => {
+        if(props.visualization) {
+            setVis_24(
+                <Line
+                    data = {{
+                        labels: label24,
+                        datasets: [
+                            {
+                                label: props.visualization.results[0]['sub'],
+                                data: values24[0],
+                                borderColor: "rgb(135, 100, 69)",
+                                tension: 0.2
+                            },
+                            {
+                                label: props.visualization.results[1]['sub'],
+                                data: values24[1],
+                                fill: true,
+                                backgroundColor: 'rgba(202, 150, 92, 0.1)',
+                                borderColor: "rgb(202, 150, 92)",
+                                tension: 0.2
+                            },
+                            {
+                                label: props.visualization.results[2]['sub'],
+                                data: values24[2],
+                                fill: true,
+                                backgroundColor: 'rgba(238, 195, 115, 0.1)',
+                                borderColor: "rgb(238, 195, 115)",
+                                tension: 0.2
+                            },
+                            {
+                                label: props.visualization.results[3]['sub'],
+                                data: values24[3],
+                                fill: true,
+                                backgroundColor: 'rgba(244, 223, 186, 0.1)',
+                                borderColor: "rgb(244, 223, 186)",
+                                tension: 0.2
+                            }
+                        ]
+                    }}
+                    options= {{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    padding: 30,
+                                    color: 'white'
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    color: 'rgba(47,79,79,0.3)',
+                                    borderColor: 'white'
+                                },
+                                ticks: {
+                                    color: 'white'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(47,79,79,0.3)',
+                                    borderColor: 'white'
+                                },
+                                ticks: {
+                                    color: 'white',
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        hover: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }}
+                />
+            )
         }
-    }, [props.instance.instance.usage_cat])
+    }, [values24])
     
     const toggleRadio = (e) => {
         setChecked(e.target.value);
@@ -231,7 +341,7 @@ function DataVisPage(props) {
         <div>
             <h2 className="text-black w-fit font-bold font-italic text-2xl">Recommendation</h2>
 
-            {(recommendationsList.length != 0 ? 
+            {(recommendationsList != null ? 
                 recommendationsList.map((recommendation, index) => {
                     const stepsArr = [];
     
@@ -490,98 +600,6 @@ function DataVisPage(props) {
         ]
     }
 
-    const dataSampleFromEndpoint = {
-        "name": "cpu",
-        "time": "last 24 hours",
-        "hostname": "node",
-        "results": [
-            {
-                "sub": "system",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "0.11460402696608946"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "0.4461703738680719"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "0.4543584379358438"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "0.4019177126917713"
-                    ]
-                ]
-            },
-            {
-                "sub": "user",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "0.22050527786796537"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "0.8206391604522963"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "1.0756624825662482"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "1.0872733612273362"
-                    ]
-                ]
-            },
-            {
-                "sub": "iowait",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "0.026527739087301588"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "0.05123537678782476"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "0.03720362622036261"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "0.04735006973500697"
-                    ]
-                ]
-            },
-            {
-                "sub": "idle",
-                "values": [
-                    [
-                        "2022-05-03T14:11:19+07:00",
-                        "6.829833821434583"
-                    ],
-                    [
-                        "2022-05-03T15:11:19+07:00",
-                        "2.051405812124374"
-                    ],
-                    [
-                        "2022-05-03T16:11:19+07:00",
-                        "2.306032078103226"
-                    ],
-                    [
-                        "2022-05-03T17:11:19+07:00",
-                        "2.2845536959553714"
-                    ]
-                ]
-            }
-        ]
-    }
-
     Chart.register({
         id: 'annotationLine',
         afterDraw: function(chart, easing) {
@@ -606,91 +624,6 @@ function DataVisPage(props) {
             }
         }
     });
-
-    const vis_24 = (
-        <Line
-            data = {{
-                labels: label24,
-                datasets: [
-                    {
-                        label: dataSampleFromEndpoint.results[0]['sub'],
-                        data: values24[0],
-                        borderColor: "rgb(135, 100, 69)",
-                        tension: 0.2
-                    },
-                    {
-                        label: dataSampleFromEndpoint.results[1]['sub'],
-                        data: values24[1],
-                        fill: true,
-                        backgroundColor: 'rgba(202, 150, 92, 0.1)',
-                        borderColor: "rgb(202, 150, 92)",
-                        tension: 0.2
-                    },
-                    {
-                        label: dataSampleFromEndpoint.results[2]['sub'],
-                        data: values24[2],
-                        fill: true,
-                        backgroundColor: 'rgba(238, 195, 115, 0.1)',
-                        borderColor: "rgb(238, 195, 115)",
-                        tension: 0.2
-                    },
-                    {
-                        label: dataSampleFromEndpoint.results[3]['sub'],
-                        data: values24[3],
-                        fill: true,
-                        backgroundColor: 'rgba(244, 223, 186, 0.1)',
-                        borderColor: "rgb(244, 223, 186)",
-                        tension: 0.2
-                    }
-                ]
-            }}
-            options= {{
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            padding: 30,
-                            color: 'white'
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            color: 'rgba(47,79,79,0.3)',
-                            borderColor: 'white'
-                        },
-                        ticks: {
-                            color: 'white'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            color: 'rgba(47,79,79,0.3)',
-                            borderColor: 'white'
-                        },
-                        ticks: {
-                            color: 'white',
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false
-                },
-                hover: {
-                    mode: 'index',
-                    intersect: false
-                }
-            }}
-        />
-    )
 
     const vis_7d = (
         <Line
@@ -896,6 +829,8 @@ function DataVisPage(props) {
     )
 }
 
-const mapStateToProps = (state) => ({instance: state.instance})
+const mapStateToProps = (state) => ({instance: state.instance.instance, visualization: state.visualization.visualization})
 
-export default connect(mapStateToProps, {getInstance})(DataVisPage);
+const mapDispatchToProps = {getInstance, getDataVis}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);

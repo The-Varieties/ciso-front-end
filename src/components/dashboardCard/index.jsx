@@ -34,12 +34,12 @@ function DashboardCard(props) {
     return (
         <div className={
             `py-5 px-10 w-full h-fit bg-white rounded-3xl shadow-lg shadow-black/50 bg-gradient-to-t 
-            ${props.cardContent.instance_status === 0 ? "from-card-green to-card-green/20" : (props.cardContent.instance_status === 1 ? "from-card-yellow to-card-yellow/20" : "from-card-red to-card-red/20")}
+            ${props.cardContent.instance_status[2] === 0 ? "from-card-green to-card-green/20" : (props.cardContent.instance_status[2] === 1 ? "from-card-yellow to-card-yellow/20" : "from-card-red to-card-red/20")}
         `}>
             <div className="relative pb-10">
                 <p>ID: {props.cardContent.instance_id}</p>
                 <h1 className="font-extrabold text-3xl pt-3 pb-1">{props.cardContent.instance_name}</h1>
-                <p><span className="font-bold">Status: </span>{props.cardContent.instance_status === 0 ? "Optimized" : (props.cardContent.instance_status === 1 ? "Underutilized" : "Overutilized")}</p>
+                <p><span className="font-bold">Status: </span>{props.cardContent.instance_status[2] === 0 ? "Optimized" : (props.cardContent.instance_status[2] === 1 ? "Underutilized" : "Overutilized")}</p>
                 <p><span className="font-bold">IP Address: </span>{props.cardContent.instance_ipv4}</p>
 
                 <div className="absolute right-0 top-0">
