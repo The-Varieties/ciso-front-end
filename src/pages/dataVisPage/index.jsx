@@ -14,7 +14,7 @@ function DataVisPage(props) {
     const [labels, setLabels] = useState([]);
     const [values, setValues] = useState([]);
     const {state} = useLocation();
-    const {instanceName} = state;
+    const {instanceName, instanceId} = state;
     const [rightsizingCat, setRightsizingCat] = useState([]);
     const [recommendationsList, setRecommendationsList] = useState(null);
     const [vis_24, setVis_24] = useState(<h2 className="text-white">Loading...</h2>);
@@ -27,14 +27,12 @@ function DataVisPage(props) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            props.getInstance(instanceName);
+            props.getInstance(instanceId);
             props.getDataVis(instanceName, checked)
-            setRightsizingCat(props.instance.usage_cat);
-        
-            if(props.instance.recommendations) {
-                setRecommendationsList(null)
-                setRecommendationsList(props.instance.recommendations);
-            }
+            setRightsizingCat(props.instance.instance_status[2]);
+
+            setRecommendationsList(null)
+            setRecommendationsList(props.instance.instance_status[3]);
 
             if(props.visualization) {
                 setLabels([])
@@ -65,7 +63,9 @@ function DataVisPage(props) {
             if(chosenData) {
                 for(let i = 0; i < chosenData.results.length; i++) {
                     for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
-                        const value = chosenData.results[i]['values'][j][1];
+                        const value = chosenData.results[i]['values'][j][1].split(" ")[0];
+
+                        console.log(value)
         
                         valArr.push(value);
                     }
@@ -75,7 +75,7 @@ function DataVisPage(props) {
             if(chosenData7) {
                 for(let i = 0; i < chosenData7.results.length; i++) {
                     for(let j = 0; j < chosenData7.results[i]['values'].length; j++) {
-                        const value = chosenData7.results[i]['values'][j][1];
+                        const value = chosenData7.results[i]['values'][j][1].slice(0, -3);
     
                         valArr7.push(value);
                     }
@@ -133,8 +133,6 @@ function DataVisPage(props) {
                 "rgb(238, 195, 115)",
                 "rgb(244, 223, 186)",
             ]
-
-            console.log(values)
 
             for(let i = 0; i < props.visualization[0].data.results.length; i++) {
                 data.push({
@@ -221,14 +219,13 @@ function DataVisPage(props) {
     }
 
     const instanceDetail = {'name': 'instanceDetail', 'value': [
-        {'title': 'Region', 'content': 'Asia Pacific (Jakarta)'},
-        {'title': 'Operating System', 'content': 'Linux'},
-        {'title': 'On-Demand Hourly Cost', 'content': '1.53'},
-        {'title': '1 YR Std Reserved Hourly Cost', 'content': '0.964'},
-        {'title': 'Pricing Plan', 'content': 'EC2 Instance Savings Plan'},
-        {'title': 'Reservation Term', 'content': '1 Year'},
-        {'title': 'Payment Option', 'content': 'No Upfront'},
-        {'title': 'EBS Volume Storage Type', 'content': 'General Purpose SSD (gp2)'},
+        {'title': 'Name', 'content': props.instance.instance_name},
+        {'title': 'IPv4', 'content': props.instance.instance_ipv4},
+        {'title': 'Region', 'content': props.instance.instance_region},
+        {'title': 'Operating System', 'content': props.instance.instance_os},
+        {'title': 'Volume Type', 'content': props.instance.instance_volume_type},
+        {'title': 'Instance Type', 'content': props.instance.instance_type},
+        {'title': 'Pricing Plan', 'content': props.instance.instance_pricing_plan},
     ]}
 
     const content = (
@@ -332,7 +329,7 @@ function DataVisPage(props) {
             {(recommendationsList != null ? 
                 recommendationsList.map((recommendation, index) => {
                     const stepsArr = [];
-    
+
                     for(let i = 0; i < recommendation.steps.length; i++) {
                         stepsArr.push(<li className="text-sm" key={i}>{recommendation.steps[i]}</li>)
                     }
@@ -557,12 +554,12 @@ function DataVisPage(props) {
 
             <div className="block mt-20">
                 <div className="w-full ml-2">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked.toUpperCase()}%</h2>
+                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
                 <div className="w-full mt-10">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked.toUpperCase()}%</h2>
+                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
                     <div className="h-72">{vis_7d}</div>
                 </div>
 

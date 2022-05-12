@@ -12,7 +12,7 @@ function DashboardCard(props) {
 
     const goNextPage = () => {
         if (props.hasOnClick)
-            navigate(props.nextPageRoute, { state: {instanceName: props.cardContent.instance_name}});
+            navigate(props.nextPageRoute, { state: {instanceName: props.cardContent.instance_name, instanceId: props.cardContent.instance_id}});
     }
     
     const submit = () => {

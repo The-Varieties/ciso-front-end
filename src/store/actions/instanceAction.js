@@ -1,9 +1,9 @@
 import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS } from "../types";
 import axios from 'axios';
 
-export const getInstance = (instanceName) => async dispatch => {
+export const getInstance = (targetId) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category/?instance=${instanceName}&time_interval`)
+        const res = await axios.get(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
 
         dispatch({
             type: GET_INSTANCE,
