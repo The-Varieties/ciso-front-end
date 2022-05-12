@@ -1,16 +1,10 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, DELETE_INSTANCE } from "../types";
+import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS } from "../types";
 import axios from 'axios';
 
-let contentMap = {name: "instanceList", values: [
-        {name: "Instance 1", id: "de8q9dn9", ipAddress: "192.168.77.43", instanceStatus: "Optimized"},
-        {name: "Instance 2", id: "324iorn", ipAddress: "10.0.8.55", instanceStatus: "Overutilized"},
-        {name: "Instance 3", id: "f32fplr4", ipAddress: "172.168.9.98", instanceStatus: "Underutilized"},
-    ]
-};
-
-export const getInstance = () => async dispatch => {
+export const getInstance = (targetId) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category?instance=node_exporter`)
+        const res = await axios.get(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
+
         dispatch({
             type: GET_INSTANCE,
             payload: res.data
@@ -24,11 +18,17 @@ export const getInstance = () => async dispatch => {
     }
 }
 
-export const getInstanceList = () => dispatch => {
-    try{
+export const getDataVis = (instanceName, metric) => async dispatch => {
+    try {
+        let res = [];
+
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=24 hours&metric=${metric}`))
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=7 days&metric=${metric}`))
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
+
         dispatch({
-            type: GET_INSTANCES_LIST,
-            payload: contentMap
+            type: GET_VIS,
+            payload: res,
         })
     }
     catch(e) {
@@ -39,14 +39,49 @@ export const getInstanceList = () => dispatch => {
     }
 }
 
-export const deleteInstance = (targetId) => dispatch => {
+export const getInstanceList = () => async dispatch => {
     try{
-        let index = contentMap.values.map(instance => instance.id).indexOf(targetId);
-        contentMap.values.splice(index, 1)
-        
+        const res = await axios.get(`http://localhost:8000/api/dashboard/instance/`)
+
         dispatch({
-            type: DELETE_INSTANCE,
-            payload: contentMap
+            type: GET_INSTANCES_LIST,
+            payload: res.data
+        })
+    }
+    catch(e) {
+        dispatch({
+            type: INSTANCE_ERROR,
+            payload: console.log(e)
+        })
+    }
+}
+
+export const deleteInstance = (targetId) => async dispatch => {
+    try{
+        await axios.delete(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
+    }
+    catch(e) {
+        dispatch({
+            type: INSTANCE_ERROR,
+            payload: console.log(e)
+        })
+    }
+}
+
+export const addNewInstance = (newInstanceMap) => async dispatch => {
+    try {        
+        const res = await axios({
+            method: 'post',
+            url: 'http://localhost:8000/api/dashboard/instance/',
+            data: newInstanceMap,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
+
+        dispatch({
+            type: ADD_NEW_INSTANCE,
+            payload: res.data
         })
     }
     catch(e) {

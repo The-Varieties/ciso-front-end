@@ -1,4 +1,4 @@
-import { GET_INSTANCE, GET_INSTANCES_LIST, DELETE_INSTANCE } from "../types";
+import { GET_INSTANCE, GET_INSTANCES_LIST, DELETE_INSTANCE, ADD_NEW_INSTANCE, GET_VIS } from "../types";
 
 const initialState = {
     instance: [],
@@ -11,12 +11,13 @@ export default function InstanceReducer(state = initialState, action) {
         case GET_INSTANCE:
             return {
                 ...state,
+                loading: false,
                 instance: action.payload,
-                loading: false
             }
-        case GET_INSTANCES_LIST || DELETE_INSTANCE:
+        case GET_INSTANCES_LIST || ADD_NEW_INSTANCE:
             return{
                 ...state,
+                loading: false,
                 instanceList: action.payload,
             }
         default: return {...state}

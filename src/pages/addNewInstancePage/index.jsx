@@ -1,73 +1,67 @@
 import React, {useState} from 'react';
 // import ReactDOM from 'react-dom';
-import './style.css';
+import './index.css';
 import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addNewInstance } from '../../store/actions/instanceAction';
 
-function AddInstance(){
-
-    const [name,setname] = useState('');
-    const [ipaddress, setipadd] = useState('');
-    const [securitykey, setsecuritykey] = useState('');
-    const [accesskey, setaccesskey] = useState('');
-
-    const addName =(e)=>{
-        setname(e.target.value);
-    }
-
-    const addIP =(e)=>{
-        setipadd(e.target.value);
-    }
+function AddInstance(props){
+    const [newInstanceMap, setNewInstanceMap] = useState({
+        access_key: "",
+        secret_key: "",
+        session_token: "",
+    });
 
     const addseckey =(e)=>{
-        setsecuritykey(e.target.value);
+        setNewInstanceMap({
+            ...newInstanceMap, 
+            'secret_key': `${e.target.value}`
+        });
     }
 
     const addacckey =(e)=>{
-        setaccesskey(e.target.value);
+        setNewInstanceMap({
+            ...newInstanceMap, 
+            'access_key': `${e.target.value}`
+        });
     }
 
-    const handlesubmit=(event)=>{
-        console.log(`
-        Name:${name}
-        IpAddress:${ipaddress}
-        Securitykey:${securitykey}
-        Accesskey:${accesskey}
-        `);
-        event.preventDefault();
+    const addsesskey =(e)=>{
+        setNewInstanceMap({
+            ...newInstanceMap, 
+            'session_token': `${e.target.value}`
+        });
     }
 
     let navigate = useNavigate();
 
+    const addinstance = (event) => {
+        event.preventDefault();
+        props.addNewInstance(newInstanceMap);
+        alert("A new instance has added!");
+        navigate("/");
+    }
 
     return (
         <div className="AddingInstanceForm">
             <h2>Add New Instance</h2>
             <form>
-                <label>Instance Name: </label>
-                <input
-                type="text"
-                required
-                />
-                <label>IP Address: </label>
-                <input
-                type="text"
-                required
-                />
-                <label>Security Key: </label>
-                <input
-                type="text"
-                required
-                />
-                <label>Access Key: </label>
-                <input
-                type="text"
-                required
-                />
-                <button className='btnadd'>Add Instance</button>
-                <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
+                <label>AWS Access Key: </label>
+                <input type="text" required onChange={addacckey}/>
+
+                <label>AWS Secret Key: </label>
+                <input type="text" onChange={addseckey}/>
+
+                <label>AWS Session Token: </label>
+                <input type="text" required onChange={addsesskey}/>
+
+                <div class="clickbutton">
+                    <button className='btnadd' onClick= {addinstance}>Add Instance</button>
+                    <button className='cancelbtn' onClick={(e) => {navigate("/")}}>Cancel</button>
+                </div>
             </form>
         </div>
     )
 }
 
-export default AddInstance;
+export default connect(null, {addNewInstance})(AddInstance);
