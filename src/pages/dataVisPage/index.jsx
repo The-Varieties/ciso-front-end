@@ -19,7 +19,7 @@ function DataVisPage(props) {
     const [recommendationsList, setRecommendationsList] = useState(null);
     const [vis_24, setVis_24] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_7d, setVis_7d] = useState(<h2 className="text-white">Loading...</h2>);
-    const [vis_30d, setVis_24d] = useState(<h2 className="text-white">Loading...</h2>);
+    const [vis_30d, setVis_30d] = useState(<h2 className="text-white">Loading...</h2>);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -46,9 +46,8 @@ function DataVisPage(props) {
                         } else {
                             labelArr.push(rawLabel.split("T")[0])
                         }
-                        
-                        setLabels(labels => [...labels, labelArr]);
                     }
+                    setLabels(labels => [...labels, labelArr]);
                 }
             }
 
@@ -64,8 +63,6 @@ function DataVisPage(props) {
                 for(let i = 0; i < chosenData.results.length; i++) {
                     for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
                         const value = chosenData.results[i]['values'][j][1].split(" ")[0];
-
-                        console.log(value)
         
                         valArr.push(value);
                     }
@@ -124,9 +121,70 @@ function DataVisPage(props) {
         return () => clearInterval(intervalId);
     })
 
+    const setLoading = () => {
+        setVis_24(<h2 className="text-white">Loading...</h2>)
+        setVis_7d(<h2 className="text-white">Loading...</h2>)
+        setVis_30d(<h2 className="text-white">Loading...</h2>)
+    }
+
+    const setChartData = (dataset) => {
+        setVis_24( <Line data = {{ labels: labels[0], datasets: dataset[0] }} options= {lineChartOptions}/>)
+        setVis_7d( <Line data = {{ labels: labels[1], datasets: dataset[1] }} options= {lineChartOptions}/>)
+        setVis_30d( <Line data = {{ labels: labels[2], datasets: dataset[2] }} options= {lineChartOptions}/>)
+    }
+
+    const lineChartOptions = (
+        {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        padding: 30,
+                        color: 'white'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    grid: {
+                        color: 'rgba(47,79,79,0.3)',
+                        borderColor: 'white'
+                    },
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(47,79,79,0.3)',
+                        borderColor: 'white'
+                    },
+                    ticks: {
+                        color: 'white',
+                    }
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
+            }
+        }
+    )
+
     useEffect(() => {
-        if(props.visualization) {
-            let data = []
+        console.log(values)
+        if(props.visualization && values.length > 0) {
+            let dataset = []
             let color_swatches = [
                 "rgb(135, 100, 69)",
                 "rgb(202, 150, 92)",
@@ -134,72 +192,24 @@ function DataVisPage(props) {
                 "rgb(244, 223, 186)",
             ]
 
-            for(let i = 0; i < props.visualization[0].data.results.length; i++) {
-                data.push({
-                    label: props.visualization[0].data.results[i]['sub'],
-                    data: values[0][i],
-                    tension: 0.2,
-                    borderColor: color_swatches[i],
-                    fill: true,
-                })
+            for(let i = 0; i < props.visualization.length; i++) {
+                let data = []
+                for(let j = 0; j < props.visualization[i].data.results.length; j++) {
+                    data.push({
+                        label: props.visualization[i].data.results[j]['sub'],
+                        data: values[0][j],
+                        tension: 0.2,
+                        borderColor: color_swatches[j],
+                        fill: true,
+                    })
+                }
+                dataset.push(data)
             }
-
+            
             {props.visualization[0].data.name != checked ? 
-                setVis_24(<h2 className="text-white">Loading...</h2>)
+                setLoading()
             : 
-                setVis_24(
-                    <Line
-                        data = {{
-                            labels: labels[0],
-                            datasets: data,
-                        }}
-                        options= {{
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'right',
-                                    labels: {
-                                        padding: 30,
-                                        color: 'white'
-                                    }
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    grid: {
-                                        color: 'rgba(47,79,79,0.3)',
-                                        borderColor: 'white'
-                                    },
-                                    ticks: {
-                                        color: 'white'
-                                    }
-                                },
-                                x: {
-                                    grid: {
-                                        color: 'rgba(47,79,79,0.3)',
-                                        borderColor: 'white'
-                                    },
-                                    ticks: {
-                                        color: 'white',
-                                    }
-                                }
-                            },
-                            interaction: {
-                                mode: 'index',
-                                intersect: false
-                            },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: false
-                            },
-                            hover: {
-                                mode: 'index',
-                                intersect: false
-                            }
-                        }}
-                    />
-                )
+                setChartData(dataset)
             }
         }
     }, [values])
@@ -215,7 +225,7 @@ function DataVisPage(props) {
             setValues([])
         }
 
-        setVis_24(<h2 className="text-white">Loading...</h2>)
+        setLoading();
     }
 
     const instanceDetail = {'name': 'instanceDetail', 'value': [
@@ -374,180 +384,6 @@ function DataVisPage(props) {
         }
     });
 
-    // const vis_7d = (
-    //     <Line
-    //         data = {{
-    //             labels: data_be_7['values'][0]['labels'],
-    //             datasets: [
-    //                 {
-    //                     label: data_be_7['values'][0]['data'][0]['sub'],
-    //                     data: values7[0],
-    //                     borderColor: "rgb(135, 100, 69)",
-    //                     tension: 0.5
-    //                 },
-    //                 {
-    //                     label: data_be_7['values'][0]['data'][1]['sub'],
-    //                     data: values7[1],
-    //                     fill: true,
-    //                     backgroundColor: 'rgba(202, 150, 92, 0.1)',
-    //                     borderColor: "rgb(202, 150, 92)",
-    //                     tension: 0.5
-    //                 },
-    //                 {
-    //                     label: data_be_7['values'][0]['data'][2]['sub'],
-    //                     data: values7[2],
-    //                     fill: true,
-    //                     backgroundColor: 'rgba(238, 195, 115, 0.1)',
-    //                     borderColor: "rgb(238, 195, 115)",
-    //                     tension: 0.5
-    //                 },
-    //                 {
-    //                     label: data_be_7['values'][0]['data'][3]['sub'],
-    //                     data: values7[3],
-    //                     fill: true,
-    //                     backgroundColor: 'rgba(244, 223, 186, 0.1)',
-    //                     borderColor: "rgb(244, 223, 186)",
-    //                     tension: 0.5
-    //                 }
-    //             ]
-    //         }}
-    //         options= {{
-    //             responsive: true,
-    //             maintainAspectRatio: false,
-    //             plugins: {
-    //                 legend: {
-    //                     position: 'right',
-    //                     labels: {
-    //                         padding: 30,
-    //                         color: 'white'
-    //                     }                        
-    //                 }
-    //             },
-    //             scales: {
-    //                 y: {
-    //                     grid: {
-    //                         color: 'rgba(47,79,79,0.3)',
-    //                         borderColor: 'white'
-    //                     },
-    //                     ticks: {
-    //                         color: 'white',
-    //                     },
-    //                     max: 100,
-    //                     min: 0,
-    //                 },
-    //                 x: {
-    //                     grid: {
-    //                         color: 'rgba(47,79,79,0.3)',
-    //                         borderColor: 'white'
-    //                     },
-    //                     ticks: {
-    //                         color: 'white',
-    //                     }
-    //                 },
-    //             },
-    //             interaction: {
-    //                 mode: 'index',
-    //                 intersect: false
-    //             },
-    //             tooltips: {
-    //                 mode: 'index',
-    //                 intersect: false
-    //             },
-    //             hover: {
-    //                 mode: 'index',
-    //                 intersect: false
-    //             }
-    //         }}
-    //     />
-    // )
-
-    // const vis_30d = (
-    //     <Line
-    //         data = {{
-    //             labels: data_be_30['values'][0]['labels'],
-    //             datasets: [
-    //                 {
-    //                     label: data_be_30['values'][0]['data'][0]['sub'],
-    //                     data: values30[0],
-    //                     borderColor: "rgb(135, 100, 69)",
-    //                     tension: 0.5
-    //                 },
-    //                 {
-    //                     label: data_be_30['values'][0]['data'][1]['sub'],
-    //                     data: values30[1],
-    //                     fill: true,
-    //                     backgroundColor: 'rgba(202, 150, 92, 0.1)',
-    //                     borderColor: "rgb(202, 150, 92)",
-    //                     tension: 0.5
-    //                 },
-    //                 {
-    //                     label: data_be_30['values'][0]['data'][2]['sub'],
-    //                     data: values30[2],
-    //                     fill: true,
-    //                     backgroundColor: 'rgba(238, 195, 115, 0.1)',
-    //                     borderColor: "rgb(238, 195, 115)",
-    //                     tension: 0.5
-    //                 },
-    //                 {
-    //                     label: data_be_30['values'][0]['data'][3]['sub'],
-    //                     data: values30[3],
-    //                     fill: true,
-    //                     backgroundColor: 'rgba(244, 223, 186, 0.1)',
-    //                     borderColor: "rgb(244, 223, 186)",
-    //                     tension: 0.5
-    //                 }
-    //             ]
-    //         }}
-    //         options= {{
-    //             responsive: true,
-    //             maintainAspectRatio: false,
-    //             plugins: {
-    //                 legend: {
-    //                     position: 'right',
-    //                     labels: {
-    //                         padding: 30,
-    //                         color: 'white'
-    //                     }
-    //                 }
-    //             },
-    //             scales: {
-    //                 y: {
-    //                     grid: {
-    //                         color: 'rgba(47,79,79,0.3)',
-    //                         borderColor: 'white'
-    //                     },
-    //                     ticks: {
-    //                         color: 'white',
-    //                     },
-    //                     min: 0,
-    //                     max: 100
-    //                 },
-    //                 x: {
-    //                     grid: {
-    //                         color: 'rgba(47,79,79,0.3)',
-    //                         borderColor: 'white'
-    //                     },
-    //                     ticks: {
-    //                         color: 'white',
-    //                     }
-    //                 }
-    //             },
-    //             interaction: {
-    //                 mode: 'index',
-    //                 intersect: false
-    //             },
-    //             tooltips: {
-    //                 mode: 'index',
-    //                 intersect: false
-    //             },
-    //             hover: {
-    //                 mode: 'index',
-    //                 intersect: false
-    //             }
-    //         }}
-    //     />
-    // )
-
     return (
         <div className="mx-16 my-5">
             <RightSizingComponent rightsizingCat = {rightsizingCat} />
@@ -563,10 +399,10 @@ function DataVisPage(props) {
                     <div className="h-72">{vis_7d}</div>
                 </div>
 
-                {/* <div className="w-full mt-10">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked}%</h2>
+                <div className="w-full mt-10">
+                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
                     <div className="h-72">{vis_30d}</div>
-                </div> */}
+                </div>
             </div>
 
             <div className="mt-20 mb-10 grid grid-cols-5 gap-5">
