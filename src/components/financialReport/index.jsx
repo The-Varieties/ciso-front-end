@@ -2,7 +2,7 @@
 import React from "react";
 import './index.css';
 import BackArrow from "../../components/backArrow";
-import instance_image from '../../assets/Images/instance.png';
+
 
 
 function FinancialReport(){
@@ -43,8 +43,15 @@ function FinancialReport(){
             </div>
         </div>
 
-        <div class="instance_image">
-            <img src={instance_image}></img>
+        <div className="mx-16 relative flex-wrap item-start my-10">
+            <div className="lg:w-1/4 w-full lg:pr-3">
+                <div className="bg-gray-200 rounded-xl p-6">
+                    <h2 className="text-2xl font-bold mb-5">t2.medium</h2>
+                    <div className="text-grey-800 leading-relaxed mb-6">
+
+                    </div>
+                </div>
+            </div>
         </div>
         
         </div>
