@@ -1,7 +1,6 @@
 import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS } from "../types";
 import axios from 'axios';
 
-
 export const getInstance = (instanceName) => async dispatch => {
     try {
         const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category/?instance=${instanceName}&time_interval`)
@@ -21,15 +20,15 @@ export const getInstance = (instanceName) => async dispatch => {
 
 export const getDataVis = (instanceName, metric) => async dispatch => {
     try {
-        const res = (await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=24 hours&metric=${metric}`))
-        // const performance_7d = (await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=7 days&metric=${metric}`))
-        // const performance_30d = (await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
+        let res = [];
 
-        // console.log(performance_7d)
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=24 hours&metric=${metric}`))
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=7 days&metric=${metric}`))
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
 
         dispatch({
             type: GET_VIS,
-            payload: res.data
+            payload: res,
         })
     }
     catch(e) {
@@ -70,8 +69,15 @@ export const deleteInstance = (targetId) => async dispatch => {
 }
 
 export const addNewInstance = (newInstanceMap) => async dispatch => {
-    try {
-        const res = await axios.post(`http://localhost:8000/api/dashboard/instance/`, newInstanceMap)
+    try {        
+        const res = await axios({
+            method: 'post',
+            url: 'http://localhost:8000/api/dashboard/instance/',
+            data: newInstanceMap,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
 
         dispatch({
             type: ADD_NEW_INSTANCE,

@@ -7,37 +7,29 @@ import { addNewInstance } from '../../store/actions/instanceAction';
 
 function AddInstance(props){
     const [newInstanceMap, setNewInstanceMap] = useState({
-        instance_name: "",
-        instance_ipv4: "",
-        // instance_AWSSecretKey: "",
-        // instance_AWSAccessKey: ""
+        access_key: "",
+        secret_key: "",
+        session_token: "",
     });
-
-    const addName =(e)=>{
-        setNewInstanceMap({
-            ...newInstanceMap, 
-            'instance_name': `${e.target.value}`
-        });
-    }
-
-    const addIP =(e)=>{
-        setNewInstanceMap({
-            ...newInstanceMap, 
-            'instance_ipv4': `${e.target.value}`
-        });
-    }
 
     const addseckey =(e)=>{
         setNewInstanceMap({
             ...newInstanceMap, 
-            'instance_AWSSecretKey': `${e.target.value}`
+            'secret_key': `${e.target.value}`
         });
     }
 
     const addacckey =(e)=>{
         setNewInstanceMap({
             ...newInstanceMap, 
-            'instance_AWSAccessKey': `${e.target.value}`
+            'access_key': `${e.target.value}`
+        });
+    }
+
+    const addsesskey =(e)=>{
+        setNewInstanceMap({
+            ...newInstanceMap, 
+            'session_token': `${e.target.value}`
         });
     }
 
@@ -54,17 +46,14 @@ function AddInstance(props){
         <div className="AddingInstanceForm">
             <h2>Add New Instance</h2>
             <form>
-                <label>Instance Name: </label>
-                <input type="text" required onChange={addName}/>
+                <label>AWS Access Key: </label>
+                <input type="text" required onChange={addacckey}/>
 
-                <label>IP Address: </label>
-                <input type="text" required onChange={addIP}/>
-
-                <label>Security Key: </label>
+                <label>AWS Secret Key: </label>
                 <input type="text" onChange={addseckey}/>
 
-                <label>Access Key: </label>
-                <input type="text" />
+                <label>AWS Session Token: </label>
+                <input type="text" required onChange={addsesskey}/>
 
                 <div class="clickbutton">
                     <button className='btnadd' onClick= {addinstance}>Add Instance</button>
