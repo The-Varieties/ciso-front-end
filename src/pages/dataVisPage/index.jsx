@@ -3,6 +3,7 @@ import pie_chart from "../../assets/DummyImages/pie_chart.svg";
 import line_graph from "../../assets/DummyImages/line_graph.svg";
 import { useEffect } from 'react';
 import RightSizingComponent from "../../components/rightSizingComponent";
+import React from "react";
 
 function DataVisPage() {
     useEffect(() => {

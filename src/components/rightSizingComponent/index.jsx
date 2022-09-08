@@ -3,9 +3,11 @@ import RefreshIcon from "../../assets/Icons/refresh_icon.svg";
 import ProfileIcon from "../../assets/Icons/profile_icon.svg";
 import DropdownMenu from "../dropdownMenu";
 import {connect} from 'react-redux';
+import React from "react";
 import {getInstance} from '../../store/actions/instanceAction';
 import { useEffect, useState, useRef } from "react";
 import { Link } from 'react-router-dom';
+
 
 function RightSizingComponent(props){
     // 0 --> Optimized, 1 --> Under, 2 --> Over

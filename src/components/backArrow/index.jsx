@@ -1,5 +1,7 @@
 import backArrow from "../../assets/Icons/back_arrow.svg";
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
+
 
 function BackArrow(props) {
     let navigate = useNavigate();

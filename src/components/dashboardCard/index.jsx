@@ -5,6 +5,7 @@ import { deleteInstance } from "../../store/actions/instanceAction";
 import { connect } from "react-redux";
 import { confirmAlert } from 'react-confirm-alert';
 import '../../../node_modules/react-confirm-alert/src/react-confirm-alert.css';
+import React from "react";
 
 
 function DashboardCard(props) {

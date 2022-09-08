@@ -2,6 +2,7 @@ import DownArrow from "../../assets/Icons/down_arrow.svg";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+
 function DropdownMenu(props) {
     const dropdownRef = useRef(null);
     const [dropdownIsActive, setActive] = useState(false);
