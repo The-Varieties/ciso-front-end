@@ -15,7 +15,9 @@ const DatabasePage=()=>{
             <BackArrow backPath = "/"/>
             </div>
 
+            <div className="date-picker">
             <input type="date" onChange={e=>setDate(e.target.value)}></input>
+            </div>
 
             <div className="database-container">
             <table className="db-table">
