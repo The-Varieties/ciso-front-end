@@ -1,11 +1,13 @@
 // It will show the financial report of the instance by taking the data as parameter
-import React from "react";
+import React, { useState } from "react";
 import './index.css';
 import BackArrow from "../../components/backArrow";
-
+import data from "./financial-datatest.json";
 
 
 function FinancialReport(){
+
+    const [financialdata] = useState(data);
 
 
     return(
@@ -30,17 +32,25 @@ function FinancialReport(){
                 </select>
         </form>
 
-        <div class="total_spent">
-            <div class="check_spent">
-                <p>Current Spent: </p>
-                <p>Optimized Spent:</p>
-                <p>Potential Saving:</p>
-            </div>
-            <div class="cost_spent">
-                <p>$100 </p>
-                <p>$100 </p>
-                <p>$100 </p>
-            </div>
+        <div className="financial-container">
+            <table className="findata-table">
+            <thead>
+            <tr>
+                <th>Curret Spent</th>
+                <th>Optimized Spent</th>
+                <th>Potential Saving</th>
+            </tr>
+            </thead>
+            <tbody>
+                {financialdata.map((findatas)=> (
+                <tr>
+                <td>{findatas.Curret_Spent}</td>
+                <td>{findatas.Optimized_Spent}</td>
+                <td>{findatas.Potential_Saving}</td>
+            </tr>
+            ))}
+            </tbody>
+            </table>
         </div>
 
         <div className="mx-16 relative flex-wrap item-start my-10">

@@ -20,7 +20,7 @@
     padding: 4px;
 }
 
-.total_spent{
+.financial-container{
     background-color: white;
     margin-top: 2%;
     padding:1%;
@@ -29,26 +29,17 @@
     border-radius: 10px;
 }
 
-.check_spent{
-    display:flex;
-    position:relative;
+.findata-table{
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.check_spent p{
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 35px;
-    font-weight: bold;
+.findata-table td, .findata-table th{
+    text-align: left;
+    padding: 1px;
+    font-size: 25px;
+    text-align: center;
+    background-color: #ffffff;
 }
 
-.cost_spent{
-    display:flex;
-    position:relative;
-}
 
-.cost_spent p{
-    font-size: 28px;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: bold;
-}
