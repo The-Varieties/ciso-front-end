@@ -6,7 +6,8 @@ import data from "./testing-data.json";
 
 const DatabasePage=()=>{
 
-    const [passdatabases, setPassDatabases] = useState(data);
+    const [passdatabases] = useState(data);
+    const [selectedDate, setDate] = useState();
 
     return(
         <div>
@@ -14,8 +15,10 @@ const DatabasePage=()=>{
             <BackArrow backPath = "/"/>
             </div>
 
-            <div class="database-container">
-            <table class="db-table">
+            <input type="date" onChange={e=>setDate(e.target.value)}></input>
+
+            <div className="database-container">
+            <table className="db-table">
             <thead>
             <tr>
                 <th>Name</th>
