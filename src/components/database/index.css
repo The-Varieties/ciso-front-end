@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 5rem;
+  padding: 1rem;
 }
 
 .db-table {
@@ -25,11 +25,13 @@ td{
 
 .date-picker{
   text-align: right;
-  margin-right: 85px;
+  padding: 1rem;
+  gap: 6px;
+  width: 100%;
 }
 
 .date-picker input{
-  height: 20px;
+  height: 30px;
   width: 200px;
   font-size: 20px;
 }
