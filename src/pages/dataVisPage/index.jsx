@@ -192,13 +192,13 @@ function DataVisPage(props) {
                 dataVisTimeList = {dataVisTimeList}
             />
 
-            <div className="block mt-28">
-                <div className="w-full mt-14">
+            <div className="grid grid-cols-2 gap-16 mt-28 w-full">
+                <div className="w-full">
                     <h2 className="text-white text-xl font-medium mb-4">Last {checked} - CPU%</h2>
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
-                <div className="w-full mt-10">
+                <div className="w-full">
                     <h2 className="text-white text-xl font-medium mb-4">Last {checked} - RAM (MB)</h2>
                     <div className="h-72">{vis_7d}</div>
                 </div>
