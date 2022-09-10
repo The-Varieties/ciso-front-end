@@ -22,9 +22,59 @@ export const getDataVis = (instanceName, metric) => async dispatch => {
     try {
         let res = [];
 
-        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=24 hours&metric=${metric}`))
-        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=7 days&metric=${metric}`))
-        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
+        // res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=24 hours&metric=${metric}`))
+        // res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=7 days&metric=${metric}`))
+        // res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
+
+        const dummy = {
+            "time": "last 30 days",
+            "hostname": "node",
+            "data": {
+                "name": "cpu",
+                "results": [
+                    {
+                        "sub": "system",
+                        "values": [
+                            [
+                                "2022-05-03T20:42:17+07:00",
+                                "0.07965813833564882"
+                            ]
+                        ]
+                    },
+                    {
+                        "sub": "user",
+                        "values": [
+                            [
+                                "2022-05-03T20:42:17+07:00",
+                                "0.17609334464352544"
+                            ]
+                        ]
+                    },
+                    {
+                        "sub": "iowait",
+                        "values": [
+                            [
+                                "2022-05-03T20:42:17+07:00",
+                                "0.010760544157180878"
+                            ]
+                        ]
+                    },
+                    {
+                        "sub": "idle",
+                        "values": [
+                            [
+                                "2022-05-03T20:42:17+07:00",
+                                "80.54370419515321"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        }
+
+        res.push(dummy)
+        res.push(dummy)
+        res.push(dummy)
 
         dispatch({
             type: GET_VIS,
