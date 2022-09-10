@@ -27,7 +27,7 @@ export const getDataVis = (instanceName, metric) => async dispatch => {
         // res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
 
         const dummy = {
-            "time": "last 30 days",
+            "time": "24 hours",
             "hostname": "node",
             "data": {
                 "name": "cpu",
@@ -72,7 +72,6 @@ export const getDataVis = (instanceName, metric) => async dispatch => {
             }
         }
 
-        res.push(dummy)
         res.push(dummy)
         res.push(dummy)
 

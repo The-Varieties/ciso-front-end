@@ -1,6 +1,6 @@
 import Card from "../../components/cards";
 import { useEffect, useState } from 'react';
-import RightSizingComponent from "../../components/rightSizingComponent";
+import { RightSizingComponent } from "../../components/rightSizingComponent";
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
@@ -11,23 +11,19 @@ import { FinancialSummaryContent } from "../../components/financialSummaryConten
 import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";
-import { DataVisRadioComponent } from "../../components/dataVisRadioComponent";
 
 function DataVisPage(props) {
-    const [checked, setChecked] = useState("cpu");
-    // const [chosenRadio, setChosenRadio] = useState(0);
+    const [checked, setChecked] = useState("24 hours");
     const [labels, setLabels] = useState([]);
     const [values, setValues] = useState([]);
     // const {state} = useLocation();
     // const {instanceName, instanceId} = state;
-    // const {instanceName, instanceId} = ['testing', '1'];
     const instanceName = 'testing'
     // const [rightsizingCat, setRightsizingCat] = useState([]);
     const rightsizingCat = useState(1);
     const [recommendationsList, setRecommendationsList] = useState(null);
     const [vis_24, setVis_24] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_7d, setVis_7d] = useState(<h2 className="text-white">Loading...</h2>);
-    const [vis_30d, setVis_30d] = useState(<h2 className="text-white">Loading...</h2>);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -60,11 +56,9 @@ function DataVisPage(props) {
 
                 const valArr = [];
                 const valArr7 = [];
-                const valArr30 = [];
 
                 let chosenData = props.visualization[0].data;
                 let chosenData7 = props.visualization[1].data;
-                let chosenData30 = props.visualization[2].data;
 
                 if(chosenData) {
                     for(let i = 0; i < chosenData.results.length; i++) {
@@ -85,20 +79,9 @@ function DataVisPage(props) {
                         }
                     }
                 }
-
-                if(chosenData30) {
-                    for(let i = 0; i < chosenData30.results.length; i++) {
-                        for(let j = 0; j < chosenData30.results[i]['values'].length; j++) {
-                            const value = chosenData30.results[i]['values'][j][1];
-        
-                            valArr30.push(value);
-                        }
-                    }
-                }
                 
                 const reshapedArr = [];
                 const reshapedArr7 = [];
-                const reshapedArr30 = [];
 
                 if(chosenData) {
                     for(let i  = 0; i < chosenData.results.length; i++) {
@@ -112,17 +95,10 @@ function DataVisPage(props) {
                     }
                 }
                 
-                if(chosenData30) {
-                    for(let i  = 0; i < chosenData30.results.length; i++) {
-                        reshapedArr30.push(valArr30.splice(0, chosenData30.results[0]['values'].length));
-                    }
-                }
-                
                 setValues([])
 
                 setValues(values => [...values, reshapedArr]);
                 setValues(values => [...values, reshapedArr7]);
-                setValues(values => [...values, reshapedArr30]);
             }
         }, 2000)
 
@@ -132,13 +108,11 @@ function DataVisPage(props) {
     const setLoading = () => {
         setVis_24(<h2 className="text-white">Loading...</h2>)
         setVis_7d(<h2 className="text-white">Loading...</h2>)
-        setVis_30d(<h2 className="text-white">Loading...</h2>)
     }
 
     const setChartData = (dataset) => {
         setVis_24( <Line data = {{ labels: labels[0], datasets: dataset[0] }} options= {ChartSetting.lineChartSetting}/>)
         setVis_7d( <Line data = {{ labels: labels[1], datasets: dataset[1] }} options= {ChartSetting.lineChartSetting}/>)
-        setVis_30d( <Line data = {{ labels: labels[2], datasets: dataset[2] }} options= {ChartSetting.lineChartSetting}/>)
     }
 
     useEffect(() => {
@@ -165,16 +139,23 @@ function DataVisPage(props) {
                 dataset.push(data)
             }
             
-            props.visualization[0].data.name !== checked ? setLoading() : setChartData(dataset)
+            props.visualization[0].time !== checked ? setLoading() : setChartData(dataset)
         }
-    }, 
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [values])
     
-    const toggleRadio = (e) => {
-        setChecked(e.target.value);
+    const changeTime = (e) => {
+        setChecked(e.target.attributes.value.value);
         setValues([])
         setLoading();
+    }
+
+    const dataVisTimeList = {name: "dataVisTimeList", values: [
+            {menuName: "24 hours"},
+            {menuName: '7 days'},
+            {menuName: "30 days"},
+        ]
     }
 
     Chart.register({
@@ -204,24 +185,22 @@ function DataVisPage(props) {
 
     return (
         <div className="mx-16 my-5">
-            <RightSizingComponent rightsizingCat = {rightsizingCat} />
+            <RightSizingComponent 
+                rightsizingCat = {rightsizingCat} 
+                checked = {checked} 
+                dropdownCallback = {changeTime} 
+                dataVisTimeList = {dataVisTimeList}
+            />
 
-            <div className="block mt-10">
-                <DataVisRadioComponent checked = {checked} radioCallback = {toggleRadio} />
-
+            <div className="block mt-28">
                 <div className="w-full mt-14">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
+                    <h2 className="text-white text-xl font-medium mb-4">Last {checked} - CPU%</h2>
                     <div className="h-72">{vis_24}</div>
                 </div>
                 
                 <div className="w-full mt-10">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
+                    <h2 className="text-white text-xl font-medium mb-4">Last {checked} - RAM (MB)</h2>
                     <div className="h-72">{vis_7d}</div>
-                </div>
-
-                <div className="w-full mt-10">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
-                    <div className="h-72">{vis_30d}</div>
                 </div>
             </div>
 

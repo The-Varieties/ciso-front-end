@@ -38,7 +38,11 @@ function DropdownMenu(props) {
                     <div className="bg-white rounded-md shadow block px-5 pt-5 pb-0.5 text-sm" >
                         {props.dropdownList.values.map((instance, index) => (
                             <div className="mb-5 text-center" key={index}>
-                                <Link to={instance.nextRoute} className="w-full font-semibold">{instance.menuName}</Link>
+                                {props.dropdownType === 'routing' ? 
+                                    <Link to={instance.nextRoute} className="w-full font-semibold">{instance.menuName}</Link>
+                                :
+                                    <div value={instance.menuName} className="w-full font-semibold cursor-pointer" onClick={props.dropdownCallback}>{instance.menuName}</div>
+                                }
                             </div>  
                         ))}           
                     </div>

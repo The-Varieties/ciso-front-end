@@ -8,7 +8,6 @@ function InterfaceDropdownMenu(props) {
     const dropdownRef = useRef(null);
     const [dropdownIsActive, setActive] = useState(false);
     const toogleDropdown = () => {setActive(!dropdownIsActive)};
-    const rotatingAnimation = `${dropdownIsActive ? 'rotate-180' : 'rotate-0'} transition-transform duration-200 transform`;
     
     useEffect(() => {
         const closeDropdown = (e) => {
@@ -42,7 +41,7 @@ function InterfaceDropdownMenu(props) {
     return(
     <div className="relative w-full">
             <div className="flex">
-                <DropdownMenu menuTitle="Instance Module" dropdownList={instancemodule} roundedCornerStyling={"rounded-md"}/>
+                <DropdownMenu menuTitle="Instance Module" dropdownType='routing' dropdownList={instancemodule} roundedCornerStyling={"rounded-md"}/>
 
                 <div className="block my-auto">
                     <img src={ProfileIcon} alt="Profile Icon" className="ml-14 h-6 cursor-pointer mx-auto my-auto" ref={dropdownRef} onClick={toogleDropdown}/>
