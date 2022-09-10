@@ -11,6 +11,7 @@ import { FinancialSummaryContent } from "../../components/financialSummaryConten
 import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";
+import { DataVisRadioComponent } from "../../components/dataVisRadioComponent";
 
 function DataVisPage(props) {
     const [checked, setChecked] = useState("cpu");
@@ -205,8 +206,10 @@ function DataVisPage(props) {
         <div className="mx-16 my-5">
             <RightSizingComponent rightsizingCat = {rightsizingCat} />
 
-            <div className="block mt-20">
-                <div className="w-full ml-2">
+            <div className="block mt-10">
+                <DataVisRadioComponent checked = {checked} radioCallback = {toggleRadio} />
+
+                <div className="w-full mt-14">
                     <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
                     <div className="h-72">{vis_24}</div>
                 </div>
@@ -236,30 +239,3 @@ const mapStateToProps = (state) => ({instance: state.instance.instance, visualiz
 const mapDispatchToProps = {getInstance, getDataVis}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);
-
-
-/*
-Code Reference:
-
-Radio Button
-----
-<h2 className="text-black w-fit font-bold text-2xl">Chosen Component</h2>
-
-<div className="flex mt-2">
-    <div className="flex align-baseline mr-12">
-        <input type="radio" id="cpu_radio" name="cpu_radio" value="cpu" className="w-5 h-5 my-auto" checked={checked === "cpu"} onChange={toggleRadio}/>
-        <label htmlFor="cpu_radio" className="text-base ml-2">CPU</label>
-    </div>
-
-    <div className="flex align-baseline mr-12">
-        <input type="radio" id="ram_radio" name="ram_radio" value="ram" className="w-5 h-5 my-auto" checked={checked === "ram"} onChange={toggleRadio}/>
-        <label htmlFor="ram_radio" className="text-base ml-2">RAM</label>
-    </div>
-</div>
-
-<div className="py-8">
-    <div className="w-full border-t border-gray-500"></div>
-</div>
-
-
-*/
