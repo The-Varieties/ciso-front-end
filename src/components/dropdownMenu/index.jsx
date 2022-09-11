@@ -41,7 +41,7 @@ function DropdownMenu(props) {
                                 {props.dropdownType === 'routing' ? 
                                     <Link to={instance.nextRoute} className="w-full font-semibold">{instance.menuName}</Link>
                                 :
-                                    <div value={instance.menuName} className="w-full font-semibold cursor-pointer" onClick={props.dropdownCallback}>{instance.menuName}</div>
+                                    <div value={instance.menuName} className={`w-full font-semibold cursor-pointer ${props.menuTitle === instance.menuName ? 'underline underline-offset-4 decoration-2' : 'no-underline'}`} onClick={props.dropdownCallback}>{instance.menuName}</div>
                                 }
                             </div>  
                         ))}           
