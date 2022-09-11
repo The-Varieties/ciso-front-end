@@ -23,6 +23,7 @@ const DatabasePage=()=>{
             <table className="db-table">
             <thead>
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>RAM</th>
                 <th>Storage</th>
@@ -33,6 +34,7 @@ const DatabasePage=()=>{
             <tbody>
                 {passdatabases.map((passdatabase)=> (
                 <tr>
+                <td><input type="checkbox"></input></td>
                 <td>{passdatabase.Name}</td>
                 <td>{passdatabase.RAM}</td>
                 <td>{passdatabase.Storage}</td>
