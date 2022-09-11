@@ -48,6 +48,7 @@ export const RightSizingComponent = (props) => {
                                 dropdownCallback={props.dropdownCallback} 
                                 dropdownList={props.dataVisTimeList} 
                                 roundedCornerStyling="rounded-md"
+                                customWidth="w-44"
                             />
                         </div>
                         <DropdownMenu menuTitle="Instance State" dropdownType='routing' dropdownList={instanceDropdownList} roundedCornerStyling={"rounded-l-md"}/>
