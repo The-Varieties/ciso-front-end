@@ -1,9 +1,11 @@
 export const RecommendationContent = (props) => {
+    // console.log(props.recommendationsList)
+
     return(
         <div>
             <h2 className="text-black w-fit font-bold font-italic text-2xl">Recommendation</h2>
 
-            {(props.recommendationsList !== null ? 
+            {(props.recommendationsList && props.recommendationsList.length > 0 ? 
                 props.recommendationsList.map((recommendation, index) => {
                     const stepsArr = [];
 
@@ -21,7 +23,9 @@ export const RecommendationContent = (props) => {
                     )
                 })
             : 
-                null
+            <div>
+                <p className="text-indigo-800 w-fit font-black text-base">This instance is in its best utilization</p>
+            </div>
             )}
         </div>
     )

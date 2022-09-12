@@ -54,7 +54,7 @@ export const RightSizingComponent = (props) => {
                         <DropdownMenu menuTitle="Instance State" dropdownType='routing' dropdownList={instanceDropdownList} roundedCornerStyling={"rounded-l-md"}/>
                         <DropdownMenu menuTitle="Action" dropdownType='routing' dropdownList={actionDropdownList} roundedCornerStyling={"rounded-r-md"}/>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" className={`ml-10 h-7 my-auto ${props.rightsizingCat === 0 ? "stroke-green-500" : [props.rightsizingCat === 1 ? "stroke-yellow-300" : "stroke-red-600"]}`} viewBox="0 0 24 24" strokeWidth="2" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" className={`ml-10 h-7 my-auto ${props.rightsizingCat === 'Optimized' ? "stroke-green-500" : [props.rightsizingCat === 'UnderUtilized' ? "stroke-yellow-300" : "stroke-red-600"]}`} viewBox="0 0 24 24" strokeWidth="2" fill="none">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>

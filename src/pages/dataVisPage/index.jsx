@@ -4,9 +4,9 @@ import { RightSizingComponent } from "../../components/rightSizingComponent";
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
-// import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { getInstance, getDataVis } from "../../store/actions/instanceAction";
+import { getInstance, getDataVis, getUsageCategory } from "../../store/actions/instanceAction";
 import { FinancialSummaryContent } from "../../components/financialSummaryContent";
 import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
@@ -16,11 +16,9 @@ function DataVisPage(props) {
     const [checked, setChecked] = useState("24 hours");
     const [labels, setLabels] = useState([]);
     const [values, setValues] = useState([]);
-    // const {state} = useLocation();
-    // const {instanceName, instanceId} = state;
-    const instanceName = 'testing'
-    // const [rightsizingCat, setRightsizingCat] = useState([]);
-    const rightsizingCat = useState(1);
+    const {state} = useLocation();
+    const {instanceName, instanceId} = state;
+    const [rightsizingCat, setRightsizingCat] = useState([]);
     const [recommendationsList, setRecommendationsList] = useState(null);
     const [vis_24, setVis_24] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_7d, setVis_7d] = useState(<h2 className="text-white">Loading...</h2>);
@@ -31,12 +29,11 @@ function DataVisPage(props) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            // props.getInstance(instanceId);
+            props.getInstance(instanceId);
             props.getDataVis(instanceName, checked)
-            // setRightsizingCat(props.instance.instance_status[2]);
-
-            setRecommendationsList(null)
-            // setRecommendationsList(props.instance.instance_status[3]);
+            props.getUsageCategory(instanceName, checked)
+            setRightsizingCat(props.instance.instance_status);
+            setRecommendationsList(props.usageCategory.recommendations);
 
             if(props.visualization) {
                 setLabels([])
@@ -139,7 +136,7 @@ function DataVisPage(props) {
                 dataset.push(data)
             }
             
-            props.visualization[0].time !== checked ? setLoading() : setChartData(dataset)
+            props.visualization[0].data.time !== `last ${checked}` ? setLoading() : setChartData(dataset)
         }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,8 +210,8 @@ function DataVisPage(props) {
     )
 }
 
-const mapStateToProps = (state) => ({instance: state.instance.instance, visualization: state.visualization.visualization})
+const mapStateToProps = (state) => ({instance: state.instance.instance, visualization: state.visualization.visualization, usageCategory: state.usageCategory.usageCategory})
 
-const mapDispatchToProps = {getInstance, getDataVis}
+const mapDispatchToProps = {getInstance, getDataVis, getUsageCategory}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);

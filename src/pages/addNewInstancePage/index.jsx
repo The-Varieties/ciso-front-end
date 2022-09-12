@@ -8,8 +8,7 @@ import { addNewInstance } from '../../store/actions/instanceAction';
 function AddInstance(props){
     const [newInstanceMap, setNewInstanceMap] = useState({
         access_key: "",
-        secret_key: "",
-        session_token: "",
+        secret_key: ""
     });
 
     const addseckey =(e)=>{
@@ -23,13 +22,6 @@ function AddInstance(props){
         setNewInstanceMap({
             ...newInstanceMap, 
             'access_key': `${e.target.value}`
-        });
-    }
-
-    const addsesskey =(e)=>{
-        setNewInstanceMap({
-            ...newInstanceMap, 
-            'session_token': `${e.target.value}`
         });
     }
 
@@ -52,8 +44,8 @@ function AddInstance(props){
                 <label>AWS Secret Key: </label>
                 <input type="text" onChange={addseckey}/>
 
-                <label>AWS Session Token: </label>
-                <input type="text" required onChange={addsesskey}/>
+                {/* <label>AWS Session Token: </label>
+                <input type="text" required onChange={addsesskey}/> */}
 
                 <div class="clickbutton">
                     <button className='btnadd' onClick= {addinstance}>Add Instance</button>
