@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import './index.css';
 import BackArrow from "../../components/backArrow";
-import data from "./financial-datatest.json";
+import fdata from "./financial-datatest.json";
+import ldata from "./list-data.json";
 
 
 function FinancialReport(){
 
-    const [financialdata] = useState(data);
+    const [financialdata] = useState(fdata);
+    const [financiallistdata] = useState(ldata);
 
 
     return(
@@ -53,15 +55,29 @@ function FinancialReport(){
             </table>
         </div>
 
-        <div className="mx-16 relative flex-wrap item-start my-10">
-            <div className="lg:w-1/4 w-full lg:pr-3">
-                <div className="bg-gray-200 rounded-xl p-6">
-                    <h2 className="text-2xl font-bold mb-5">t2.medium</h2>
-                    <div className="text-grey-800 leading-relaxed mb-6">
-
-                    </div>
-                </div>
-            </div>
+        <div class="financiallist-container">
+            <table class="findatalist-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Instance Name</th>
+                    <th>RAM</th>
+                    <th>CPU</th>
+                    <th>Expenses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {financiallistdata.map((listdatas)=> (
+                <tr>
+                    <td>{listdatas.ID}</td>
+                    <td>{listdatas.Instance_Name}</td>
+                    <td>{listdatas.RAM}</td>
+                    <td>{listdatas.CPU}</td>
+                    <td>{listdatas.Expenses}</td>
+                </tr>
+            ))}
+            </tbody>
+            </table>
         </div>
         
         </div>

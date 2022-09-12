@@ -1,7 +1,7 @@
 import React from "react";
 import './index.css';
 import profile from '../../assets/Images/profile.jpg'
-import BackArrow from "../../components/backArrow";
+import BackArrow from "../backArrow";
 import {useLocation} from 'react-router-dom';
 
 function ProfilePage() {
