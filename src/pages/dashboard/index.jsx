@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import DashboardCard from '../../components/dashboardCard';
 import './index.css';
 import { useState } from 'react';
 import InterfaceDropdownMenu from "../../components/interfacemenubar";
@@ -50,7 +49,7 @@ function Dashboard(props){
         <div className='block'>
             <div className="navigation mr-20">
                 <div className="icon-logo">
-                    <img src={logo}></img>
+                    <img src={logo} alt='logo'></img>
                 </div>
                 <div className="dropdownbar"> 
                     <InterfaceDropdownMenu />
