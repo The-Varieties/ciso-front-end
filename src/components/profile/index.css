@@ -31,46 +31,8 @@ hr{
     margin-left: 18.5%;
 }
 
-.first-container{
-    float: left;
-    margin-left: 20%;
-    margin-top: 2%;
-    color: white;
-}
-
-.second-container{
-    float: right;
-    margin-right: 22.7%;
-    margin-top: 2%;
-    color: white;
-}
-
-.first-container .second-container h3{
-    margin-right: 65%;
-}
-
-.first-container p{
-    border: 2px solid white;
-    background-color: white;
-    text-align: left;
-    padding: 5% 7%;
-    width: 280px;
-    border-radius: 10px;
-    color: black;
-}
-
-.second-container p{
-    border: 2px solid white;
-    background-color: white;
-    text-align: left;
-    padding: 5% 7%;
-    width: 280px;
-    border-radius: 10px;
-    color: black;
-}
-
 .edit-button{
-    margin-top: 2%;
+    margin-top: 10px;
     width: 60%;
     padding:5px;
     color:black;
@@ -79,11 +41,24 @@ hr{
     margin-left: 18.5%;
 }
 
-.email{
-    margin-right:220px;
+.info-container{
+    display: table;
+    width: 100%;
+    color: white;
+    padding: 20px;
+    margin-left: 18.5%;
 }
 
-.username{
-    margin-right:190px;
+.textsss{
+    display: table-row;
+    height: 100px;
 }
 
+.x{
+    width:50%;
+    display: table-cell;
+}
+
+.y{
+    display: table-cell;
+}

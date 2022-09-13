@@ -17,18 +17,24 @@ function ProfilePage() {
             <img src={profile} alt="Profile"/>
             <h1 class="membername">NeXphos Member</h1>
             <hr/>
-            <div class="first-container">
-                <h3>First Name</h3>
-                <p>Jentz</p>
-                <h3 class="username">Username</h3>
-                <p>Jentz_Chua</p>
+            <form>
+                <div class="info-container">
+                    <div class="textsss">
+                <div class="x">
+                    <label for="Fname"><b>First Name</b></label>
+                    <p>Jentz</p>
+                    <label for="Lname">Last Name</label>
+                    <p>Chua</p>
+                </div>
+                <div class="y">
+                    <label for="Uname">Username</label>
+                    <p>Jentz_Chua</p>
+                    <label for="Email">Email</label>
+                    <p>123@gmail.com</p>
+                </div>
+                </div>
             </div>
-            <div class="second-container">
-                <h3>Last Name</h3>
-                <p>Chua</p>
-                <h3 class="email">Email</h3>
-                <p>123@gmail.com</p>
-            </div>
+            </form>
             <button class="edit-button">Edit Profile</button>
         </div>
     </div>
