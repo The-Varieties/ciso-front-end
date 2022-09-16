@@ -52,13 +52,24 @@ hr{
 .textsss{
     display: table-row;
     height: 100px;
+    margin: auto;
+    padding:auto;
 }
 
 .x{
-    width:50%;
     display: table-cell;
+}
+
+.x p{
+    padding: 10%;
+    border: 2px solid white;
 }
 
 .y{
     display: table-cell;
+}
+
+.y p{
+    padding: 10%;
+    border: 1px solid white;
 }
