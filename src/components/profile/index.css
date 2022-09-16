@@ -1,6 +1,6 @@
 .container{
-    margin: 0 0;
-    padding: 0 0;
+    margin: auto;
+    padding: auto;
     margin-bottom: 40px;
 }
 
@@ -43,17 +43,12 @@ hr{
 
 .info-container{
     display: table;
-    width: 100%;
     color: white;
-    padding: 20px;
-    margin-left: 18.5%;
 }
 
 .textsss{
     display: table-row;
     height: 100px;
-    margin: auto;
-    padding:auto;
 }
 
 .x{
