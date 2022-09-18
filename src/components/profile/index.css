@@ -2,6 +2,7 @@
     margin: auto;
     padding: auto;
     margin-bottom: 40px;
+    box-sizing: border-box;
 }
 
 .backarrow{
@@ -41,31 +42,23 @@ hr{
     margin-left: 18.5%;
 }
 
-.info-container{
+.info-container:after{
     display: table;
+    clear: both;
+}
+
+.column {
+    float: left;
+    width: 16%;
+    padding: 10px;
+    margin-left: 18%;
+    text-align: left;
     color: white;
-    margin-left: 18.5%;
 }
 
-.textsss{
-    display: table-row;
-    height: 100px;
-}
-
-.x{
-    display: table-cell;
-}
-
-.x p{
-    padding: 10%;
-    border: 2px solid white;
-}
-
-.y{
-    display: table-cell;
-}
-
-.y p{
-    padding: 10%;
+.column p{
     border: 1px solid white;
+    padding:3%;
+    width: 176%;
 }
+  

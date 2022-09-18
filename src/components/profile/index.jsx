@@ -18,22 +18,22 @@ function ProfilePage() {
             <h1 class="membername">NeXphos Member</h1>
             <hr/>
             <div class="info-container">
-            <form>
-                <div class="textsss">
-                <div class="x">
-                    <label for="Fname"><b>First Name</b></label>
+                <div class="column">
+                    <h2>First Name</h2>
                     <p>Jentz</p>
-                    <label for="Lname"><b>Last Name</b></label>
+                </div>
+                <div class="column">
+                    <h2>Last Name</h2>
                     <p>Chua</p>
                 </div>
-                <div class="y">
-                    <label for="Uname"><b>Username</b></label>
+                <div class="column">
+                    <h2 >Username</h2>
                     <p>Jentz_Chua</p>
-                    <label for="Email"><b>Email</b></label>
+                </div>
+                <div class="column">
+                    <h2>Email</h2>
                     <p>123@gmail.com</p>
                 </div>
-                </div>
-            </form>
             </div>
             <button class="edit-button">Edit Profile</button>
         </div>
