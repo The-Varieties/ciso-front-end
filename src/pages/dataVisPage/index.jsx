@@ -180,10 +180,10 @@ function DataVisPage(props) {
                 </div>
             </div>
 
-            <div className="mt-20 mb-10 grid grid-cols-5 gap-5">
+            <div className="mt-20 mb-10 grid grid-cols-6 gap-5">
                 <div className="col-span-3"> <Card cardContent = {<InstanceDetail instance = {props.instance} />} /> </div>
-                <div className="col-span-2"> <Card cardContent = {<RecommendationContent recommendationsList = {recommendationsList} />} /> </div>
-                <div className="col-span-5"> <Card cardContent = {<FinancialSummaryContent />} /> </div>
+                <div className="col-span-3"> <Card cardContent = {<RecommendationContent recommendationsList = {recommendationsList} />} /> </div>
+                <div className="col-span-6"> <Card cardContent = {<FinancialSummaryContent />} /> </div>
             </div>
         </div>
     )

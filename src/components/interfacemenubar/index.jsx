@@ -26,20 +26,19 @@ function InterfaceDropdownMenu(props) {
     }, [dropdownIsActive, dropdownRef])
 
     const instancemodule = {name: "actionDropdownList", values: [
-        {nextRoute: "/add-new-instance", menuName: "Adding Instance"},
-        {nextRoute: "/financial-report", menuName: "Financial Report"},
-        {nextRoute: "/database-page", menuName: "Database"},
-    ]
-}
+            {nextRoute: "/add-new-instance", menuName: "Adding Instance"},
+            {nextRoute: "/financial-report", menuName: "Financial Report"}
+        ]
+    }
 
     const profileDropdownList ={name:"profileDropdownList", values:[
-        {nextRoute:"/profile", menuName: "Profile"},
-        {nextRoute:"/", menuName:"Log Out"},
-    ]
-}
+            {type: "route", nextRoute:"/profile", menuName: "Profile"},
+            {tpye: "action", menuName:"Log Out"},
+        ]
+    }
     
     return(
-    <div className="relative w-full">
+        <div className="relative w-full">
             <div className="flex">
                 <DropdownMenu menuTitle="Instance Module" dropdownType='routing' dropdownList={instancemodule} roundedCornerStyling={"rounded-md"}/>
 
@@ -50,7 +49,10 @@ function InterfaceDropdownMenu(props) {
                             <div className="bg-white rounded-md shadow block px-5 pt-5 pb-0.5 text-sm" >
                                 {profileDropdownList.values.map((instance, index) => (
                                     <div className="mb-5 text-center" key={index}>
-                                        <Link to={instance.nextRoute} className="w-full font-semibold" state={{from: "dashboard"}}>{instance.menuName}</Link>
+                                        {instance.type === 'route' 
+                                        ? <Link to={instance.nextRoute} className="w-full font-semibold" state={{from: "dashboard"}}>{instance.menuName}</Link>
+                                        : <div className="w-full font-semibold cursor-pointer" onClick={props.resetToken}>{instance.menuName}</div>
+                                        }
                                     </div>  
                                 ))}           
                             </div>
@@ -58,7 +60,7 @@ function InterfaceDropdownMenu(props) {
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     )
 }
 

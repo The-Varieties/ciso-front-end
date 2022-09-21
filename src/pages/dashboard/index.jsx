@@ -8,7 +8,6 @@ import logo from '../../assets/Images/logo.png';
 import { useNavigate } from 'react-router-dom';
 
 function Dashboard(props){
-    const [loaded, setLoaded] = useState(true);
     const [contentMap, setContentMap] = useState([]);
 
     let navigate = useNavigate();
@@ -20,10 +19,6 @@ function Dashboard(props){
                 instanceId: instance_id
             }
         });
-    }
-
-    const onLoadFunc = () => {
-        setLoaded(false);
     }
 
     useEffect(() => {
@@ -52,7 +47,7 @@ function Dashboard(props){
                     <img src={logo} alt='logo'></img>
                 </div>
                 <div className="dropdownbar"> 
-                    <InterfaceDropdownMenu />
+                    <InterfaceDropdownMenu resetToken = {props.resetToken} />
                 </div>
             </div>
 
