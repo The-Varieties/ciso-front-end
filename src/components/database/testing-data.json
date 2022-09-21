@@ -1,0 +1,37 @@
+[
+    {
+      "Name": "Instance 1",
+      "RAM": "4 GB",
+      "Storage": "16 GB",
+      "CPU": "t2.large",
+      "IPv4": "192.160.0.0"
+    },
+    {
+      "Name": "Instance 2",
+      "RAM": "1 GB",
+      "Storage": "2 GB",
+      "CPU": "t2.micro",
+      "IPv4": "112.116.173.104"
+    },
+    {
+      "Name": "Instance 3",
+      "RAM": "2 GB",
+      "Storage": "6 GB",
+      "CPU": "t2.medium",
+      "IPv4": "77.165.55.70"
+    },
+    {
+      "Name": "Instance 4",
+      "RAM": "1 GB",
+      "Storage": "4 GB",
+      "CPU": "t2.small",
+      "IPv4": "101.110.128.120"
+    },
+    {
+      "Name": "Instance 5",
+      "RAM": "2 GB",
+      "Storage": "2 GB",
+      "CPU": "t2.micro",
+      "IPv4": "111.112.168.125"
+    }
+  ]

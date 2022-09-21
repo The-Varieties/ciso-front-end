@@ -1,6 +1,8 @@
 .container{
-    margin: 0 0;
-    padding: 0 0;
+    margin: auto;
+    padding: auto;
+    margin-bottom: 40px;
+    box-sizing: border-box;
 }
 
 .backarrow{
@@ -30,46 +32,8 @@ hr{
     margin-left: 18.5%;
 }
 
-.first-container{
-    float: left;
-    margin-left: 20%;
-    margin-top: 2%;
-    color: white;
-}
-
-.second-container{
-    float: right;
-    margin-right: 22.7%;
-    margin-top: 2%;
-    color: white;
-}
-
-.first-container .second-container h3{
-    margin-right: 65%;
-}
-
-.first-container p{
-    border: 2px solid white;
-    background-color: white;
-    text-align: left;
-    padding: 5% 7%;
-    width: 280px;
-    border-radius: 10px;
-    color: black;
-}
-
-.second-container p{
-    border: 2px solid white;
-    background-color: white;
-    text-align: left;
-    padding: 5% 7%;
-    width: 280px;
-    border-radius: 10px;
-    color: black;
-}
-
 .edit-button{
-    margin-top: 2%;
+    margin-top: 10px;
     width: 60%;
     padding:5px;
     color:black;
@@ -78,11 +42,23 @@ hr{
     margin-left: 18.5%;
 }
 
-.email{
-    margin-right:220px;
+.info-container:after{
+    display: table;
+    clear: both;
 }
 
-.username{
-    margin-right:190px;
+.column {
+    float: left;
+    width: 16%;
+    padding: 10px;
+    margin-left: 18%;
+    text-align: left;
+    color: white;
 }
 
+.column p{
+    border: 1px solid white;
+    padding:3%;
+    width: 176%;
+}
+  

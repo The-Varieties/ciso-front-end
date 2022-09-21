@@ -20,35 +20,46 @@
     padding: 4px;
 }
 
-.total_spent{
+.financial-container{
     background-color: white;
     margin-top: 2%;
     padding:1%;
-    margin-left: 65px;
-    margin-right: 65px;
+    margin-left: 40px;
+    margin-right: 40px;
     border-radius: 10px;
 }
 
-.check_spent{
-    display:flex;
-    position:relative;
+.findata-table{
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.check_spent p{
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 35px;
-    font-weight: bold;
+.findata-table td, .findata-table th{
+    padding: 1px;
+    font-size: 25px;
+    text-align: center;
+    background-color: #ffffff;
 }
 
-.cost_spent{
-    display:flex;
-    position:relative;
+.financiallist-container{
+    background-color: white;
+    margin-top: 2%;
+    padding:1%;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-radius: 10px;
 }
 
-.cost_spent p{
-    font-size: 28px;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: bold;
+.findatalist-table{
+    border-collapse: collapse;
+    width: 100%;
 }
+
+.findatalist-table td, .findatalist-table th{
+    padding: 1px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+
