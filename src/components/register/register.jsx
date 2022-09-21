@@ -9,7 +9,7 @@ function LoginModule(){
     return(
         <div className="justify-content-center">
             <div class="icon">
-                <img src={logo}></img>
+                <img src={logo} alt="logo"></img>
             </div>
             <h1 class="title">
                 Register
@@ -49,7 +49,7 @@ function LoginModule(){
                 </div>
             </form>
             </div>
-            <p class="registerlink">Already have an account?<a><Link to={"/login-page"}> Sign In</Link></a></p>
+            <p class="registerlink">Already have an account?<Link to={"/login-page"}> Sign In</Link></p>
         </div>
     )
 }
