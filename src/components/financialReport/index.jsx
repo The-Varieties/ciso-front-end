@@ -1,11 +1,15 @@
 // It will show the financial report of the instance by taking the data as parameter
-import React from "react";
+import React, { useState } from "react";
 import './index.css';
 import BackArrow from "../../components/backArrow";
-
+import fdata from "./financial-datatest.json";
+import ldata from "./list-data.json";
 
 
 function FinancialReport(){
+
+    const [financialdata] = useState(fdata);
+    const [financiallistdata] = useState(ldata);
 
 
     return(
@@ -30,28 +34,50 @@ function FinancialReport(){
                 </select>
         </form>
 
-        <div class="total_spent">
-            <div class="check_spent">
-                <p>Current Spent: </p>
-                <p>Optimized Spent:</p>
-                <p>Potential Saving:</p>
-            </div>
-            <div class="cost_spent">
-                <p>$100 </p>
-                <p>$100 </p>
-                <p>$100 </p>
-            </div>
+        <div className="financial-container">
+            <table className="findata-table">
+            <thead>
+            <tr>
+                <th>Curret Spent</th>
+                <th>Optimized Spent</th>
+                <th>Potential Saving</th>
+            </tr>
+            </thead>
+            <tbody>
+                {financialdata.map((findatas)=> (
+                <tr>
+                <td>{findatas.Curret_Spent}</td>
+                <td>{findatas.Optimized_Spent}</td>
+                <td>{findatas.Potential_Saving}</td>
+            </tr>
+            ))}
+            </tbody>
+            </table>
         </div>
 
-        <div className="mx-16 relative flex-wrap item-start my-10">
-            <div className="lg:w-1/4 w-full lg:pr-3">
-                <div className="bg-gray-200 rounded-xl p-6">
-                    <h2 className="text-2xl font-bold mb-5">t2.medium</h2>
-                    <div className="text-grey-800 leading-relaxed mb-6">
-
-                    </div>
-                </div>
-            </div>
+        <div class="financiallist-container">
+            <table class="findatalist-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Instance Name</th>
+                    <th>RAM</th>
+                    <th>CPU</th>
+                    <th>Expenses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {financiallistdata.map((listdatas)=> (
+                <tr>
+                    <td>{listdatas.ID}</td>
+                    <td>{listdatas.Instance_Name}</td>
+                    <td>{listdatas.RAM}</td>
+                    <td>{listdatas.CPU}</td>
+                    <td>{listdatas.Expenses}</td>
+                </tr>
+            ))}
+            </tbody>
+            </table>
         </div>
         
         </div>
