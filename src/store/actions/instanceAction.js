@@ -1,4 +1,4 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS } from "../types";
+import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY } from "../types";
 import axios from 'axios';
 
 export const getInstance = (targetId) => async dispatch => {
@@ -18,13 +18,29 @@ export const getInstance = (targetId) => async dispatch => {
     }
 }
 
-export const getDataVis = (instanceName, metric) => async dispatch => {
+export const getUsageCategory = (instance_name, time_interval) => async dispatch => {
+    try {
+        const res = await axios.get(`http://localhost:8000/api/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`)
+
+        dispatch({
+            type: GET_USAGE_CATEGORY,
+            payload: res.data
+        })
+    }
+    catch(e) {
+        dispatch({
+            type: INSTANCE_ERROR,
+            payload: console.log(e)
+        })
+    }
+}
+
+export const getDataVis = (instanceName, time_interval) => async dispatch => {
     try {
         let res = [];
 
-        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=24 hours&metric=${metric}`))
-        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=7 days&metric=${metric}`))
-        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis/?instance=${instanceName}&time_interval=30 days&metric=${metric}`))
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis-cpu/?instance=${instanceName}&time_interval=${time_interval}`))
+        res.push(await axios.get(`http://localhost:8000/api/metrics/data-vis-ram/?instance=${instanceName}&time_interval=${time_interval}`))
 
         dispatch({
             type: GET_VIS,
@@ -91,3 +107,4 @@ export const addNewInstance = (newInstanceMap) => async dispatch => {
         })
     }
 }
+

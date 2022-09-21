@@ -3,24 +3,24 @@ import './index.css';
 import { Link, useNavigate} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
 
-function LoginModule(){
-
-    let navigate = useNavigate();
+function LoginModule({setToken}){
+    const navigate = useNavigate();
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        navigate("/");
+        setToken('123');
+        navigate('/');
     }
 
     return(
         <div className="justify-content-center">
-            <div class="icon">
-                <img src={logo}></img>
+            <div className="icon">
+                <img src={logo} alt="logo"></img>
             </div>
-            <h1 class="title">
+            <h1 className="title">
                 Sign in to your account
             </h1>
-            <p class="sentenses">
+            <p className="sentenses">
                 Start using our product
             </p>
             
@@ -39,7 +39,7 @@ function LoginModule(){
                 </div>
             </form>
             </div>
-            <p class="registerlink">Don’t have an account? <a><Link to={"/register-page"}>Register</Link></a></p>
+            <p className="registerlink">Don’t have an account? <Link to={"/register-page"}>Register</Link></p>
         </div>
     )
 }

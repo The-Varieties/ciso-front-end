@@ -7,7 +7,7 @@ import data from "./testing-data.json";
 const DatabasePage=()=>{
 
     const [passdatabases] = useState(data);
-    const [selectedDate, setDate] = useState();
+    const [, setDate] = useState();
 
     return(
         <div>

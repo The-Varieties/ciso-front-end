@@ -26,8 +26,8 @@ function DropdownMenu(props) {
     
     return(
         <div className="block">
-            <div className={`flex bg-white ${props.roundedCornerStyling} h-10 w-max px-11 text-sm`}>
-                <div ref={dropdownRef} className="my-auto flex w-fit cursor-pointer" onClick={toogleDropdown}>
+            <div className={`flex bg-white ${props.roundedCornerStyling} h-10 w-max ${props.customWidth} px-11 text-sm justify-center`}>
+                <div ref={dropdownRef} className="my-auto flex cursor-pointer" onClick={toogleDropdown}>
                     <p className="font-semibold">{props.menuTitle}</p>
                     <img src={DownArrow} alt="Down Arrow" className={`h-3 w-fit my-auto ml-1 ${rotatingAnimation}`}/>
                 </div>
@@ -38,7 +38,11 @@ function DropdownMenu(props) {
                     <div className="bg-white rounded-md shadow block px-5 pt-5 pb-0.5 text-sm" >
                         {props.dropdownList.values.map((instance, index) => (
                             <div className="mb-5 text-center" key={index}>
-                                <Link to={instance.nextRoute} className="w-full font-semibold">{instance.menuName}</Link>
+                                {props.dropdownType === 'routing' ? 
+                                    <Link to={instance.nextRoute} className="w-full font-semibold">{instance.menuName}</Link>
+                                :
+                                    <div value={instance.menuName} className={`w-full font-semibold cursor-pointer ${props.menuTitle === instance.menuName ? 'underline underline-offset-4 decoration-2' : 'no-underline'}`} onClick={props.dropdownCallback}>{instance.menuName}</div>
+                                }
                             </div>  
                         ))}           
                     </div>
