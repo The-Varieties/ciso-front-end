@@ -89,3 +89,8 @@ input[type="submit"]:hover {
 .registerlink a:hover{
   color:#6cf0c2;
 }
+
+.error {
+  color: red;
+  font-size: 15px;
+}
