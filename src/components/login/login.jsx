@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './index.css';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate,ReactDOM} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
@@ -21,7 +21,6 @@ function LoginModule(){
     const handleSubmit = (event) => {
         //Prevent page reload
         event.preventDefault();
-        navigate("/");
     
         var { uname, pass } = document.forms[0];
     
@@ -30,23 +29,14 @@ function LoginModule(){
     
         // Compare user info
         if (userData) {
-          if (userData.password !== pass.value) {
-            // Invalid password
-            setErrorMessages({errorMessages});
+          if (userData.passord !== pass.value) {
+            setIsSubmitted(false);
           } else {
+            navigate("/");
             setIsSubmitted(true);
           }
-        } else {
-          // Username not found
-          setErrorMessages({ errorMessages});
         }
     };
-
-    const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
-
 
     const renderForm =(
         <div className="justify-content-center">
@@ -69,8 +59,7 @@ function LoginModule(){
                 <div className="input-container">
                 <label>Password </label>
                 <input type="password" name="pass" required size="50"/>
-                {renderErrorMessage("pass")}
-                {setIsSubmitted ?
+                {isSubmitted ?
                 <div></div>
                 :
                 <div className="error">{errorMessages}</div>
