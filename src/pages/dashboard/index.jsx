@@ -50,13 +50,11 @@ function Dashboard(props){
 
 	return (
 		<div className='block'>
-			<div className="navigation mr-20">
-				<div className="icon-logo">
+			<div className="flex mr-16 xl:mr-0 mt-14">
+				<div className="w-96 ml-12 pl-1">
 					<img src={logo} alt='logo'></img>
 				</div>
-				<div className="dropdownbar"> 
-					<InterfaceDropdownMenu resetToken = {props.resetToken} />
-				</div>
+				<InterfaceDropdownMenu resetToken = {props.resetToken} />
 			</div>
 
 			<div className='mx-16 mt-20'>
@@ -76,7 +74,7 @@ function Dashboard(props){
 								</tr>
 							</thead>
 							<tbody className='border'>
-								{props.instanceList.map((data) => {
+								{props.instanceList.map((data, index) => {
 									return(
 										<tr className='border text-center' key={data.instance_id}>
 											<td className='border'>{data.instance_id}</td>

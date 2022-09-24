@@ -70,17 +70,6 @@
     display: block;
 }
 
-.dropdownbar{
-    margin-top: 2%;
-    margin-left: 75%;
-    padding-top: 1.3rem;
-}
-
-.navigation{
-    position:relative;
-    min-height: 5.1rem;
-}
-
 .icon-logo{
     float: left;
     width: 350px;

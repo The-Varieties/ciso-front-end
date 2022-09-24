@@ -25,7 +25,7 @@ function DropdownMenu(props) {
     }, [dropdownIsActive, dropdownRef])
     
     return(
-        <div className="block">
+        <div className="block my-auto">
             <div className={`flex bg-white ${props.roundedCornerStyling} h-10 w-max ${props.customWidth} px-11 text-sm justify-center`}>
                 <div ref={dropdownRef} className="my-auto flex cursor-pointer" onClick={toogleDropdown}>
                     <p className="font-semibold">{props.menuTitle}</p>
