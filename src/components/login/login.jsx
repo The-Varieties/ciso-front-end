@@ -1,29 +1,20 @@
 import React, { useState } from "react";
 import './index.css';
-import { Link, useNavigate,ReactDOM} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
 
     /// Error Message
-    const [errorMessages, setErrorMessages] = useState({});
+    const [errorMessages, setErrorMessages] = useState("Username or Password invalid");
 
     /// Success log in
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
-    // User info
-    const database = [
-        {
-          username: "bryan",
-          password: "123"
-        }
-    ];
-
-    // Error message
-    const errors = {
-        uname: "Username or Password invalid",
-        pass: "Username or Password invalid"
-    };
+    const [isSubmitted, setIsSubmitted] = useState(
+      {
+        username:"bryan",
+        password:"123"
+      }
+    );
 
     let navigate = useNavigate();
 
@@ -35,19 +26,19 @@ function LoginModule(){
         var { uname, pass } = document.forms[0];
     
         // Find user login info
-        const userData = database.find((user) => user.username === uname.value);
+        const userData = isSubmitted.find((user) => user.username === uname.value);
     
         // Compare user info
         if (userData) {
           if (userData.password !== pass.value) {
             // Invalid password
-            setErrorMessages({ name: "pass", message: errors.pass });
+            setErrorMessages({errorMessages});
           } else {
             setIsSubmitted(true);
           }
         } else {
           // Username not found
-          setErrorMessages({ name: "pass", message: errors.uname });
+          setErrorMessages({ errorMessages});
         }
     };
 
@@ -74,12 +65,16 @@ function LoginModule(){
                 <div className="input-container">
                 <label>User Name </label>
                 <input type="text" name="uname" required size="50"/>
-                {renderErrorMessage("uname")}
                 </div>
                 <div className="input-container">
                 <label>Password </label>
                 <input type="password" name="pass" required size="50"/>
                 {renderErrorMessage("pass")}
+                {setIsSubmitted ?
+                <div></div>
+                :
+                <div className="error">{errorMessages}</div>
+                }
                 </div>
                 <div className="button-container">
                     <input type="submit" value="Sign In"/>
@@ -92,7 +87,7 @@ function LoginModule(){
 
     return (
     <div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {renderForm}
     </div>
     );
 }
