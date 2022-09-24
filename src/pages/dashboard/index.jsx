@@ -52,10 +52,10 @@ function Dashboard(props){
             </div>
 
             {contentMap.length > 0 ? 
-                <div className='block w-full mt-20'>
+                <div className='block w-full mt-20 '>
                     <h1 className={`w-fit text-white text-3xl font-bold ml-16`}>Chua's List of Instances</h1>
 
-                    <div className='flex w-full mt-6'>
+                    <div className={`flex w-full mt-6 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
                         <table className='border w-full mx-16 text-white'>
                             <thead className='border'>
                                 <tr>
