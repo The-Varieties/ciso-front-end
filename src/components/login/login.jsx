@@ -5,16 +5,16 @@ import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
 
-    /// Error Message
-    const [errorMessages, setErrorMessages] = useState("Username or Password invalid");
-
     /// Success log in
-    const [isSubmitted, setIsSubmitted] = useState(
+    const [isSubmitted, setIsSubmitted] = useState(true);
+    
+    const database = [
       {
-        username:"bryan",
-        password:"123"
+        username: "bryan",
+        password: "123"
       }
-    );
+    ];
+  
 
     let navigate = useNavigate();
 
@@ -25,16 +25,18 @@ function LoginModule(){
         var { uname, pass } = document.forms[0];
     
         // Find user login info
-        const userData = isSubmitted.find((user) => user.username === uname.value);
+        const userData = database.find((user) => user.username === uname.value);
     
         // Compare user info
         if (userData) {
-          if (userData.passord !== pass.value) {
+          if (userData.password !== pass.value) {
             setIsSubmitted(false);
           } else {
-            navigate("/");
             setIsSubmitted(true);
+            navigate("/");
           }
+        }else{
+          setIsSubmitted(false);
         }
     };
 
@@ -60,9 +62,9 @@ function LoginModule(){
                 <label>Password </label>
                 <input type="password" name="pass" required size="50"/>
                 {isSubmitted ?
-                <div></div>
+                <div className="h-1"></div>
                 :
-                <div className="error">{errorMessages}</div>
+                <div className="error h-1">Username or Password invalid</div>
                 }
                 </div>
                 <div className="button-container">
