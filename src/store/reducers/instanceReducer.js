@@ -1,4 +1,4 @@
-import { GET_INSTANCE, GET_INSTANCES_LIST, DELETE_INSTANCE, ADD_NEW_INSTANCE, GET_VIS } from "../types";
+import { GET_INSTANCE, GET_INSTANCES_LIST, ADD_NEW_INSTANCE } from "../types";
 
 const initialState = {
     instance: [],
