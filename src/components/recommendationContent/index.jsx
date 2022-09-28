@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const RecommendationContent = (props) => {
     // console.log(props.recommendationsList)
 

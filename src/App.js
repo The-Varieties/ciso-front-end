@@ -9,6 +9,7 @@ import DatabasePage from "./components/database/database";
 import LoginModule from "./components/login/login";
 import RegisterModule from "./components/register/register";
 import useToken from './useToken';
+import React from 'react';
 
 function App() {
   const {token, setToken, resetToken} = useToken();

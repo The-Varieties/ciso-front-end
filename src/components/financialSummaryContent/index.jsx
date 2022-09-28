@@ -1,4 +1,5 @@
 import { FinanceSummaryTable } from "../financeSummaryTable"
+import React from 'react'
 
 export const FinancialSummaryContent = () => {
     return(

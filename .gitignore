@@ -10,6 +10,7 @@
 
 # production
 /build
+/.ebextensions
 
 # misc
 .DS_Store
