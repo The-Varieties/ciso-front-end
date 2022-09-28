@@ -1,4 +1,4 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY } from "../types";
+import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY ,GET_USERLOGIN} from "../types";
 import axios from 'axios';
 
 export const getInstance = (targetId) => async dispatch => {
@@ -108,3 +108,6 @@ export const addNewInstance = (newInstanceMap) => async dispatch => {
     }
 }
 
+export const GetUserLogin = () => async dispatch => {
+    
+}
