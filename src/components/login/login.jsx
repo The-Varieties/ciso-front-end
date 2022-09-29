@@ -5,39 +5,27 @@ import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
     /// Success log in
-    const [isSubmitted, setIsSubmitted] = useState(true);
-
-    // User info
-    const database = [
-      {
-        username: "bryan",
-        password: "123"
-      }
-    ];
+    const [loginRes, setLoginRes] = useState();
 
     let navigate = useNavigate();
 
     const handleSubmit = (event) => {
-        //Prevent page reload
-        event.preventDefault();
-    
-        var { uname, pass } = document.forms[0];
-    
-        // Find user login info
-        const userData = database.find((user) => user.username === uname.value);
-    
-        // Compare user info
-        if (userData) {
-          if (userData.password !== pass.value) {
-            setIsSubmitted(false);
-          } else {
-            setIsSubmitted(true);
-            navigate("/");
-          }
-        } else {
-          setIsSubmitted(false);
-        }
-    };
+      //Prevent page reload
+      event.preventDefault();
+      
+      var { uname, pass } = document.forms[0];
+      
+      props.login(uname, pass);
+      setLoginRes(props.yourStateName)
+      
+      // if(loginRes is showing login is success) {
+      //   store data (token and userId) to session storage --> check alesandro's code or ask alesandro to work on this
+      //   setIsSubmitted(true);
+      //   navigate('/')
+      // } else { // login failed
+      //   setIsSubmitted(false);
+      // }
+  };
 
     return (
       <div className="justify-content-center">
