@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import './index.css';
 import { Link, useNavigate,ReactDOM} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
@@ -76,4 +76,8 @@ function LoginModule(){
     );
 }
 
-export default LoginModule;
+const mapStateToProps = (state) => ({userData:state.LoginModule.LoginModule})
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModule);
