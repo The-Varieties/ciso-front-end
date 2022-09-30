@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getLoginUserInstace = (targetuserId) => async dispatch => {
     try {
-        const res = await axios.get(`<link>${targetuserId}/`)
+        const res = await axios.get(`http://localhost:8000/api/users/users/${targetuserId}/`)
 
         dispatch({
             type: GET_USERLOGIN,
