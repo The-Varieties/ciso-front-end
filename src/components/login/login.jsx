@@ -4,6 +4,7 @@ import { Link, useNavigate,ReactDOM} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
 
 function LoginModule(){
+
     /// Success log in
     const [loginRes, setLoginRes] = useState();
 
@@ -15,16 +16,17 @@ function LoginModule(){
       
       var { uname, pass } = document.forms[0];
       
+      
       props.login(uname, pass);
       setLoginRes(props.yourStateName)
       
-      // if(loginRes is showing login is success) {
-      //   store data (token and userId) to session storage --> check alesandro's code or ask alesandro to work on this
-      //   setIsSubmitted(true);
-      //   navigate('/')
-      // } else { // login failed
-      //   setIsSubmitted(false);
-      // }
+      if(loginRes == uname.yourStateName) {
+      //  store data (token and userId) to session storage --> check alesandro's code or ask alesandro to work on this
+        setIsSubmitted(true);
+        navigate('/')
+      } else { // login failed
+        setIsSubmitted(false);
+      }
   };
 
     return (
