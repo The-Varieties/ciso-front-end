@@ -1,7 +1,7 @@
 import { GET_USERLOGIN } from "../types";
 
 const initialState = {
-    userid: [],
+    getloginuser: [],
     loading: true,
 }
 

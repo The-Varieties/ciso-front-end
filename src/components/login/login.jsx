@@ -2,6 +2,7 @@ import React, {useState } from "react";
 import './index.css';
 import { Link, useNavigate,ReactDOM} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
+import { getLoginUserInstance } from "../../store/actions/LoginAction";
 
 function LoginModule(){
 
@@ -16,8 +17,8 @@ function LoginModule(){
       
       var { uname, pass } = document.forms[0];
       
-      props.login(uname, pass);
-      setLoginRes(props.userId)
+      props.getLoginUserInstace(uname, pass);
+      setLoginRes(props.userData)
 
       //const loginid = setLoginRes.find((user) => user.userData === uname.value);
       
@@ -68,8 +69,8 @@ function LoginModule(){
     );
 }
 
-const mapStateToProps = (state) => ({userData:state.LoginModule.LoginModule})
+const mapStateToProps = (state) => ({userData:state.getloginuser.getloginuser})
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {getLoginUserInstance}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginModule);

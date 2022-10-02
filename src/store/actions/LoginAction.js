@@ -1,9 +1,9 @@
 import { GET_USERLOGIN, LOGGIN_ERROR} from "../types";
 import axios from 'axios';
 
-export const getLoginUserInstace = (targetuserId) => async dispatch => {
+export const getLoginUserInstance = (uname, pass) => async dispatch => {
     try {
-        const res = await axios.get(`https://631065638105.signin.aws.amazon.com/console/${targetuserId}/`)
+        const res = await axios.get(`https://631065638105.signin.aws.amazon.com/console/${uname, pass}/`)
 
         dispatch({
             type: GET_USERLOGIN,
