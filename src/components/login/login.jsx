@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, {useState } from "react";
 import './index.css';
 import { Link, useNavigate,ReactDOM} from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
@@ -16,12 +16,14 @@ function LoginModule(){
       
       var { uname, pass } = document.forms[0];
       
-      
       props.login(uname, pass);
-      setLoginRes(props.yourStateName)
+      setLoginRes(props.userId)
+
+      //const loginid = setLoginRes.find((user) => user.userData === uname.value);
       
-      if(loginRes == uname.yourStateName) {
+      if(loginRes == uname.userId) {
       //  store data (token and userId) to session storage --> check alesandro's code or ask alesandro to work on this
+        setToken(userId);
         setIsSubmitted(true);
         navigate('/')
       } else { // login failed

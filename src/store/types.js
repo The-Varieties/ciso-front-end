@@ -6,3 +6,4 @@ export const ADD_NEW_INSTANCE = 'ADD_NEW_INSTANCE'
 export const GET_VIS = 'GET_VIS'
 export const GET_USAGE_CATEGORY = 'GET_USAGE_CATEGORY'
 export const GET_USERLOGIN = "GET_USERLOGIN"
+export const LOGGIN_ERROR = 'LOGGIN_ERROR'
