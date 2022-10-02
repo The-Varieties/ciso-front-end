@@ -1,0 +1,10 @@
+{
+  "short_name": "CISO",
+  "name": "Cloud Infrastructure Services Optimization",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

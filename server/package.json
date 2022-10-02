@@ -1,0 +1,29 @@
+{
+    "name": "ciso-fe-server",
+    "version": "0.1.0",
+    "private": true,
+    "main": "server.js",
+    "type": "module",
+    "engines": {
+        "node": "v14.17.4"
+    },
+    "dependencies": {
+        "express": "^4.18.1",
+        "fs": "^0.0.1-security",
+        "http-proxy-middleware": "^2.0.6"
+    },
+    "scripts": {
+        "start": "node server.bundle.js",
+        "build": "webpack",
+        "dev": "set PORT=3080 && nodemon ./server.js localhost 3080"
+    },
+    "devDependencies": {
+        "del": "^5.1.0",
+        "gulp": "^4.0.2",
+        "gulp-zip": "^5.0.1",
+        "nodemon": "^2.0.20",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-stream": "^5.2.1"
+    }
+}

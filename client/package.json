@@ -12,6 +12,7 @@
     "axios": "^0.26.1",
     "chart.js": "^3.7.1",
     "cors": "^2.8.5",
+    "create-react-app": "^5.0.1",
     "create-react-native": "^1.1.0",
     "create-react-native-app": "^3.8.0",
     "react": "^18.2.0",
@@ -61,5 +62,6 @@
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
-  }
+  },
+  "proxy": "http://localhost:3080"
 }
