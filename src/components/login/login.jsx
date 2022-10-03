@@ -7,7 +7,7 @@ import { getLoginUserInstance } from "../../store/actions/LoginAction";
 function LoginModule(){
 
     /// Success log in
-    const [loginRes, setLoginRes] = useState();
+    const [loginRes, setLoginRes] = useState(true);
 
     let navigate = useNavigate();
 
@@ -17,6 +17,7 @@ function LoginModule(){
       
       var { uname, pass } = document.forms[0];
       
+      /*
       props.getLoginUserInstace(uname, pass);
       setLoginRes(props.userData)
 
@@ -30,6 +31,7 @@ function LoginModule(){
       } else { // login failed
         setIsSubmitted(false);
       }
+      */
   };
 
     return (
@@ -53,7 +55,7 @@ function LoginModule(){
             <div className="input-container">
             <label>Password </label>
             <input type="password" name="pass" required size="50"/>
-            {isSubmitted ?
+            {loginRes ?
               <div className="h-1"></div>
             :
               <div className="error h-1">Username or Password invalid</div>
@@ -73,4 +75,5 @@ const mapStateToProps = (state) => ({userData:state.getloginuser.getloginuser})
 
 const mapDispatchToProps = {getLoginUserInstance}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginModule);
+export default LoginModule;
+//export default connect(mapStateToProps, mapDispatchToProps)(LoginModule);
