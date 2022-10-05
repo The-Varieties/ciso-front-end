@@ -5,7 +5,7 @@ const initialState = {
     loading: true,
 }
 
-export default function getloginuserReducer(state = {loading: true}, action) {
+export default function getloginuserReducer(state = initialState, action) {
     switch(action.type) {
         case GET_USERLOGIN:
             return {
