@@ -11,6 +11,7 @@ function LoginModule(props){
     const [loginRes, setLoginRes] = useState(true);
 
     let navigate = useNavigate();
+    console.log(props.value)
 
     // console.log(props)
 
@@ -49,12 +50,9 @@ function LoginModule(props){
       
       props.getLoginUserInstance(uname.value, pass.value);
 
-      if(loginRes == true){
+      if(props.userData !== ''){
         navigate('/')
-      }else{
-        loginRes(false);
       }
-
   };
 
     return (
