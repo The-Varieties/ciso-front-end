@@ -7,3 +7,4 @@ export const GET_VIS = 'GET_VIS'
 export const GET_USAGE_CATEGORY = 'GET_USAGE_CATEGORY'
 export const GET_USERLOGIN = "GET_USERLOGIN"
 export const LOGGIN_ERROR = 'LOGGIN_ERROR'
+export const RESET_LOGIN = 'RESET_LOGIN'

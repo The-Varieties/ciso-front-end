@@ -1,8 +1,8 @@
 import React, {useState } from "react";
 import './index.css';
-import { Link, useNavigate,ReactDOM} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
-import { getLoginUserInstance } from "../../store/actions/LoginAction";
+import { getLoginUserInstance, resetLogin } from "../../store/actions/LoginAction";
 import { connect } from "react-redux";
 import { useEffect } from "react";
 
@@ -10,36 +10,16 @@ function LoginModule(props){
     /// Success log in
     const [loginRes, setLoginRes] = useState(true);
 
-    let navigate = useNavigate();
-    console.log(props)
-
-    // console.log(props)
-
     useEffect(() => {
-      console.log(props.userData)
-
-      // Check whether the props.userData got value or not
-      // If got value, then navigate
-      // If got no value, then setSubmitted to false
-
-
-
-      // Reference
-      // if(loginRes == uname.userId) {
-      //   //  store data (token and userId) to session storage --> check alesandro's code or ask alesandro to work on this
-      //     setToken(userId);
-      //     setIsSubmitted(true);
-      //     navigate('/')
-      //   } else { // login failed
-      //     setIsSubmitted(false);
-      //   }
-
-      if(props.userData !== null){
+      if(props.userData == null){
         setLoginRes(true);
-      }else{
+      } else if(props.userData !== null && props.userData.length !== 0) {
+        setLoginRes(true);
+        props.setToken(props.userData)
+        props.resetLogin()
+      } else{
         setLoginRes(false);
       }
-
     }, [props.userData])
 
     const handleSubmit = (event) => {
@@ -49,10 +29,6 @@ function LoginModule(props){
       var { uname, pass } = document.forms[0];
       
       props.getLoginUserInstance(uname.value, pass.value);
-
-      if(props.userData !== ''){
-        navigate('/')
-      }
   };
 
     return (
@@ -94,7 +70,7 @@ function LoginModule(props){
 
 const mapStateToProps = (state) => ({userData:state.getloginuser.getloginuser})
 
-const mapDispatchToProps = {getLoginUserInstance}
+const mapDispatchToProps = {getLoginUserInstance, resetLogin}
 
 // export default LoginModule;
 export default connect(mapStateToProps, mapDispatchToProps)(LoginModule);
