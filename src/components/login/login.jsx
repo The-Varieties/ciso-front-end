@@ -11,7 +11,7 @@ function LoginModule(props){
     const [loginRes, setLoginRes] = useState(true);
 
     let navigate = useNavigate();
-    console.log(props.value)
+    console.log(props)
 
     // console.log(props)
 
