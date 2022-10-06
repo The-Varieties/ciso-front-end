@@ -50,7 +50,7 @@ function LoginModule(props){
       props.getLoginUserInstance(uname.value, pass.value);
 
       if(loginRes == true){
-        navigate('/dashboard')
+        navigate('/')
       }else{
         loginRes(false);
       }
@@ -62,10 +62,10 @@ function LoginModule(props){
         <div class="icon">
             <img src={logo}></img>
         </div>
-        <h1 class="title">
+        <h1 className="title">
             Sign in to your account
         </h1>
-        <p class="sentenses">
+        <p className="sentenses">
             Start using our product
         </p>
         
