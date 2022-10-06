@@ -3,7 +3,11 @@ import axios from 'axios';
 
 export const getLoginUserInstance = (uname, pass) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/logins/login?username=${uname}&password=${pass}`)
+        const res = await axios({
+            method:"get",
+            url:`http://localhost:8000/api/logins/login?username=${uname}&password=${pass}`,
+            'Access-Control-Allow-Origin':"*"
+        });
         
         dispatch({
             type: GET_USERLOGIN,

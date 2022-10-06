@@ -35,8 +35,6 @@ function LoginModule(props){
 
       if(props.userData !== null){
         setLoginRes(true);
-        navigate('/')
-        
       }else{
         setLoginRes(false);
       }
@@ -50,6 +48,12 @@ function LoginModule(props){
       var { uname, pass } = document.forms[0];
       
       props.getLoginUserInstance(uname.value, pass.value);
+
+      if(loginRes == true){
+        navigate('/dashboard')
+      }else{
+        loginRes(false);
+      }
 
   };
 
