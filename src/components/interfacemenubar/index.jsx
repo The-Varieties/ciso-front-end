@@ -33,7 +33,7 @@ function InterfaceDropdownMenu(props) {
 
     const profileDropdownList ={name:"profileDropdownList", values:[
             {type: "route", nextRoute:"/profile", menuName: "Profile"},
-            {tpye: "action", menuName:"Log Out"},
+            {type: "action", menuName:"Log Out"},
         ]
     }
     
