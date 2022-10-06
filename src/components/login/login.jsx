@@ -59,7 +59,7 @@ function LoginModule(props){
 
     return (
       <div className="justify-content-center">
-        <div class="icon">
+        <div className="icon">
             <img src={logo}></img>
         </div>
         <h1 className="title">
@@ -89,7 +89,7 @@ function LoginModule(props){
             </div>
         </form>
         </div>
-        <p class="registerlink">Don’t have an account? <a><Link to={"/register-page"}>Register</Link></a></p>
+        <p className="registerlink">Don’t have an account?<Link to={"/register-page"}>Register</Link></p>
       </div>
     );
 }
