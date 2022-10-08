@@ -1,36 +1,43 @@
-import {GET_REGISTER, REGISTER_ERROR} from "../types";
+import {GET_REGISTERUSER, REGISTER_ERROR, ADD_NEW_USER} from "../types";
 import axios from 'axios';
 
-export const getRegisterUserInstance = (uname, fname, lname, email, pass, cpass) => async dispatch => {
+export const getRegistrationInstance = (UserInformation) => async dispatch => {
     try {
         const res = await axios({
             method:"post",
-            url:`http://localhost:8000/api/logins/login?username=${uname}&password=${pass}`,
-            'Access-Control-Allow-Origin':"*"
+            url:`http://localhost:8000/api/registers/register/`,
+            data: UserInformation,
         });
         
         dispatch({
-            type: GET_USERLOGIN,
+            type: GET_REGISTERUSER,
             payload: res.data
         })
     }
     catch(e) {
         dispatch({
-            type: LOGGIN_ERROR,
+            type: REGISTER_ERROR,
             payload: console.log(e)
         })
     }
 }
 
-export const resetLogin = () => async dispatch => {
-    try {
+export const addNewUser = (UserInformation) => async dispatch => {
+    try {        
+        const res = await axios({
+            method: 'post',
+            url: 'http://localhost:8000/api/registers/register/',
+            data: UserInformation,
+        });
+
         dispatch({
-            type: RESET_LOGIN
+            type: ADD_NEW_USER,
+            payload: res.data
         })
     }
     catch(e) {
         dispatch({
-            type: LOGGIN_ERROR,
+            type: REGISTER_ERROR,
             payload: console.log(e)
         })
     }

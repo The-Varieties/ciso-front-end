@@ -1,9 +1,12 @@
 import React, {useState } from "react";
 import './index.css';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
+import { addNewUser } from "../../store/actions/registerAction";
 
-function RegisterModule(){
+function RegisterModule(props){
 
     const [RegisterValue, setRegisterValue] = useState({
         UserName:"",
@@ -42,10 +45,13 @@ function RegisterModule(){
         setRegisterValue({...RegisterValue, ConfirmPassword: e.target.value})
     }
 
+    let navigate = useNavigate();
+
     const handleSubmit = (e) =>{
         e.preventDefault();
         if(RegisterValue.UserName &&RegisterValue.FirstName && RegisterValue.LastName && RegisterValue.Email && RegisterValue.Password && RegisterValue.ConfirmPassword){
             setValid(true);
+            props.addNewUser();
         }
         setRegisterSubmietted(true);
     }
@@ -104,4 +110,4 @@ function RegisterModule(){
     )
 }
 
-export default RegisterModule;
+export default connect(null, {addNewUser})(RegisterModule);
