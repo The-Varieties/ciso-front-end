@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Meetup from './Meetup';
 import About from './About';
 import MeetupDetails from './MeetupDetails';
@@ -8,13 +8,13 @@ import EditMeetup from './EditMeetup';
 
 const Main = () => (
   <main>
-    <Switch>
-      <Route exact path='/' component={Meetup} />
-      <Route exact path='/about' component={About} />
-      <Route exact path='/meetups/add' component={AddMeetup} />
-      <Route exact path='/meetups/edit/:id' component={EditMeetup} />
-      <Route exact path='/meetups/:id' component={MeetupDetails} />
-    </Switch>
+    <Routes>
+      <Route path='/' element={Meetup} />
+      <Route path='/about' element={About} />
+      <Route path='/meetups/add' element={AddMeetup} />
+      <Route path='/meetups/edit/:id' element={EditMeetup} />
+      <Route path='/meetups/:id' element={MeetupDetails} />
+    </Routes>
   </main>
 )
 
