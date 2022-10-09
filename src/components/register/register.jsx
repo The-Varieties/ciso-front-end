@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/Images/logo.png';
-import { addNewUser } from "../../store/actions/registerAction";
+import { getRegistrationUser } from "../../store/actions/registerAction";
 
 function RegisterModule(props){
 
@@ -51,7 +51,8 @@ function RegisterModule(props){
         e.preventDefault();
         if(RegisterValue.UserName &&RegisterValue.FirstName && RegisterValue.LastName && RegisterValue.Email && RegisterValue.Password && RegisterValue.ConfirmPassword){
             setValid(true);
-            props.addNewUser();
+            props.getRegistrationUser();
+            navigate("/");
         }
         setRegisterSubmietted(true);
     }
@@ -59,13 +60,13 @@ function RegisterModule(props){
 
     return(
         <div className="justify-content-center">
-            <div class="icon">
+            <div className="icon">
                 <img src={logo} alt="logo"></img>
             </div>
-            <h1 class="title">
+            <h1 className="title">
                 Register
             </h1>
-            <p class="sentenses">
+            <p className="sentenses">
                 Start using our product
             </p>
 
@@ -105,9 +106,9 @@ function RegisterModule(props){
                 </div>
             </form>
             </div>
-            <p class="registerlink">Already have an account?<Link to={"/login-page"}> Sign In</Link></p>
+            <p className="registerlink">Already have an account?<Link to={"/login-page"}> Sign In</Link></p>
         </div>
     )
 }
 
-export default connect(null, {addNewUser})(RegisterModule);
+export default connect(null, {getRegistrationUser})(RegisterModule);
