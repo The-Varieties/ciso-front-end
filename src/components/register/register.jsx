@@ -17,9 +17,7 @@ function RegisterModule(props){
         ConfirmPassword: ""
     });
 
-    const [RegisterSubmitted, setRegisterSubmietted] = useState(true);
-
-    const [Valid, setValid] = useState(false);
+    const [RegisterSubmitted, setRegisterSubmietted] = useState(false);
 
     const handleUserNameChange = (e) => {
         setRegisterValue({...RegisterValue, UserName: e.target.value})
@@ -49,12 +47,16 @@ function RegisterModule(props){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        if(RegisterValue.UserName &&RegisterValue.FirstName && RegisterValue.LastName && RegisterValue.Email && RegisterValue.Password && RegisterValue.ConfirmPassword){
-            setValid(true);
-            props.getRegistrationUser();
-            navigate("/");
-        }
-        setRegisterSubmietted(true);
+        if(RegisterValue.Password == RegisterValue.ConfirmPassword){
+            if(RegisterValue.UserName &&RegisterValue.FirstName && RegisterValue.LastName && RegisterValue.Email && RegisterValue.Password && RegisterValue.ConfirmPassword){
+                props.getRegistrationUser(RegisterValue);
+                alert("Successful Registered!");
+                navigate("/");
+            }
+            setRegisterSubmietted(true);
+        }else{
+            alert("Password not match!");
+        }setRegisterSubmietted(false);
     }
 
 
@@ -96,11 +98,6 @@ function RegisterModule(props){
                 <label>Confirm Password </label>
                 <input type="password" name="confirm_password" size="55" value={RegisterValue.ConfirmPassword} onChange={handleConfirmPasswordChange} required/>
                 </div>
-                {RegisterSubmitted && Valid?
-                <div className="Register-message">Account Registered Success</div>
-                :
-                null
-            }
                 <div className="button-container">
                     <input type="submit" value="Register"/>
                 </div>
