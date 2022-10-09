@@ -9,33 +9,33 @@ function ProfilePage() {
   const { from } = location.state
 
   return (
-    <div class="container">
-        <div class="backarrow">
+    <div className="container">
+        <div className="backarrow">
             <BackArrow backPath = {`/${from}`} />
         </div>
-        <div class="profile_detail">
+        <div className="profile_detail">
             <img src={profile} alt="Profile"/>
-            <h1 class="membername">NeXphos Member</h1>
+            <h1 className="membername">NeXphos Member</h1>
             <hr/>
-            <div class="info-container">
-                <div class="column">
+            <div className="info-container">
+                <div className="column">
                     <h2>First Name</h2>
                     <p>Jentz</p>
                 </div>
-                <div class="column">
+                <div className="column">
                     <h2>Last Name</h2>
                     <p>Chua</p>
                 </div>
-                <div class="column">
+                <div className="column">
                     <h2 >Username</h2>
                     <p>Jentz_Chua</p>
                 </div>
-                <div class="column">
+                <div className="column">
                     <h2>Email</h2>
                     <p>123@gmail.com</p>
                 </div>
             </div>
-            <button class="edit-button">Edit Profile</button>
+            <button className="edit-button">Edit Profile</button>
         </div>
     </div>
   )
