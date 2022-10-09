@@ -1,12 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 import './index.css';
 import profile from '../../assets/Images/profile.jpg'
 import BackArrow from "../backArrow";
 import {useLocation} from 'react-router-dom';
+import data from "./profile.json";
 
 function ProfilePage() {
   const location = useLocation()
   const { from } = location.state
+  const [profiledata] = useState(data);
 
   return (
     <div className="container">
@@ -20,19 +22,27 @@ function ProfilePage() {
             <div className="info-container">
                 <div className="column">
                     <h2>First Name</h2>
-                    <p>Jentz</p>
+                    {profiledata.map((profiledata)=> (
+                    <p>{profiledata.FirstName}</p>
+                    ))}
                 </div>
                 <div className="column">
                     <h2>Last Name</h2>
-                    <p>Chua</p>
+                    {profiledata.map((profiledata)=> (
+                    <p>{profiledata.LastName}</p>
+                    ))}
                 </div>
                 <div className="column">
                     <h2 >Username</h2>
-                    <p>Jentz_Chua</p>
+                    {profiledata.map((profiledata)=> (
+                    <p>{profiledata.UserName}</p>
+                    ))}
                 </div>
                 <div className="column">
                     <h2>Email</h2>
-                    <p>123@gmail.com</p>
+                    {profiledata.map((profiledata)=> (
+                    <p>{profiledata.Email}</p>
+                    ))}
                 </div>
             </div>
             <button className="edit-button">Edit Profile</button>
