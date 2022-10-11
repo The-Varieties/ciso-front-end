@@ -1,12 +1,11 @@
-import {GET_USER, UPDATE_PROFILE, USER_ERROR} from '../types';
+import {GET_USER, UPDATE_PROFILE} from '../types';
 
 const initialState = {
-    instance: [],
-    loading: true,
-    instanceList: [],
+    userinfo: [],
+    loading: true
 }
 
-export default function updateProfileReducer(state = initialState, action) {
+export default function UserInfoReducer(state = initialState, action) {
     switch(action.type) {
         case GET_USER:
             return {

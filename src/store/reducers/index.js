@@ -4,7 +4,7 @@ import dataVisReducer from './dataVisReducer'
 import UsageCategoryReducer from "./usageCategoryReducer"
 import getloginuserReducer from "./getloginuserReducer";
 import RegistrationReducer from "./registrationReducer";
-import UpdateProfileReducer from './updateProfileReducer';
+import UserInfoReducer from './userInfoReducer';
 
 export default combineReducers({
     instance: instanceReducer,
@@ -12,5 +12,5 @@ export default combineReducers({
     usageCategory: UsageCategoryReducer,
     getloginuser: getloginuserReducer,
     registration:RegistrationReducer,
-    updateprofile:UpdateProfileReducer
+    userinfo:UserInfoReducer
 })

@@ -3,12 +3,15 @@ import './index.css';
 import profile from '../../assets/Images/profile.jpg'
 import BackArrow from "../backArrow";
 import {useLocation} from 'react-router-dom';
+import { getUser } from "../../store/actions/userAction";
 import data from "./profile.json";
+import { connect } from "react-redux";
 
-function ProfilePage() {
+function ProfilePage(props) {
   const location = useLocation()
   const { from } = location.state
   const [profiledata] = useState(data);
+  console.log(props.userData());
 
   return (
     <div className="container">
@@ -51,4 +54,8 @@ function ProfilePage() {
   )
 }
 
-export default ProfilePage;
+const mapStateToProps = (state) => ({userData:state.getUser.getUser});
+
+const mapDispatchToProps = {getUser}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

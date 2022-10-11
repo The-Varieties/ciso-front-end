@@ -1,10 +1,10 @@
 import {GET_USER, UPDATE_PROFILE,USER_ERROR} from '../types';
 import axios from 'axios';
 
-export const getUser = (user) => async dispatch => {
+export const getUser = (targetId) => async dispatch => {
     
     try{
-        const res = await axios.get()
+        const res = await axios.get(`http://localhost:8000/api/users/users/${targetId}`)
 
         dispatch({
             type: GET_USER, 
@@ -19,10 +19,10 @@ export const getUser = (user) => async dispatch => {
     }
 }
 
-export const getUpdateProfile = (user) => async dispatch => {
+export const getUpdateProfile = (targetId) => async dispatch => {
     
     try{
-        const res = await axios.get()
+        const res = await axios.get(`http://localhost:8000/api/users/users/${targetId}`)
 
         dispatch({
             type: UPDATE_PROFILE, 
