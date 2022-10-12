@@ -61,4 +61,40 @@ hr{
     padding:3%;
     width: 176%;
 }
-  
+
+.editprofile{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.edituserinfo-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+}
+
+
+.editprofile input[type="text"],
+.editprofile input[type="password"],
+.editprofile input[type="email"] {
+  height: 50px;
+  text-align: left;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.editprofile input[type="submit"] {
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    background: yellow;
+    border-radius: 5px;
+    color: black;
+    padding: 8px 215px;
+    font-weight: bold;
+  }

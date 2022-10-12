@@ -27,51 +27,49 @@ const EditForm = ({userProfile}) => {
             <div className="backarrow">
                 <BackArrow backPath = {`/${from}`} />
             </div>
-            <div className="profile_detail">
+            <div className="editprofile">
                 <img src={profile} alt="Profile"/>
                 <h1 className="membername">NeXphos Member</h1>
                 <hr/>
-                <div className="info-container">
-                <div className="column">
-                    <h2>First Name</h2>
+                <div className="edituserinfo-container">
+                    <label>First Name</label>
                     {profiledata.map((profiledata)=> (
-                    <p>{profiledata.FirstName}</p>
+                    <input type='text' name='fname' size='55'>{profiledata.FirstName}</input>
                     ))}
                 </div>
-                <div className="column">
-                    <h2>Last Name</h2>
+                <div className="edituserinfo-container">
+                    <label>Last Name</label>
                     {profiledata.map((profiledata)=> (
-                    <p>{profiledata.LastName}</p>
+                    <input type='text' name='fname' size='55'>{profiledata.LastName}</input>
                     ))}
                 </div>
-                <div className="column">
-                    <h2 >Username</h2>
+                <div className="edituserinfo-container">
+                    <label >Username</label>
                     {profiledata.map((profiledata)=> (
-                    <p>{profiledata.UserName}</p>
+                    <input type='text' name='fname' size='55'>{profiledata.UserName}</input>
                     ))}
                 </div>
-                <div className="column">
-                    <h2>Email</h2>
+                <div className="edituserinfo-container">
+                    <label>Email</label>
                     {profiledata.map((profiledata)=> (
-                    <p>{profiledata.Email}</p>
+                    <input type='text' name='fname' size='55'>{profiledata.Email}</input>
                     ))}
                 </div>
-                <div className="column">
-                    <h2>Password</h2>
+                <div className="edituserinfo-container">
+                    <label>Password</label>
                     {profiledata.map((profiledata)=> (
-                    <p>{profiledata.Password}</p>
+                    <input type='text' name='fname' size='55'>{profiledata.Password}</input>
                     ))}
                 </div>
-                <div className="column">
-                    <h2>Confirm Password</h2>
+                <div className="edituserinfo-container">
+                    <label>Confirm Password</label>
                     {profiledata.map((profiledata)=> (
-                    <p>{profiledata.ConfirmPassword}</p>
+                    <input type='text' name='fname' size='55'>{profiledata.ConfirmPassword}</input>
                     ))}
                 </div>
             </div>
                 <button className="edit-button">Edit Profile</button>
             </div>
-        </div>
         </Form>
     )
 
