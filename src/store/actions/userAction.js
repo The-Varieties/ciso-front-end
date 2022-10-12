@@ -2,7 +2,7 @@ import {GET_USER, UPDATE_PROFILE,USER_ERROR} from '../types';
 import axios from 'axios';
 
 export const getUser = (targetId) => async dispatch => {
-    
+
     try{
         const res = await axios.get(`http://localhost:8000/api/users/users/${targetId}`)
 

@@ -47,7 +47,7 @@ function RegisterModule(props){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        if(RegisterValue.user_password == confirmPassword){
+        if(RegisterValue.user_password === confirmPassword){
             if(RegisterValue.user_username &&RegisterValue.user_firstname && RegisterValue.user_lastname && RegisterValue.user_email && RegisterValue.user_password && confirmPassword){
                 props.getRegistrationUser(RegisterValue);
                 alert("Successful Registered!");

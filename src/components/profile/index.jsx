@@ -7,16 +7,29 @@ import { getUser } from "../../store/actions/userAction";
 import data from "./profile.json";
 import { connect } from "react-redux";
 import { GetUserIdFromToken } from "../../utils/tokenDecoder";
+import { useEffect } from "react";
 
 
 function ProfilePage(props) {
-  const location = useLocation()
-  const { from } = location.state
-  const [profiledata] = useState(data);
-  console.log(GetUserIdFromToken()) // can use this function to get the id
+    const location = useLocation()
+    const { from } = location.state
+    const [profiledata] = useState(props.userData);
+    // console.log(GetUserIdFromToken()) // can use this function to get the id
+
+    // const userid1 = props.getUser(GetUserIdFromToken());
+
+    // const getinfo = props.userData;
+    // props.userData
+
+    // console.log(props.userData);
+
+    // const data1 = props.getUser(GetUserIdFromToken());
+    
+    // console.log(data1);
 
 
-  return (
+
+    return (
     <div className="container">
         <div className="backarrow">
             <BackArrow backPath = {`/${from}`} />
@@ -28,36 +41,35 @@ function ProfilePage(props) {
             <div className="info-container">
                 <div className="column">
                     <h2>First Name</h2>
-                    {profiledata.map((profiledata)=> (
-                    <p>{profiledata.FirstName}</p>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index}>{profiledata.FirstName}</p>
                     ))}
                 </div>
                 <div className="column">
                     <h2>Last Name</h2>
-                    {profiledata.map((profiledata)=> (
-                    <p>{profiledata.LastName}</p>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index}>{profiledata.LastName}</p>
                     ))}
                 </div>
                 <div className="column">
                     <h2 >Username</h2>
-                    {profiledata.map((profiledata)=> (
-                    <p>{profiledata.UserName}</p>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index}>{profiledata.UserName}</p>
                     ))}
                 </div>
                 <div className="column">
                     <h2>Email</h2>
-                    {profiledata.map((profiledata)=> (
-                    <p>{profiledata.Email}</p>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index}>{profiledata.Email}</p>
                     ))}
                 </div>
             </div>
-            <button className="edit-button">Edit Profile</button>
         </div>
     </div>
   )
 }
 
-const mapStateToProps = (state) => ({userData:state.userinfo.instance});
+const mapStateToProps = (state) => ({userData:state.userinfo.userinfo});
 
 const mapDispatchToProps = {getUser}
 

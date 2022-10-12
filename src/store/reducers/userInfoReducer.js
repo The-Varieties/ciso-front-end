@@ -11,13 +11,13 @@ export default function UserInfoReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                instance: action.payload,
+                userinfo: action.payload,
             }
         case UPDATE_PROFILE:
             return{
                 ...state,
                 loading: false,
-                instanceList: action.payload,
+                userinfo: action.payload,
             }
         default: return {...state}
     }
