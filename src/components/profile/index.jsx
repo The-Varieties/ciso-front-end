@@ -6,12 +6,15 @@ import {useLocation} from 'react-router-dom';
 import { getUser } from "../../store/actions/userAction";
 import data from "./profile.json";
 import { connect } from "react-redux";
+import { GetUserIdFromToken } from "../../utils/tokenDecoder";
+
 
 function ProfilePage(props) {
   const location = useLocation()
   const { from } = location.state
   const [profiledata] = useState(data);
-  console.log(props.userData());
+  console.log(GetUserIdFromToken()) // can use this function to get the id
+
 
   return (
     <div className="container">
@@ -54,7 +57,7 @@ function ProfilePage(props) {
   )
 }
 
-const mapStateToProps = (state) => ({userData:state.getUser.getUser});
+const mapStateToProps = (state) => ({userData:state.userinfo.instance});
 
 const mapDispatchToProps = {getUser}
 
