@@ -8,79 +8,88 @@
     font-weight: bold;
   }
   
-  .sentenses{
-    text-align: center;
-    margin-top: 1%;
-    color: grey;
-    font-weight: bold;
-    font-size: 20px;
-  }
+.sentenses{
+  text-align: center;
+  margin-top: 1%;
+  color: grey;
+  font-weight: bold;
+  font-size: 20px;
+}
   
-  .registertable{
-    margin-top: 2%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+.registertable{
+  margin-top: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
   
-  .input-container label{
-    color:white;
-    font-size: 18px;
-    text-align: left;
-  }
+.input-container label{
+  color:white;
+  font-size: 18px;
+  text-align: left;
+}
   
-  .input-container{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 10px;
-  }
+.input-container{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+}
   
-  .registertable input[type="text"],
-  .registertable input[type="password"],
-  .registertable input[type="email"] {
-    height: 50px;
-    text-align: left;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 10px;
-  }
+.registertable input[type="text"],
+.registertable input[type="password"],
+.registertable input[type="email"] {
+  height: 50px;
+  text-align: left;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
   
-  .registertable input[type="submit"] {
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    background: yellow;
-    border-radius: 5px;
-    color: black;
-    padding: 8px 215px;
-    font-weight: bold;
-  }
+.registertable input[type="submit"] {
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  background: yellow;
+  border-radius: 5px;
+  color: black;
+  padding: 8px 215px;
+  font-weight: bold;
+}
   
-  input[type="submit"]:hover {
-    background: #6cf0c2;
-  }
+input[type="submit"]:hover {
+  background: #6cf0c2;
+}
   
-  .button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 5%;
-  }
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
   
-  .registerlink{
-    text-align: center;
-    color: white;
-    font-size: 12px;
-    margin-top: 12px;
-  }
+.registerlink{
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  margin-top: 12px;
+}
   
-  .registerlink a{
-    color: yellow;
-    cursor: pointer;
-    padding-bottom: 40px;
-  }
+.registerlink a{
+  color: yellow;
+  cursor: pointer;
+  padding-bottom: 40px;
+}
   
-  .registerlink a:hover{
-    color:#6cf0c2;
-  }
+.registerlink a:hover{
+  color:#6cf0c2;
+}
+
+.Register-message{
+  color: red;
+  margin-left: 10px;
+}
+
+.error_m{
+  color:red;
+}

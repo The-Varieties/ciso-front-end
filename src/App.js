@@ -17,7 +17,7 @@ function App() {
   if(!token) {
     return (
       <Routes>
-        <Route path = '/' element={<LoginModule setToken={setToken}/>}/>
+        <Route path = '/' element={<LoginModule setToken={setToken} />}/>
         <Route path = '/register-page' element={<RegisterModule />}/>
         <Route path = '*' element={<Navigate to='/' replace />} />
       </Routes>
