@@ -1,10 +1,9 @@
 import React,{useState} from "react";
 import './index.css';
-import profile from '../../assets/Images/profile.jpg'
+import profile from '../../assets/Images/profile.png'
 import BackArrow from "../backArrow";
 import {useLocation} from 'react-router-dom';
 import { getUser } from "../../store/actions/userAction";
-import data from "./profile.json";
 import { connect } from "react-redux";
 import { GetUserIdFromToken } from "../../utils/tokenDecoder";
 import { useEffect } from "react";
@@ -13,15 +12,19 @@ import { useEffect } from "react";
 function ProfilePage(props) {
     const location = useLocation()
     const { from } = location.state
-    const [profiledata] = useState(props.userData);
+
+
+    props.getUser(GetUserIdFromToken());
+    const profiledata = useState(props.userData);
     // console.log(GetUserIdFromToken()) // can use this function to get the id
 
-    // const userid1 = props.getUser(GetUserIdFromToken());
+    //const userid1 = props.getUser(GetUserIdFromToken());
 
     // const getinfo = props.userData;
     // props.userData
 
-    // console.log(props.userData);
+    //console.log(props.userData);
+    //console.log(profiledata);
 
     // const data1 = props.getUser(GetUserIdFromToken());
     
@@ -42,25 +45,25 @@ function ProfilePage(props) {
                 <div className="column">
                     <h2>First Name</h2>
                     {profiledata.map((profiledata, index)=> (
-                    <p key={index}>{profiledata.FirstName}</p>
+                    <p key={index}>{profiledata.user_firstname}</p>
                     ))}
                 </div>
                 <div className="column">
                     <h2>Last Name</h2>
                     {profiledata.map((profiledata, index)=> (
-                    <p key={index}>{profiledata.LastName}</p>
+                    <p key={index}>{profiledata.user_lastname}</p>
                     ))}
                 </div>
                 <div className="column">
                     <h2 >Username</h2>
                     {profiledata.map((profiledata, index)=> (
-                    <p key={index}>{profiledata.UserName}</p>
+                    <p key={index}>{profiledata.user_username}</p>
                     ))}
                 </div>
                 <div className="column">
                     <h2>Email</h2>
                     {profiledata.map((profiledata, index)=> (
-                    <p key={index}>{profiledata.Email}</p>
+                    <p key={index}>{profiledata.user_email}</p>
                     ))}
                 </div>
             </div>

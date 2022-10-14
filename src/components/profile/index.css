@@ -10,11 +10,8 @@
 }
 
 .profile_detail img{
-    margin-top: 2%;
-    width: 15%;
-    border-radius: 60%;
-    border: 2px solid white;
-    margin-left: 42%;
+    width: 20%;
+    margin: auto;
 }
 
 .membername{
