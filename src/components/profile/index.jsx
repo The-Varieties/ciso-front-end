@@ -10,9 +10,9 @@ import { useEffect } from "react";
 
 
 function ProfilePage(props) {
+
     const location = useLocation()
     const { from } = location.state
-
 
     props.getUser(GetUserIdFromToken());
     const profiledata = useState(props.userData);
@@ -30,7 +30,15 @@ function ProfilePage(props) {
     
     // console.log(data1);
 
-
+    // useEffect((profiledata) => {
+    //     if(profiledata == null){
+    //         props.getUser(GetUserIdFromToken());
+    //     } else if(props.userData !== null && props.userData.length !== 0) {
+    //         props.getUser(GetUserIdFromToken());
+    //     } else{
+    //         GetUserIdFromToken();
+    //     }
+    // }, [props.userData])
 
     return (
     <div className="container">
