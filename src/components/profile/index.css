@@ -11,3 +11,46 @@
 }
 
 
+/* 
+.profile_detail img{
+    width: 400px;
+    height: auto;
+}
+
+.membername{
+    color: rgb(101, 38, 247);
+    text-align: center;
+    margin-top: 120px;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+hr{
+    width: 68%;
+    border: 2px solid white;
+    background-color: white;
+    margin: auto;
+}
+
+.info-container:after{
+    display: table;
+    clear: both;
+}
+
+.column {
+    padding: 10px;
+    margin-left: 100px;
+    float:left;
+    width: 20%;
+}
+
+.column h2{
+    font-size: 28px;
+    color: rgb(165, 236, 58);
+}
+
+.column p{
+    font-size: 24px;
+    color: rgb(236, 229, 20);
+    margin-top: 16px;
+} */
