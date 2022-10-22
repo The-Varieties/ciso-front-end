@@ -45,34 +45,34 @@ function ProfilePage(props) {
         <div className="backarrow">
             <BackArrow backPath = {`/${from}`} />
         </div>
-        <div className="md:flex bg-slate-100 rounded-m p-8 md:p-0">
-            <img src={profile} alt="Profile" className="w-29 h-29 rounded-full border-slate-50 object-cover"/>
-            <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
-                <h1 className="membername">NeXphos Member</h1>
-                <hr/>
-                <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
-                    <div className="column">
-                        <h2>First Name</h2>
+        <div className="md:flex bg-slate-100 p-6 md:p-0 md:m-10 md:mt-32 mt-32">
+            <img src={profile} alt="Profile" className="w-25 h-full object-cover m-auto md:m-auto" width="384" height="512"/>
+            <div className="m-auto bg-green-200 p-3 text-lg space-y-4 md:w-full md:m-4">
+                <h1 className="pt-4 md:p-8 text-center space-y-4 md:text-[42px] text-[30px]">NeXphos Member</h1>
+                <hr class="border-1 border-black"/>
+                <div className="grid grid-cols-2 gap-6 p-5">
+                    <div className="">
+                        <h2 className="text-[24px]">First Name</h2>
                         {profiledata.map((profiledata, index)=> (
-                        <p key={index}>{profiledata.user_firstname}</p>
+                        <p key={index} className="text-[20px]">{profiledata.user_firstname}</p>
                         ))}
                     </div>
-                    <div className="column">
-                        <h2>Last Name</h2>
+                    <div className="">
+                        <h2 className="text-[24px]">Last Name</h2>
                         {profiledata.map((profiledata, index)=> (
-                        <p key={index}>{profiledata.user_lastname}</p>
+                        <p key={index} className="text-[20px]">{profiledata.user_lastname}</p>
                         ))}
                     </div>
-                    <div className="column">
-                        <h2 >Username</h2>
+                    <div className="">
+                        <h2 className="text-[24px]">Username</h2>
                         {profiledata.map((profiledata, index)=> (
-                        <p key={index}>{profiledata.user_username}</p>
+                        <p key={index} className="text-[20px]">{profiledata.user_username}</p>
                         ))}
                     </div>
-                    <div className="column">
-                        <h2>Email</h2>
+                    <div className="">
+                        <h2 className="text-[24px]">Email</h2>
                         {profiledata.map((profiledata, index)=> (
-                        <p key={index}>{profiledata.user_email}</p>
+                        <p key={index} className="text-[20px]">{profiledata.user_email}</p>
                         ))}
                     </div>
                 </div>
