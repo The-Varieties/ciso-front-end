@@ -1,7 +1,5 @@
+/*
 .container{
-    margin: auto;
-    padding: auto;
-    margin-bottom: 40px;
     box-sizing: border-box;
     width: 100%;
 }
@@ -9,8 +7,7 @@
 .backarrow{
     margin-top:55px;
 }
-
-/* 
+ 
 .profile_detail img{
     width: 400px;
     height: auto;

@@ -41,42 +41,42 @@ function ProfilePage(props) {
     // }, [props.userData])
 
     return (
-    <div className="container">
-        <div className="backarrow">
+    <div className="m-0 p-0">
+        <div className="m-10">
             <BackArrow backPath = {`/${from}`} />
         </div>
-        <div className="md:flex bg-slate-100 p-6 md:p-0 md:m-10 md:mt-32 mt-32">
-            <img src={profile} alt="Profile" className="w-25 h-full object-cover m-auto md:m-auto" width="384" height="512"/>
-            <div className="m-auto bg-green-200 p-3 text-lg space-y-4 md:w-full md:m-4">
-                <h1 className="pt-4 md:p-8 text-center space-y-4 md:text-[42px] text-[30px]">NeXphos Member</h1>
-                <hr class="border-1 border-black"/>
-                <div className="grid grid-cols-2 gap-6 p-5">
-                    <div className="">
-                        <h2 className="text-[24px]">First Name</h2>
-                        {profiledata.map((profiledata, index)=> (
-                        <p key={index} className="text-[20px]">{profiledata.user_firstname}</p>
-                        ))}
-                    </div>
-                    <div className="">
-                        <h2 className="text-[24px]">Last Name</h2>
-                        {profiledata.map((profiledata, index)=> (
-                        <p key={index} className="text-[20px]">{profiledata.user_lastname}</p>
-                        ))}
-                    </div>
-                    <div className="">
-                        <h2 className="text-[24px]">Username</h2>
-                        {profiledata.map((profiledata, index)=> (
-                        <p key={index} className="text-[20px]">{profiledata.user_username}</p>
-                        ))}
-                    </div>
-                    <div className="">
-                        <h2 className="text-[24px]">Email</h2>
-                        {profiledata.map((profiledata, index)=> (
-                        <p key={index} className="text-[20px]">{profiledata.user_email}</p>
-                        ))}
-                    </div>
+        <div className="flex font-medium items-center justify-center">
+        <div className="w-65 mx-auto bg-[#20354b] rounded-2xl px-10 py-8 shadow-lg">
+            <img src={profile} alt="Profile" className="mt-5 mx-auto"/>
+            <h1 className="pt-4 text-center space-y-4 text-[36px]">NeXphos Member</h1>
+            <hr class="border-2 border-black bg-black"/>
+            <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[24px]">First Name</h2>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index} className="text-emerald-400 text-[18px]">{profiledata.user_firstname}</p>
+                    ))}
+                </div>
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">Last Name</h2>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index} className="text-emerald-400 text-[18px]">{profiledata.user_lastname}</p>
+                    ))}
+                </div>
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">Username</h2>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index} className="text-emerald-400 text-[18px]">{profiledata.user_username}</p>
+                    ))}
+                </div>
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">Email</h2>
+                    {profiledata.map((profiledata, index)=> (
+                    <p key={index} className="text-emerald-400 text-[18px]">{profiledata.user_email}</p>
+                    ))}
                 </div>
             </div>
+        </div>
         </div>
     </div>
   )
