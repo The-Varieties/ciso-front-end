@@ -6,11 +6,14 @@ import { connect } from 'react-redux';
 import { getInstanceList } from '../../store/actions/instanceAction';
 import logo from '../../assets/Images/logo.png';
 import { useNavigate } from 'react-router-dom';
+import {getUser} from "../../store/actions/userAction";
+import {GetUserIdFromToken} from "../../utils/tokenDecoder";
 
 function Dashboard(props){
 	const [loaded, setLoaded] = useState(false)
 	const tableRef = useRef(null);
 	const [contentMap, setContentMap] = useState([]);
+	const userId = GetUserIdFromToken();
 
 	let navigate = useNavigate();
 
@@ -26,6 +29,7 @@ function Dashboard(props){
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			props.getInstanceList();
+			props.getUser(userId);
 			setContentMap(props.instanceList);
 		}, 3000)
 		
@@ -58,7 +62,7 @@ function Dashboard(props){
 			</div>
 
 			<div className='mx-16 mt-20'>
-				<h1 className={`w-fit text-white text-3xl font-bold`}>{contentMap.length > 0 ? "Chua's List of Instances" : "Loading..."}</h1>
+				<h1 className={`w-fit text-white text-3xl font-bold`}>{contentMap.length > 0 ? `${props.userData.user_lastname}'s List of Instances` : "Loading..."}</h1>
 			</div>
 
 			<div className={`flex w-full mt-6 delay-300 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
@@ -96,6 +100,6 @@ function Dashboard(props){
 	)
 }
 
-const mapStateToProps = (state) => ({instanceList: state.instance.instanceList})
+const mapStateToProps = (state) => ({instanceList: state.instance.instanceList, userData:state.userinfo.userinfo})
 
-export default connect(mapStateToProps, {getInstanceList})(Dashboard);
+export default connect(mapStateToProps, {getInstanceList, getUser})(Dashboard);

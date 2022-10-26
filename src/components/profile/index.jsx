@@ -5,6 +5,7 @@ import BackArrow from "../backArrow";
 import {useLocation} from 'react-router-dom';
 import { getUser } from "../../store/actions/userAction";
 import { connect } from "react-redux";
+import {GetUserIdFromToken} from "../../utils/tokenDecoder";
 // import { GetUserIdFromToken } from "../../utils/tokenDecoder";
 
 
@@ -12,10 +13,11 @@ function ProfilePage(props) {
     const location = useLocation()
     const { from } = location.state
     const [profiledata, setProfileData] = useState(null)
+    const userId = GetUserIdFromToken();
 
     useEffect(() => {
         if(profiledata === null || profiledata.length === 0) {
-            props.getUser(1);
+            props.getUser(userId);
             setProfileData(props.userData);
         }
     },[props.userData])
