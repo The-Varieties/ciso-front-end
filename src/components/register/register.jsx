@@ -98,6 +98,11 @@ function RegisterModule(props){
                 <label>Confirm Password </label>
                 <input type="password" name="confirm_password" size="55" value={confirmPassword} onChange={handleConfirmPasswordChange} required/>
                 </div>
+                {RegisterSubmitted && Valid?
+                <div className="Register-message">Account Registered Success</div>
+                :
+                null
+            }
                 <div className="button-container">
                     <input type="submit" value="Register"/>
                 </div>

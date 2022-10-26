@@ -21,6 +21,7 @@ function LoginModule(props){
     }
   }, [props.userData])
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
     
@@ -100,8 +101,6 @@ function LoginModule(props){
   //     <p className="registerlink">Don’t have an account?<Link to={"/register-page"}> Register</Link></p>
   //   </div>
   // );
-
-
 }
 
 const mapStateToProps = (state) => ({userData:state.getloginuser.getloginuser})
