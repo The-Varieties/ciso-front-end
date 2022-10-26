@@ -99,19 +99,3 @@ function Dashboard(props){
 const mapStateToProps = (state) => ({instanceList: state.instance.instanceList})
 
 export default connect(mapStateToProps, {getInstanceList})(Dashboard);
-
-/*
-Code Reference
-
-<div className='mx-16 mt-20'>
-	<h1 className={`w-fit text-white text-3xl font-bold`}>Chua's List of Instances</h1>
-	<div className={`grid grid-cols-3 gap-8 items-center h-full delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`} onLoad={onLoadFunc}>
-		{contentMap && contentMap.map((instance, index) => (
-			<div className="my-10" key={index}>
-				<DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"} />              
-			</div>
-		))}
-	</div>
-</div>
-
-*/
