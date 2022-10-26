@@ -11,6 +11,7 @@ import { FinancialSummaryContent } from "../../components/financialSummaryConten
 import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";
+import React from 'react';
 
 function DataVisPage(props) {
     const [checked, setChecked] = useState("24 hours");

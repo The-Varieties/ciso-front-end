@@ -38,7 +38,7 @@ function InterfaceDropdownMenu(props) {
     }
     
     return(
-        <div className="relative w-full">
+        <div className="flex w-full mr-0 xl:mr-16 justify-end">
             <div className="flex">
                 <DropdownMenu menuTitle="Instance Module" dropdownType='routing' dropdownList={instancemodule} roundedCornerStyling={"rounded-md"}/>
 

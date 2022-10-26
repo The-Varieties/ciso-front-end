@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const InstanceDetail = (props) => {
     const instanceMap = {'name': 'instanceDetail', 'value': [
         {'title': 'Name', 'content': props.instance.instance_name},

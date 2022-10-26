@@ -1,6 +1,6 @@
 import BackArrow from "../../components/backArrow";
 import DropdownMenu from "../dropdownMenu";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 export const RightSizingComponent = (props) => {
     const dropdownRef = useRef(null);
