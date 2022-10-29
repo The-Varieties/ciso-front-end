@@ -12,6 +12,8 @@ import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";
 import React from 'react';
+import {resetRecommendedInstanceType, testInstanceType} from "../../store/actions/testAction";
+import {CircularProgress, Dialog} from '@mui/material';
 
 function DataVisPage(props) {
     const [checked, setChecked] = useState("24 hours");
@@ -23,6 +25,7 @@ function DataVisPage(props) {
     const [recommendationsList, setRecommendationsList] = useState(null);
     const [vis_cpu, setVis_cpu] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_ram, setVis_ram] = useState(<h2 className="text-white">Loading...</h2>);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -160,8 +163,29 @@ function DataVisPage(props) {
 
     Chart.register(ChartSetting.annotationLineSetting);
 
+    const handleChangeInstanceType = () => {
+        setIsButtonClicked(true)
+        props.testInstanceType()
+    }
+
+    useEffect(() => {
+        if(!props.recommendedInstanceType.loading) {
+            setIsButtonClicked(false)
+            props.resetRecommendedInstanceType()
+        }
+    }, //eslint-disable-next-line
+        [props.recommendedInstanceType.type])
+
     return (
         <div className="mx-16 my-5">
+            <div onClick={handleChangeInstanceType} className="w-fit h-10 bg-yellow-50 cursor-pointer">
+                Test Change Instance Type
+            </div>
+            <Dialog open = {isButtonClicked} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+                <CircularProgress color = "warning"/>
+            </Dialog>
+
+
             <RightSizingComponent 
                 rightsizingCat = {rightsizingCat} 
                 checked = {checked} 
@@ -190,8 +214,19 @@ function DataVisPage(props) {
     )
 }
 
-const mapStateToProps = (state) => ({instance: state.instance.instance, visualization: state.visualization.visualization, usageCategory: state.usageCategory.usageCategory})
+const mapStateToProps = (state) => ({
+    instance: state.instance.instance,
+    visualization: state.visualization.visualization,
+    usageCategory: state.usageCategory.usageCategory,
+    recommendedInstanceType: state.instanceType
+})
 
-const mapDispatchToProps = {getInstance, getDataVis, getUsageCategory}
+const mapDispatchToProps = {
+    getInstance,
+    getDataVis,
+    getUsageCategory,
+    testInstanceType,
+    resetRecommendedInstanceType
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);

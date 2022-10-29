@@ -20,7 +20,8 @@ function ProfilePage(props) {
             props.getUser(userId);
             setProfileData(props.userData);
         }
-    },[props.userData])
+    }, //eslint-disable-next-line
+        [props.userData])
 
     return (
     <div className="m-0 p-0">
@@ -31,7 +32,7 @@ function ProfilePage(props) {
         <div className="w-65 mx-auto bg-[#20354b] rounded-2xl px-10 py-8 shadow-lg">
             <img src={profile} alt="Profile" className="mt-5 mx-auto"/>
             <h1 className="pt-4 text-center space-y-4 text-[36px]">NeXphos Member</h1>
-            <hr class="border-2 border-black bg-black"/>
+            <hr className="border-2 border-black bg-black"/>
             <div className="mt-4 grid grid-cols-2 gap-4">
                 <div className="">
                     <h2 className="text-emerald-400 font-semibold text-[20px]">First Name</h2>
