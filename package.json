@@ -16,6 +16,7 @@
     "create-react-native": "^1.1.0",
     "create-react-native-app": "^3.8.0",
     "jwt-decode": "^3.1.2",
+    "paho-mqtt": "^1.1.0",
     "react": "^18.0.0",
     "react-chartjs-2": "^4.1.0",
     "react-confirm-alert": "^2.8.0",
@@ -57,8 +58,8 @@
   "devDependencies": {
     "@svgr/webpack": "^6.3.1",
     "autoprefixer": "^10.4.12",
-    "postcss": "^8.4.16",
     "jest-dom": "^4.0.0",
+    "postcss": "^8.4.16",
     "react-test-renderer": "^18.0.0",
     "tailwindcss": "^3.1.8"
   },
