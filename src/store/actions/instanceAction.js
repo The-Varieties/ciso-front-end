@@ -1,4 +1,4 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY} from "../types";
+import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY, OPTIMIZED_INSTANCE} from "../types";
 import axios from 'axios';
 
 export const getInstance = (targetId) => async dispatch => {
@@ -128,6 +128,29 @@ export const addNewInstance = (newInstanceMap) => async dispatch => {
 
         dispatch({
             type: ADD_NEW_INSTANCE,
+            payload: res.data
+        })
+    }
+    catch(e) {
+        dispatch({
+            type: INSTANCE_ERROR,
+            payload: console.log(e)
+        })
+    }
+}
+
+export const OptimizedInstance = (instance_name, time_interval) => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'get',
+            url: `http://localhost:8000/api/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`,
+            headers: {
+                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+            },
+        });
+
+        dispatch({
+            type: OPTIMIZED_INSTANCE,
             payload: res.data
         })
     }
