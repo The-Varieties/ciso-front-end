@@ -18,6 +18,7 @@
     "create-react-app": "^5.0.1",
     "create-react-native": "^1.1.0",
     "create-react-native-app": "^3.8.0",
+    "env-cmd": "^10.1.0",
     "jwt-decode": "^3.1.2",
     "paho-mqtt": "^1.1.0",
     "react": "^18.0.0",
@@ -35,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

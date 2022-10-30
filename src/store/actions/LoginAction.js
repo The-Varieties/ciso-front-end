@@ -5,7 +5,7 @@ export const getLoginUserInstance = (uname, pass) => async dispatch => {
     try {
         const res = await axios({
             method:"get",
-            url:`http://localhost:8000/api/logins/login?username=${uname}&password=${pass}`,
+            url:`${process.env.REACT_APP_BASE_URL}/logins/login?username=${uname}&password=${pass}`,
             'Access-Control-Allow-Origin':"*"
         });
         

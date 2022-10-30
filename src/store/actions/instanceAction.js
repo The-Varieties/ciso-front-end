@@ -7,7 +7,7 @@ export const getInstance = (targetId) => async dispatch => {
     try {
         const res = await axios({
             method: 'get',
-            url: `http://localhost:8000/api/dashboard/instance/${targetId}/`,
+            url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/${targetId}/`,
             headers: {
                 "Authorization": auth_token,
             },
@@ -30,7 +30,7 @@ export const getUsageCategory = (instance_name, time_interval) => async dispatch
     try {
         const res = await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`,
             headers: {
                 "Authorization": auth_token,
             },
@@ -55,7 +55,7 @@ export const getDataVis = (instanceName, time_interval) => async dispatch => {
 
         res.push(await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/data-vis-cpu/?instance=${instanceName}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/data-vis-cpu/?instance=${instanceName}&time_interval=${time_interval}`,
             headers: {
                 "Authorization": auth_token,
             },
@@ -63,7 +63,7 @@ export const getDataVis = (instanceName, time_interval) => async dispatch => {
 
         res.push(await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/data-vis-ram/?instance=${instanceName}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/data-vis-ram/?instance=${instanceName}&time_interval=${time_interval}`,
             headers: {
                 "Authorization": auth_token,
             },
@@ -86,7 +86,7 @@ export const getInstanceList = () => async dispatch => {
     try{
         const res = await axios({
             method: 'get',
-            url: 'http://localhost:8000/api/dashboard/instance/',
+            url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             headers: {
                 "Authorization": auth_token,
             },
@@ -107,7 +107,7 @@ export const getInstanceList = () => async dispatch => {
 
 export const deleteInstance = (targetId) => async dispatch => {
     try{
-        await axios.delete(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
+        await axios.delete(`${process.env.REACT_APP_BASE_URL}/dashboard/instance/${targetId}/`)
     }
     catch(e) {
         dispatch({
@@ -118,10 +118,10 @@ export const deleteInstance = (targetId) => async dispatch => {
 }
 
 export const addNewInstance = (newInstanceMap) => async dispatch => {
-    try {        
+    try {
         const res = await axios({
             method: 'post',
-            url: 'http://localhost:8000/api/dashboard/instance/',
+            url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             data: newInstanceMap,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",

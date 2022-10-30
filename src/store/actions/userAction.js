@@ -2,9 +2,8 @@ import {GET_USER, UPDATE_PROFILE,USER_ERROR} from '../types';
 import axios from 'axios';
 
 export const getUser = (targetId) => async dispatch => {
-
     try{
-        const res = await axios.get(`http://localhost:8000/api/users/users/${targetId}`)
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/users/users/${targetId}`)
 
         dispatch({
             type: GET_USER, 
@@ -20,9 +19,8 @@ export const getUser = (targetId) => async dispatch => {
 }
 
 export const getUpdateProfile = (targetId) => async dispatch => {
-    
     try{
-        const res = await axios.get(`http://localhost:8000/api/users/users/${targetId}`)
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/users/users/${targetId}`)
 
         dispatch({
             type: UPDATE_PROFILE, 
