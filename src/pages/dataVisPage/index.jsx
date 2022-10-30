@@ -35,7 +35,7 @@ function DataVisPage(props) {
         const intervalId = setInterval(() => {
             props.getInstance(instanceId);
             props.getDataVis(instanceName, checked)
-            props.getUsageCategory(instanceName, checked)
+            props.getUsageCategory(instanceName)
             setRightsizingCat(props.instance.instance_status);
             setRecommendationsList(props.usageCategory.recommendations);
 

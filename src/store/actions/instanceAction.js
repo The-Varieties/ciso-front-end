@@ -26,11 +26,11 @@ export const getInstance = (targetId) => async dispatch => {
     }
 }
 
-export const getUsageCategory = (instance_name, time_interval) => async dispatch => {
+export const getUsageCategory = (instance_name) => async dispatch => {
     try {
         const res = await axios({
             method: 'get',
-            url: `${process.env.REACT_APP_BASE_URL}/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/get-usage-category/?instance=${instance_name}&time_interval=7 days`,
             headers: {
                 "Authorization": auth_token,
             },

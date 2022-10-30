@@ -86,7 +86,7 @@ function Dashboard(props){
 											<td className='border'>{data.instance_ipv4}</td>
 											<td className='border'>{data.instance_region}</td>
 											<td className='border'>{data.instance_type}</td>
-											<td className='border'>{data.instance_status[2]}</td>   
+											<td className={`border ${data.instance_status[2] === 'Optimized' ? "text-green-500" : [data.instance_status[2] === 'UnderUtilized' ? "text-yellow-300" : "text-red-600"]}`}>{data.instance_status[2]}</td>
 											<td className='border cursor-pointer font-bold hover:text-card-blue duration-300' onClick={() => goNextPage(data.instance_name, data.instance_id)}>View More</td>
 										</tr>
 									)
