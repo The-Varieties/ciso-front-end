@@ -151,6 +151,11 @@ function DataVisPage(props) {
         setLoading();
     }
 
+    //Code here**
+    // const optimezdInstance = {
+
+    // }
+
     const dataVisTimeList = {name: "dataVisTimeList", values: [
             {menuName: "24 hours"},
             {menuName: '7 days'},

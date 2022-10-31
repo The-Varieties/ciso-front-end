@@ -1,6 +1,7 @@
 import BackArrow from "../../components/backArrow";
 import DropdownMenu from "../dropdownMenu";
 import React, { useEffect, useState, useRef } from "react";
+import OptimizedInstance from "../optimzedbutton";
 
 export const RightSizingComponent = (props) => {
     const dropdownRef = useRef(null);
@@ -29,6 +30,7 @@ export const RightSizingComponent = (props) => {
             <div className="relative w-full">
                 <div className="absolute top-0 right-0">
                     <div className="flex">
+                    <button onClick={() => alert('Button clicked!')} className='mr-3 border-2 rounded-md px-10 bg-white font-bold'>Optimized</button>;
                         <div className="mr-10">
                             <DropdownMenu 
                                 menuTitle={props.checked} 
