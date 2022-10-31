@@ -5,7 +5,7 @@ import UsageCategoryReducer from "./usageCategoryReducer"
 import getloginuserReducer from "./getloginuserReducer";
 import RegistrationReducer from "./registrationReducer";
 import UserInfoReducer from './userInfoReducer';
-import OptimizedReducer from '';
+import OptimizedReducer from './optimizedReducer';
 
 export default combineReducers({
     instance: instanceReducer,

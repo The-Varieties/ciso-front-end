@@ -143,7 +143,7 @@ export const OptimizedInstance = (instance_name, time_interval) => async dispatc
     try {
         const res = await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`,
+            url: `??`,
             headers: {
                 "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
             },
