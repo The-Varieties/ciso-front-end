@@ -19,7 +19,8 @@ function LoginModule(props){
     } else{
       setLoginRes(false);
     }
-  }, [props.userData])
+  }, //eslint-disable-next-line
+    [props.userData])
 
 
   const handleSubmit = (event) => {
@@ -33,7 +34,7 @@ function LoginModule(props){
   return (
     <div className="justify-center">
       <div className="icon">
-          <img src={logo}></img>
+          <img src={logo} alt="Logo"></img>
       </div>
       <h1 className="title">
           Sign in to your account

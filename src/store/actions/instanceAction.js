@@ -1,13 +1,15 @@
 import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY, OPTIMIZED_INSTANCE} from "../types";
 import axios from 'axios';
 
+const auth_token = JSON.parse(sessionStorage.getItem('token'))
+
 export const getInstance = (targetId) => async dispatch => {
     try {
         const res = await axios({
             method: 'get',
-            url: `http://localhost:8000/api/dashboard/instance/${targetId}/`,
+            url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/${targetId}/`,
             headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+                "Authorization": auth_token,
             },
         });
 
@@ -24,13 +26,13 @@ export const getInstance = (targetId) => async dispatch => {
     }
 }
 
-export const getUsageCategory = (instance_name, time_interval) => async dispatch => {
+export const getUsageCategory = (instance_name) => async dispatch => {
     try {
         const res = await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/get-usage-category/?instance=${instance_name}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/get-usage-category/?instance=${instance_name}&time_interval=7 days`,
             headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+                "Authorization": auth_token,
             },
         });
 
@@ -53,17 +55,17 @@ export const getDataVis = (instanceName, time_interval) => async dispatch => {
 
         res.push(await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/data-vis-cpu/?instance=${instanceName}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/data-vis-cpu/?instance=${instanceName}&time_interval=${time_interval}`,
             headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+                "Authorization": auth_token,
             },
         }));
 
         res.push(await axios({
             method: 'get',
-            url: `http://localhost:8000/api/metrics/data-vis-ram/?instance=${instanceName}&time_interval=${time_interval}`,
+            url: `${process.env.REACT_APP_BASE_URL}/metrics/data-vis-ram/?instance=${instanceName}&time_interval=${time_interval}`,
             headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+                "Authorization": auth_token,
             },
         }));
 
@@ -84,9 +86,9 @@ export const getInstanceList = () => async dispatch => {
     try{
         const res = await axios({
             method: 'get',
-            url: 'http://localhost:8000/api/dashboard/instance/',
+            url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+                "Authorization": auth_token,
             },
         });
 
@@ -105,7 +107,7 @@ export const getInstanceList = () => async dispatch => {
 
 export const deleteInstance = (targetId) => async dispatch => {
     try{
-        await axios.delete(`http://localhost:8000/api/dashboard/instance/${targetId}/`)
+        await axios.delete(`${process.env.REACT_APP_BASE_URL}/dashboard/instance/${targetId}/`)
     }
     catch(e) {
         dispatch({
@@ -116,10 +118,10 @@ export const deleteInstance = (targetId) => async dispatch => {
 }
 
 export const addNewInstance = (newInstanceMap) => async dispatch => {
-    try {        
+    try {
         const res = await axios({
             method: 'post',
-            url: 'http://localhost:8000/api/dashboard/instance/',
+            url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             data: newInstanceMap,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
