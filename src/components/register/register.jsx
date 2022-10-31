@@ -65,46 +65,46 @@ function RegisterModule(props){
             <div className="icon">
                 <img src={logo} alt="logo"></img>
             </div>
-            <h1 className="title">
+            <h1 className="text-white text-4xl font-bold text-center">
                 Register
             </h1>
-            <p className="sentenses">
+            <p className="text-center text-slate-500 text-xl font-bold">
                 Start using our product
             </p>
 
-            <div className="registertable">
+            <div className="mt-5 flex justify-center items-center flex-col">
             <form onSubmit={handleSubmit}>
-                <div className="input-container">
-                <label>User Name </label>
-                <input type="text" name="uname" size="55" value={RegisterValue.user_username} onChange={handleUserNameChange} required/>
+                <div className="flex flex-col gap-2 m-2.5">
+                    <label className="text-white text-lg mt-2">User Name </label>
+                    <input className="h-12 text-left p-2 rounded-lg" type="text" name="uname" size="55" value={RegisterValue.user_username} onChange={handleUserNameChange} required/>
                 </div>
-                <div className="input-container">
-                <label>First Name </label>
-                <input type="text" name="fname" size="55" value={RegisterValue.user_firstname} onChange={handleFirstNameChange} required/>
+                <div className="flex flex-col gap-2 m-2.5">
+                    <label className="text-white text-lg mt-2">First Name </label>
+                    <input className="h-12 text-left p-2 rounded-lg" type="text" name="fname" size="55" value={RegisterValue.user_firstname} onChange={handleFirstNameChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Last Name </label>
-                <input type="text" name="lname" size="55" value={RegisterValue.user_lastname} onChange={handleLastNameChange} required/>
+                <div className="flex flex-col gap-2 m-2.5">
+                    <label className="text-white text-lg mt-2">Last Name </label>
+                    <input className="h-12 text-left p-2 rounded-lg" type="text" name="lname" size="55" value={RegisterValue.user_lastname} onChange={handleLastNameChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Email </label>
-                <input type="email" name="email" size="55" value={RegisterValue.user_email} onChange={handleEmailChange} required/>
+                <div className="flex flex-col gap-2 m-2.5">
+                    <label className="text-white text-lg mt-2">Email </label>
+                    <input className="h-12 text-left p-2 rounded-lg" type="email" name="email" size="55" value={RegisterValue.user_email} onChange={handleEmailChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Password </label>
-                <input type="password" name="password" size="55" value={RegisterValue.user_password} onChange={handlePasswordChange} required/>
+                <div className="flex flex-col gap-2 m-2.5">
+                    <label className="text-white text-lg mt-2">Password </label>
+                    <input className="h-12 text-left p-2 rounded-lg" type="password" name="password" size="55" value={RegisterValue.user_password} onChange={handlePasswordChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Confirm Password </label>
-                <input type="password" name="confirm_password" size="55" value={confirmPassword} onChange={handleConfirmPasswordChange} required/>
+                <div className="flex flex-col gap-2 m-2.5">
+                    <label className="text-white text-lg mt-2">Confirm Password </label>
+                    <input className="h-12 text-left p-2 rounded-lg" type="password" name="confirm_password" size="55" value={confirmPassword} onChange={handleConfirmPasswordChange} required/>
                 </div>
                 {RegisterSubmitted ?
                 <div className="Register-message">Account Registered Success</div>
                 :
                 null
                 }
-                <div className="button-container">
-                    <input type="submit" value="Register"/>
+                <div className="flex justify-center mt-5">
+                    <input className="mt-3 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-[215px] " type="submit" value="Register"/>
                 </div>
             </form>
             </div>
