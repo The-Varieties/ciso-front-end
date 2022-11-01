@@ -33,33 +33,33 @@ function LoginModule(props){
 
   return (
     <div className="justify-center">
-      <div className="icon">
+      <div className="mx-auto w-[500px] mt-20">
           <img src={logo} alt="Logo"></img>
       </div>
-      <h1 className="title">
+      <h1 className="mt-3 text-white text-4xl font-bold text-center">
           Sign in to your account
       </h1>
-      <p className="sentenses">
+      <p className="mt-2 text-center text-zinc-600 text-xl font-bold">
           Start using our product
       </p>
       
-      <div className="logintable">
+      <div className="mt-5 flex justify-center items-center flex-col">
         <form onSubmit={handleSubmit}>
-          <div className="input-container">
-            <label>User Name </label>
-            <input type="text" name="uname" required size="50"/>
+          <div className="flex flex-col gap-2 m-2.5">
+            <label className="text-white text-lg mt-2">User Name </label>
+            <input className="h-12 text-left p-4 rounded-lg" type="text" name="uname" required size="50"/>
           </div>
-          <div className="input-container">
-            <label>Password </label>
-            <input type="password" name="pass" required size="50"/>
+          <div className="flex flex-col gap-2 m-2.5">
+            <label className="text-white text-lg mt-2">Password </label>
+            <input className="h-12 text-left p-2 rounded-lg" type="password" name="pass" required size="50"/>
             {loginRes ?
               <div className="h-1"></div>
             :
               <div className="error h-1">Username or Password invalid</div>
             }
           </div>
-          <div className="button-container">
-              <input type="submit" value="Sign In"/>
+          <div className="flex justify-center mt-5">
+              <input className="mt-3 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-52 " type="submit" value="Sign In"/>
           </div>
         </form>
       </div>

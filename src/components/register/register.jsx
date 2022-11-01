@@ -61,7 +61,7 @@ function RegisterModule(props){
 
 
     return(
-        <div className="justify-content-center">
+        <div className="justify-center">
             <div className="icon">
                 <img src={logo} alt="logo"></img>
             </div>
