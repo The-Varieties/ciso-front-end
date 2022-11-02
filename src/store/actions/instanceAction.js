@@ -1,7 +1,16 @@
-import { GET_INSTANCE, INSTANCE_ERROR, GET_INSTANCES_LIST, ADD_NEW_INSTANCE, GET_VIS, GET_USAGE_CATEGORY, OPTIMIZED_INSTANCE} from "../types";
+import {
+    GET_INSTANCE,
+    INSTANCE_ERROR,
+    GET_INSTANCES_LIST,
+    ADD_NEW_INSTANCE,
+    GET_VIS,
+    GET_USAGE_CATEGORY,
+    OPTIMIZED_INSTANCE,
+    RESET_INSTANCE_TYPE
+} from "../types";
 import axios from 'axios';
 
-const auth_token = JSON.parse(sessionStorage.getItem('token'))
+const auth_token = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
 
 export const getInstance = (targetId) => async dispatch => {
     try {
@@ -124,7 +133,7 @@ export const addNewInstance = (newInstanceMap) => async dispatch => {
             url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             data: newInstanceMap,
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": auth_token
             },
         });
 
@@ -141,13 +150,14 @@ export const addNewInstance = (newInstanceMap) => async dispatch => {
     }
 }
 
-export const OptimizedInstance = (instance_name, time_interval) => async dispatch => {
+export const optimizeInstance = (optimizedInstanceData) => async dispatch => {
     try {
         const res = await axios({
-            method: 'get',
-            url: `??`,
+            method: 'post',
+            url: `${process.env.REACT_APP_BASE_URL}/resource-management/change-type/`,
+            data: optimizedInstanceData,
             headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.GzQmdNlTsCjQvCR-YEcqib-1R4kRb4mtm2Ev6kovYeg",
+                "Authorization": auth_token,
             },
         });
 
@@ -157,6 +167,19 @@ export const OptimizedInstance = (instance_name, time_interval) => async dispatc
         })
     }
     catch(e) {
+        dispatch({
+            type: INSTANCE_ERROR,
+            payload: console.log(e)
+        })
+    }
+}
+
+export const resetRecommendedInstanceType = () => async dispatch => {
+    try {
+        dispatch({
+            type: RESET_INSTANCE_TYPE
+        })
+    } catch (e) {
         dispatch({
             type: INSTANCE_ERROR,
             payload: console.log(e)

@@ -6,8 +6,6 @@ import {useLocation} from 'react-router-dom';
 import { getUser } from "../../store/actions/userAction";
 import { connect } from "react-redux";
 import {GetUserIdFromToken} from "../../utils/tokenDecoder";
-// import { GetUserIdFromToken } from "../../utils/tokenDecoder";
-
 
 function ProfilePage(props) {
     const location = useLocation()
