@@ -1,5 +1,4 @@
-
-.title{
+/* .title{
   color: white;
   font-size: 35px;
   text-align: center;
@@ -52,25 +51,14 @@
   margin-top: 10px;
 }
 
-input[type="submit"] {
-  margin-top: 10px;
-  cursor: pointer;
-  font-size: 18px;
-  background: yellow;
-  border-radius: 5px;
-  color: black;
-  padding: 8px 200px;
-  font-weight: bold;
-}
-
-input[type="submit"]:hover {
-  background: #6cf0c2;
-}
-
 .button-container {
   display: flex;
   justify-content: center;
   margin-top: 5%;
+} */
+
+input[type="submit"]:hover {
+  background: #6cf0c2;
 }
 
 .registerlink{
