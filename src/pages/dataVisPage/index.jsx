@@ -11,7 +11,7 @@ import {
     getDataVis,
     getUsageCategory, optimizeInstance
 } from "../../store/actions/instanceAction";
-import { FinancialSummaryContent } from "../../components/financialSummaryContent";
+import FinancialSummaryContent from "../../components/financialSummaryContent";
 import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";

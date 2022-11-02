@@ -1,53 +1,71 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux";
+import {getInstanceFinancialReport} from "../../store/actions/financialReportAction";
 
-export const FinanceSummaryTable = () => {
+const FinanceSummaryTable = (props) => {
+    const [isOptimizedHigher, setIsOptimizedHigher] = useState(false)
+
+    useEffect(() => {
+        if(props.financialReport == null && props.instance.instance_aws_id) {
+            props.getInstanceFinancialReport(props.instance.instance_aws_id)
+        }
+    }, //eslint-disable-next-line
+        [props.instance])
+
+    useEffect(() => {
+        if (props.financialReport) {
+            if (props.financialReport['optimized_monthly_price'] > props.financialReport['current_monthly_price']) {
+                setIsOptimizedHigher(true)
+            } else {
+                setIsOptimizedHigher(false)
+            }
+        }
+    }, [props.financialReport])
+
     return(
-        <table>
-            <tbody>
-                <tr>
-                    <td className="font-bold italic">Current Spending</td>
-                </tr>
-                <tr>
-                    <td>Amazon Elastic Block Storage (EBS)</td>
-                    <td className="text-right w-32">703.73 USD</td>
-                </tr>
-                <tr>
-                    <td>Amazon EC2 Instance Savings Plans Instances</td>
-                    <td className="text-right">3.00 USD</td>
-                </tr>
-                <tr>
-                    <td className="font-bold italic text-right">Sub-total:</td>
-                    <td className="font-bold text-right">706.73 USD</td>
-                </tr>
-                <tr className="h-2"></tr>
-                <tr>
-                    <td className="font-bold italic">Recommended Rightsizing with Spending</td>
-                </tr>
-                <tr>
-                    <td>Reduce Number of Allocated CPUs to 2 CPUs</td>
-                    <td className="text-right">-100.00 USD</td>
-                </tr>
-                <tr>
-                    <td className="font-bold italic text-right">Sub-total:</td>
-                    <td className="font-bold text-right">-100.00 USD</td>
-                </tr>
-                <tr className="h-2"></tr>
-                <tr>
-                    <td className="font-bold italic">Spending After Rightsizing</td>
-                </tr>
-                <tr>
-                    <td>Current Spending</td>
-                    <td className="text-right">706.73 USD</td>
-                </tr>
-                <tr>
-                    <td>Recommended Rightsizing Spending</td>
-                    <td className="text-right">-100.00 USD</td>
-                </tr>
-                <tr>
-                    <td className="font-bold italic text-right">Sub-total:</td>
-                    <td className="font-bold text-right">606.73 USD</td>
-                </tr>
-            </tbody>
-        </table>
+        props.financialReport !== null
+            ? <table className='w-full'>
+                <tbody>
+                    <tr>
+                        <td className="font-bold italic">Current Spending</td>
+                    </tr>
+                    <tr>
+                        <td>Hourly Spending</td>
+                        <td className="text-right w-40">{props.financialReport['current_hourly_price']} USD</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Spending</td>
+                        <td className="text-right">{props.financialReport['current_monthly_price']} USD</td>
+                    </tr>
+                    <tr className="h-2"></tr>
+                    <tr>
+                        <td className="font-bold italic">Optimized Spending</td>
+                    </tr>
+                    <tr>
+                        <td>Hourly Spending</td>
+                        <td className="text-right">{props.financialReport['optimized_hourly_price']} USD</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Spending</td>
+                        <td className="text-right">{props.financialReport['optimized_monthly_price']} USD</td>
+                    </tr>
+                    <tr className="h-2"></tr>
+                    <tr>
+                        <td className="font-bold italic">Summary</td>
+                    </tr>
+                    <tr>
+                        <td>{isOptimizedHigher ? 'Additional Expenses' : 'Potential Saving'}</td>
+                        <td className="text-right">{props.financialReport['potential_savings']} USD</td>
+                    </tr>
+                </tbody>
+            </table>
+            : <div></div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    instance: state.instance.instance,
+    financialReport: state.financialReport.financialReport
+})
+
+export default connect(mapStateToProps, {getInstanceFinancialReport})(FinanceSummaryTable);
