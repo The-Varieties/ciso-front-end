@@ -51,7 +51,7 @@ function LoginModule(props){
           </div>
           <div className="flex flex-col gap-2 m-2.5">
             <label className="text-white text-lg mt-2">Password </label>
-            <input className="h-12 text-left p-2 rounded-lg" type="password" name="pass" required size="50"/>
+            <input className="h-12 text-left p-4 rounded-lg" type="password" name="pass" required size="50"/>
             {loginRes ?
               <div className="h-1"></div>
             :

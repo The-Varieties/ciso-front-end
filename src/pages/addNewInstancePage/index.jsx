@@ -35,7 +35,7 @@ function AddInstance(props){
     }
 
     return (
-        <div className="bg-pink pt-10 pb-10 px-10 my-24 xl:my-60 mx-60 xl:mx-[31rem] h-full block border-black border-2 rounded-xl">
+        <div className="bg-pink pt-6 pb-4 px-10 my-24 mx-12 md:my-40 md:mx-96 h-full block border-black border-2 rounded-xl">
             <h2 className='text-pinky-red font-bold text-3xl text-center'>Add New Instance</h2>
             <form>
                 <label className='block text-lg mt-5'>AWS Access Key: </label>
