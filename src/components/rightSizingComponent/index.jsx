@@ -1,9 +1,12 @@
 import BackArrow from "../../components/backArrow";
 import DropdownMenu from "../dropdownMenu";
 import React, { useEffect, useState, useRef } from "react";
-import OptimizedInstance from "../optimzedbutton";
+import {
+    resetRecommendedInstanceType
+} from "../../store/actions/instanceAction";
+import {connect} from "react-redux";
 
-export const RightSizingComponent = (props) => {
+const RightSizingComponent = (props) => {
     const dropdownRef = useRef(null);
     const [dropdownIsActive, setActive] = useState(false);
 
@@ -17,11 +20,19 @@ export const RightSizingComponent = (props) => {
         if(dropdownIsActive) {
             window.addEventListener('click', closeDropdown);
         }
-        
+
         return() => {
             window.removeEventListener('click', closeDropdown);
         }
     }, [dropdownIsActive, dropdownRef])
+
+    useEffect(() => {
+        if(!props.optimizedInstance.loading) {
+            props.loadingSetter(false)
+            props.resetRecommendedInstanceType()
+        }
+    }, //eslint-disable-next-line
+    [props.optimizedInstance])
 
     return(
         <div className="flex h-10 mt-6">
@@ -30,7 +41,10 @@ export const RightSizingComponent = (props) => {
             <div className="relative w-full">
                 <div className="absolute top-0 right-0">
                     <div className="flex">
-                    <button onClick={() => alert('Button clicked!')} className='mr-3 border-2 rounded-md px-10 bg-white font-bold'>Optimized</button>;
+                        <button onClick={props.optimizeButtonHandle} className='mr-3 border-2 rounded-md px-10 bg-white font-bold text-sm'>
+                            Optimize
+                        </button>
+
                         <div className="mr-10">
                             <DropdownMenu 
                                 menuTitle={props.checked} 
@@ -50,3 +64,9 @@ export const RightSizingComponent = (props) => {
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({ optimizedInstance: state.optimizedInstance.optimizedInstance })
+
+const mapDispatchToProps = {resetRecommendedInstanceType}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RightSizingComponent);

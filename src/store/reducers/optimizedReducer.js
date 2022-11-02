@@ -1,7 +1,7 @@
-import { OPTIMIZED_INSTANCE } from "../types";
+import {OPTIMIZED_INSTANCE, RESET_INSTANCE_TYPE} from "../types";
 
 const initialState = {
-    optimziedInstance: null,
+    optimizedInstance: [],
     loading: true,
 }
 
@@ -11,8 +11,10 @@ export default function optimizedReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                optimziedInstance: action.payload
+                optimizedInstance: action.payload
             }
+        case RESET_INSTANCE_TYPE:
+            return {...initialState}
         default: return {...state}
     }
 }
