@@ -8,6 +8,7 @@ import logo from '../../assets/Images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import {getUser} from "../../store/actions/userAction";
 import {GetUserIdFromToken} from "../../utils/tokenDecoder";
+import {resetFinancialReport} from "../../store/actions/financialReportAction";
 
 function Dashboard(props){
 	const [loaded, setLoaded] = useState(false)
@@ -40,7 +41,9 @@ function Dashboard(props){
 		if(tableRef.current != null) {
 			setLoaded(true)
 		}
-	}, [contentMap.length])
+		props.resetFinancialReport();
+	}, //eslint-disable-next-line
+		[contentMap.length])
 
 	const tableHeadingList = {name: "tableHeadingList", values: [
 		'ID',
@@ -102,4 +105,4 @@ function Dashboard(props){
 
 const mapStateToProps = (state) => ({instanceList: state.instance.instanceList, userData:state.userinfo.userinfo})
 
-export default connect(mapStateToProps, {getInstanceList, getUser})(Dashboard);
+export default connect(mapStateToProps, {getInstanceList, getUser, resetFinancialReport})(Dashboard);
