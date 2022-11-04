@@ -14,7 +14,7 @@ function FinancialReport(){
 
     return(
         <div>
-        <div class="backarrow">
+        <div class="mt-6 ml-8">
             <BackArrow backPath = "/dashboard" />
         </div>
 

@@ -33,36 +33,33 @@ function LoginModule(props){
 
   return (
     <div className="justify-center">
-      <div className="mx-auto w-[500px] mt-20">
+      <div className="mx-auto w-[420px] mt-20 md:w-[500px]">
           <img src={logo} alt="Logo"></img>
       </div>
-      <h1 className="mt-3 text-white text-4xl font-bold text-center">
+      <h1 className="mt-3 text-white text-[30px] font-bold text-center md:text-4xl">
           Sign in to your account
       </h1>
-      <p className="mt-2 text-center text-zinc-600 text-xl font-bold">
+      <p className="mt-2 text-center text-zinc-600 text-xl font-bold md:text-2xl">
           Start using our product
       </p>
-      
-      <div className="mt-5 flex justify-center items-center flex-col">
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-2 m-2.5">
-            <label className="text-white text-lg mt-2">User Name </label>
-            <input className="h-12 text-left p-4 rounded-lg" type="text" name="uname" required size="50"/>
+        <form onSubmit={handleSubmit} className="flex mt-5 justify-center items-center flex-col">
+          <div className="mx-2.5 md:mx-6">
+            <label className="block text-white text-lg mt-4">User Name </label>
+            <input className="mt-2 h-12 text-left p-4 rounded-lg" type="text" name="uname" required size={45}/>
           </div>
-          <div className="flex flex-col gap-2 m-2.5">
-            <label className="text-white text-lg mt-2">Password </label>
-            <input className="h-12 text-left p-2 rounded-lg" type="password" name="pass" required size="50"/>
+          <div className="mx-2.5 md:mx-6">
+            <label className="block text-white text-lg mt-5">Password </label>
+            <input className="mt-2 h-12 text-left p-4 rounded-lg" type="password" name="pass" required size={45}/>
             {loginRes ?
               <div className="h-1"></div>
             :
               <div className="error h-1">Username or Password invalid</div>
             }
           </div>
-          <div className="flex justify-center mt-5">
-              <input className="mt-3 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-52 " type="submit" value="Sign In"/>
+          <div className="block text-center m-2.5 md:mx-6">
+              <input className="mt-3 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-[185px]" type="submit" value="Sign In"/>
           </div>
         </form>
-      </div>
       <p className="registerlink">Don’t have an account?<Link to={"/register-page"}> Register</Link></p>
     </div>
   );

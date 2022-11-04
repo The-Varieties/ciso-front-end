@@ -27,8 +27,8 @@ function ProfilePage(props) {
             <BackArrow backPath = {`/${from}`} />
         </div>
         <div className="flex font-medium items-center justify-center">
-        <div className="w-1/3 mx-auto bg-[#20354b] rounded-2xl px-10 py-8 shadow-lg">
-            <img src={profile} alt="Profile" className="mt-5 mx-auto"/>
+        <div className="mx-auto mb-10 bg-[#20354b] rounded-2xl px-10 py-8 shadow-lg">
+            <img src={profile} alt="Profile" className="mt-3 mx-auto md:flex"/>
             <h1 className="pt-4 text-center space-y-4 text-[36px]">NeXphos Member</h1>
             <hr className="border-2 border-black bg-black"/>
             <div className="mt-4 grid grid-cols-2 gap-4">
