@@ -1,4 +1,4 @@
-
+/* 
 .title{
     color: white;
     font-size: 35px;
@@ -56,16 +56,18 @@
   color: black;
   padding: 8px 215px;
   font-weight: bold;
-}
-  
-input[type="submit"]:hover {
-  background: #6cf0c2;
-}
-  
+} 
+
 .button-container {
   display: flex;
   justify-content: center;
   margin-top: 5%;
+}
+
+*/
+  
+input[type="submit"]:hover {
+  background: #6cf0c2;
 }
   
 .registerlink{

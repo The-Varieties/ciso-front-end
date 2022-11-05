@@ -61,53 +61,50 @@ function RegisterModule(props){
 
 
     return(
-        <div className="justify-content-center">
-            <div className="icon">
+        <div className="justify-center">
+            <div className="mx-auto w-[430px] mt-20 md:w-[500px]">
                 <img src={logo} alt="logo"></img>
             </div>
-            <h1 className="title">
+            <h1 className="text-white font-bold text-center text-4xl">
                 Register
             </h1>
-            <p className="sentenses">
+            <p className="text-center text-zinc-600 text-xl font-bold md:text-2xl">
                 Start using our product
             </p>
-
-            <div className="registertable">
-            <form onSubmit={handleSubmit}>
-                <div className="input-container">
-                <label>User Name </label>
-                <input type="text" name="uname" size="55" value={RegisterValue.user_username} onChange={handleUserNameChange} required/>
+            <form onSubmit={handleSubmit} className="mt-5 flex justify-center items-center flex-col">
+                <div className="mx-2.5 md:mx-6">
+                    <label className="block text-white text-lg mt-4">User Name </label>
+                    <input className="mt-2 h-12 text-left p-4 rounded-lg" type="text" name="uname" size="45" value={RegisterValue.user_username} onChange={handleUserNameChange} required/>
                 </div>
-                <div className="input-container">
-                <label>First Name </label>
-                <input type="text" name="fname" size="55" value={RegisterValue.user_firstname} onChange={handleFirstNameChange} required/>
+                <div className="mx-2.5 md:mx-6">
+                    <label className="block text-white text-lg mt-5">First Name </label>
+                    <input className="mt-2 h-12 text-left p-4 rounded-lg" type="text" name="fname" size="45" value={RegisterValue.user_firstname} onChange={handleFirstNameChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Last Name </label>
-                <input type="text" name="lname" size="55" value={RegisterValue.user_lastname} onChange={handleLastNameChange} required/>
+                <div className="mx-2.5 md:mx-6">
+                    <label className="block text-white text-lg mt-5">Last Name </label>
+                    <input className="mt-2 h-12 text-left p-4 rounded-lg" type="text" name="lname" size="45" value={RegisterValue.user_lastname} onChange={handleLastNameChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Email </label>
-                <input type="email" name="email" size="55" value={RegisterValue.user_email} onChange={handleEmailChange} required/>
+                <div className="mx-2.5 md:mx-6">
+                    <label className="block text-white text-lg mt-5">Email </label>
+                    <input className="mt-2 h-12 text-left p-4 rounded-lg" type="email" name="email" size="45" value={RegisterValue.user_email} onChange={handleEmailChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Password </label>
-                <input type="password" name="password" size="55" value={RegisterValue.user_password} onChange={handlePasswordChange} required/>
+                <div className="mx-2.5 md:mx-6">
+                    <label className="block text-white text-lg mt-5">Password </label>
+                    <input className="mt-2 h-12 text-left p-4 rounded-lg" type="password" name="password" size="45" value={RegisterValue.user_password} onChange={handlePasswordChange} required/>
                 </div>
-                <div className="input-container">
-                <label>Confirm Password </label>
-                <input type="password" name="confirm_password" size="55" value={confirmPassword} onChange={handleConfirmPasswordChange} required/>
+                <div className="mx-2.5 md:mx-6">
+                    <label className="block text-white text-lg mt-5">Confirm Password </label>
+                    <input className="mt-2 h-12 text-left p-4 rounded-lg" type="password" name="confirm_password" size="45" value={confirmPassword} onChange={handleConfirmPasswordChange} required/>
                 </div>
-                {RegisterSubmitted && Valid?
+                {RegisterSubmitted ?
                 <div className="Register-message">Account Registered Success</div>
                 :
                 null
-            }
-                <div className="button-container">
-                    <input type="submit" value="Register"/>
+                }
+                <div className="block text-center m-2.5 md:mx-6">
+                    <input className="mt-5 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-[180px] " type="submit" value="Register"/>
                 </div>
             </form>
-            </div>
             <p className="registerlink">Already have an account?<Link to={"/login-page"}> Sign In</Link></p>
         </div>
     )

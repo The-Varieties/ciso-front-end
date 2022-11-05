@@ -19,7 +19,8 @@ function LoginModule(props){
     } else{
       setLoginRes(false);
     }
-  }, [props.userData])
+  }, //eslint-disable-next-line
+    [props.userData])
 
 
   const handleSubmit = (event) => {
@@ -32,36 +33,33 @@ function LoginModule(props){
 
   return (
     <div className="justify-center">
-      <div className="icon">
-          <img src={logo}></img>
+      <div className="mx-auto w-[420px] mt-20 md:w-[500px]">
+          <img src={logo} alt="Logo"></img>
       </div>
-      <h1 className="title">
+      <h1 className="mt-3 text-white text-[30px] font-bold text-center md:text-4xl">
           Sign in to your account
       </h1>
-      <p className="sentenses">
+      <p className="mt-2 text-center text-zinc-600 text-xl font-bold md:text-2xl">
           Start using our product
       </p>
-      
-      <div className="logintable">
-        <form onSubmit={handleSubmit}>
-          <div className="input-container">
-            <label>User Name </label>
-            <input type="text" name="uname" required size="50"/>
+        <form onSubmit={handleSubmit} className="flex mt-5 justify-center items-center flex-col">
+          <div className="mx-2.5 md:mx-6">
+            <label className="block text-white text-lg mt-4">User Name </label>
+            <input className="mt-2 h-12 text-left p-4 rounded-lg" type="text" name="uname" required size={45}/>
           </div>
-          <div className="input-container">
-            <label>Password </label>
-            <input type="password" name="pass" required size="50"/>
+          <div className="mx-2.5 md:mx-6">
+            <label className="block text-white text-lg mt-5">Password </label>
+            <input className="mt-2 h-12 text-left p-4 rounded-lg" type="password" name="pass" required size={45}/>
             {loginRes ?
               <div className="h-1"></div>
             :
               <div className="error h-1">Username or Password invalid</div>
             }
           </div>
-          <div className="button-container">
-              <input type="submit" value="Sign In"/>
+          <div className="block text-center m-2.5 md:mx-6">
+              <input className="mt-3 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-[185px]" type="submit" value="Sign In"/>
           </div>
         </form>
-      </div>
       <p className="registerlink">Don’t have an account?<Link to={"/register-page"}> Register</Link></p>
     </div>
   );

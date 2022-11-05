@@ -6,11 +6,15 @@ import { connect } from 'react-redux';
 import { getInstanceList } from '../../store/actions/instanceAction';
 import logo from '../../assets/Images/logo.png';
 import { useNavigate } from 'react-router-dom';
+import {getUser} from "../../store/actions/userAction";
+import {GetUserIdFromToken} from "../../utils/tokenDecoder";
+import {resetFinancialReport} from "../../store/actions/financialReportAction";
 
 function Dashboard(props){
 	const [loaded, setLoaded] = useState(false)
 	const tableRef = useRef(null);
 	const [contentMap, setContentMap] = useState([]);
+	const userId = GetUserIdFromToken();
 
 	let navigate = useNavigate();
 
@@ -26,6 +30,7 @@ function Dashboard(props){
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			props.getInstanceList();
+			props.getUser(userId);
 			setContentMap(props.instanceList);
 		}, 3000)
 		
@@ -36,7 +41,9 @@ function Dashboard(props){
 		if(tableRef.current != null) {
 			setLoaded(true)
 		}
-	}, [contentMap.length])
+		props.resetFinancialReport();
+	}, //eslint-disable-next-line
+		[contentMap.length])
 
 	const tableHeadingList = {name: "tableHeadingList", values: [
 		'ID',
@@ -58,7 +65,7 @@ function Dashboard(props){
 			</div>
 
 			<div className='mx-16 mt-20'>
-				<h1 className={`w-fit text-white text-3xl font-bold`}>{contentMap.length > 0 ? "Chua's List of Instances" : "Loading..."}</h1>
+				<h1 className={`w-fit text-white text-3xl font-bold`}>{contentMap.length > 0 ? `${props.userData.user_lastname}'s List of Instances` : "Loading..."}</h1>
 			</div>
 
 			<div className={`flex w-full mt-6 delay-300 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
@@ -82,7 +89,7 @@ function Dashboard(props){
 											<td className='border'>{data.instance_ipv4}</td>
 											<td className='border'>{data.instance_region}</td>
 											<td className='border'>{data.instance_type}</td>
-											<td className='border'>{data.instance_status[2]}</td>   
+											<td className={`border ${data.instance_status[2] === 'Optimized' ? "text-green-500" : [data.instance_status[2] === 'UnderUtilized' ? "text-yellow-300" : "text-red-600"]}`}>{data.instance_status[2]}</td>
 											<td className='border cursor-pointer font-bold hover:text-card-blue duration-300' onClick={() => goNextPage(data.instance_name, data.instance_id)}>View More</td>
 										</tr>
 									)
@@ -96,22 +103,6 @@ function Dashboard(props){
 	)
 }
 
-const mapStateToProps = (state) => ({instanceList: state.instance.instanceList})
+const mapStateToProps = (state) => ({instanceList: state.instance.instanceList, userData:state.userinfo.userinfo})
 
-export default connect(mapStateToProps, {getInstanceList})(Dashboard);
-
-/*
-Code Reference
-
-<div className='mx-16 mt-20'>
-	<h1 className={`w-fit text-white text-3xl font-bold`}>Chua's List of Instances</h1>
-	<div className={`grid grid-cols-3 gap-8 items-center h-full delay-100 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`} onLoad={onLoadFunc}>
-		{contentMap && contentMap.map((instance, index) => (
-			<div className="my-10" key={index}>
-				<DashboardCard cardContent = {instance} hasOnClick = {true} nextPageRoute = {"/data-vis-page"} />              
-			</div>
-		))}
-	</div>
-</div>
-
-*/
+export default connect(mapStateToProps, {getInstanceList, getUser, resetFinancialReport})(Dashboard);
