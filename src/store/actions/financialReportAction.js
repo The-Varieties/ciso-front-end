@@ -1,9 +1,9 @@
 import axios from 'axios'
 import {ALL_INSTANCES_FINANCIAL_REPORT, FINANCIAL_REPORT, INSTANCE_ERROR, RESET_FINANCIAL_REPORT} from "../types";
 
-const auth_token = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
-
 export const getInstanceFinancialReport = (instanceAWSId) => async dispatch => {
+    const auth_token = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
+
     try {
         const res = await axios({
             method: 'get',
@@ -27,6 +27,8 @@ export const getInstanceFinancialReport = (instanceAWSId) => async dispatch => {
 }
 
 export const getAllInstanceFinancialReport = () => async dispatch => {
+    const auth_token = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
+
     try {
         const res = await axios({
             method: 'get',

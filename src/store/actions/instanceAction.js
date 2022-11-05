@@ -10,15 +10,16 @@ import {
 } from "../types";
 import axios from 'axios';
 
-const auth_token = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
+let AUTH_TOKEN = null;
 
 export const getInstance = (targetId) => async dispatch => {
+    AUTH_TOKEN = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
     try {
         const res = await axios({
             method: 'get',
             url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/${targetId}/`,
             headers: {
-                "Authorization": auth_token,
+                "Authorization": AUTH_TOKEN,
             },
         });
 
@@ -41,7 +42,7 @@ export const getUsageCategory = (instance_name) => async dispatch => {
             method: 'get',
             url: `${process.env.REACT_APP_BASE_URL}/metrics/get-usage-category/?instance=${instance_name}&time_interval=7 days`,
             headers: {
-                "Authorization": auth_token,
+                "Authorization": AUTH_TOKEN,
             },
         });
 
@@ -66,7 +67,7 @@ export const getDataVis = (instanceName, time_interval) => async dispatch => {
             method: 'get',
             url: `${process.env.REACT_APP_BASE_URL}/metrics/data-vis-cpu/?instance=${instanceName}&time_interval=${time_interval}`,
             headers: {
-                "Authorization": auth_token,
+                "Authorization": AUTH_TOKEN,
             },
         }));
 
@@ -74,7 +75,7 @@ export const getDataVis = (instanceName, time_interval) => async dispatch => {
             method: 'get',
             url: `${process.env.REACT_APP_BASE_URL}/metrics/data-vis-ram/?instance=${instanceName}&time_interval=${time_interval}`,
             headers: {
-                "Authorization": auth_token,
+                "Authorization": AUTH_TOKEN,
             },
         }));
 
@@ -92,12 +93,13 @@ export const getDataVis = (instanceName, time_interval) => async dispatch => {
 }
 
 export const getInstanceList = () => async dispatch => {
+    AUTH_TOKEN = "Bearer " + JSON.parse(sessionStorage.getItem('token'))
     try{
         const res = await axios({
             method: 'get',
             url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             headers: {
-                "Authorization": auth_token,
+                "Authorization": AUTH_TOKEN,
             },
         });
 
@@ -133,7 +135,8 @@ export const addNewInstance = (newInstanceMap) => async dispatch => {
             url: `${process.env.REACT_APP_BASE_URL}/dashboard/instance/`,
             data: newInstanceMap,
             headers: {
-                "Authorization": auth_token
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": AUTH_TOKEN
             },
         });
 
@@ -157,7 +160,7 @@ export const optimizeInstance = (optimizedInstanceData) => async dispatch => {
             url: `${process.env.REACT_APP_BASE_URL}/resource-management/change-type/`,
             data: optimizedInstanceData,
             headers: {
-                "Authorization": auth_token,
+                "Authorization": AUTH_TOKEN,
             },
         });
 
