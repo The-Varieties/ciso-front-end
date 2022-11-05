@@ -1,19 +1,23 @@
 import Card from "../../components/cards";
 import { useEffect, useState } from 'react';
-import { RightSizingComponent } from "../../components/rightSizingComponent";
+import RightSizingComponent from "../../components/rightSizingComponent";
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { getInstance, getDataVis, getUsageCategory } from "../../store/actions/instanceAction";
-import { FinancialSummaryContent } from "../../components/financialSummaryContent";
+import {
+    getInstance,
+    getDataVis,
+    getUsageCategory, optimizeInstance
+} from "../../store/actions/instanceAction";
+import FinancialSummaryContent from "../../components/financialSummaryContent";
 import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";
 import React from 'react';
-import {resetRecommendedInstanceType, testInstanceType} from "../../store/actions/testAction";
 import {CircularProgress, Dialog} from '@mui/material';
+import {GetUserIdFromToken} from "../../utils/tokenDecoder";
 
 function DataVisPage(props) {
     const [checked, setChecked] = useState("24 hours");
@@ -26,6 +30,7 @@ function DataVisPage(props) {
     const [vis_cpu, setVis_cpu] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_ram, setVis_ram] = useState(<h2 className="text-white">Loading...</h2>);
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const userId = GetUserIdFromToken();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -33,9 +38,11 @@ function DataVisPage(props) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            props.getInstance(instanceId);
-            props.getDataVis(instanceName, checked)
-            props.getUsageCategory(instanceName)
+            if(!isButtonClicked) {
+                props.getInstance(instanceId);
+                props.getDataVis(instanceName, checked)
+                props.getUsageCategory(instanceName)
+            }
             setRightsizingCat(props.instance.instance_status);
             setRecommendationsList(props.usageCategory.recommendations);
 
@@ -163,34 +170,33 @@ function DataVisPage(props) {
 
     Chart.register(ChartSetting.annotationLineSetting);
 
-    const handleChangeInstanceType = () => {
+    const handleChangeInstanceType = async () => {
         setIsButtonClicked(true)
-        props.testInstanceType()
-    }
 
-    useEffect(() => {
-        if(!props.recommendedInstanceType.loading) {
-            setIsButtonClicked(false)
-            props.resetRecommendedInstanceType()
+        const optimizedInstanceData = {
+            "user_id": userId,
+            "instance_id": props.instance.instance_id,
+            "target_instance_type": props.usageCategory.recommended_instance_family
         }
-    }, //eslint-disable-next-line
-        [props.recommendedInstanceType.type])
+
+        await props.optimizeInstance(optimizedInstanceData)
+
+        window.location.reload();
+    }
 
     return (
         <div className="mx-16 my-5">
-            <div onClick={handleChangeInstanceType} className="w-fit h-10 bg-yellow-50 cursor-pointer">
-                Test Change Instance Type
-            </div>
             <Dialog open = {isButtonClicked} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
                 <CircularProgress color = "warning"/>
             </Dialog>
-
 
             <RightSizingComponent 
                 rightsizingCat = {rightsizingCat} 
                 checked = {checked} 
                 dropdownCallback = {changeTime} 
                 dataVisTimeList = {dataVisTimeList}
+                loadingSetter = {setIsButtonClicked}
+                optimizeButtonHandle = {handleChangeInstanceType}
             />
 
             <div className="grid grid-cols-2 gap-16 mt-28 w-full">
@@ -206,7 +212,12 @@ function DataVisPage(props) {
             </div>
 
             <div className="mt-20 mb-10 grid grid-cols-6 gap-5">
-                <div className="col-span-3"> <Card cardContent = {<InstanceDetail instance = {props.instance} />} /> </div>
+                <div className="col-span-3"> <Card cardContent = {
+                    <InstanceDetail
+                        instance = {props.instance}
+                        recommendedInstanceType = {props.usageCategory.recommended_instance_family}
+                    />
+                }/> </div>
                 <div className="col-span-3"> <Card cardContent = {<RecommendationContent recommendationsList = {recommendationsList} />} /> </div>
                 <div className="col-span-6"> <Card cardContent = {<FinancialSummaryContent />} /> </div>
             </div>
@@ -218,15 +229,14 @@ const mapStateToProps = (state) => ({
     instance: state.instance.instance,
     visualization: state.visualization.visualization,
     usageCategory: state.usageCategory.usageCategory,
-    recommendedInstanceType: state.instanceType
+    optimizedInstance: state.optimizedInstance.optimizedInstance
 })
 
 const mapDispatchToProps = {
     getInstance,
     getDataVis,
     getUsageCategory,
-    testInstanceType,
-    resetRecommendedInstanceType
+    optimizeInstance
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);

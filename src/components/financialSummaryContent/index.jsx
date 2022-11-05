@@ -1,21 +1,46 @@
-import { FinanceSummaryTable } from "../financeSummaryTable"
-import React from 'react'
+import FinanceSummaryTable from "../financeSummaryTable"
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux";
 
-export const FinancialSummaryContent = () => {
+const FinancialSummaryContent = (props) => {
+    const [savingPercentage, setSavingPercentage] = useState(0)
+    const [isOptimizedHigher, setIsOptimizedHigher] = useState(false)
+
+    useEffect(() => {
+        if (props.financialReport !== null) {
+            const percentage = (props.financialReport['optimized_monthly_price'] / props.financialReport['current_monthly_price']) * 100
+            setSavingPercentage(percentage)
+
+            if (props.financialReport['optimized_monthly_price'] > props.financialReport['current_monthly_price']) {
+                setIsOptimizedHigher(true)
+            } else {
+                setIsOptimizedHigher(false)
+            }
+        }
+    }, [props.financialReport])
+
     return(
         <div>
-            <h2 className="w-fit font-bold text-2xl mb-2">Financial Report (Year)</h2>
+            <h2 className="w-fit font-bold text-2xl mb-2">Financial Report (Monthly)</h2>
             <div className="flex w-full">
                 <FinanceSummaryTable />
 
-                <div className="flex mx-auto my-auto">
-                    <div className="block">
-                        <p className="font-bold text-3xl">You can save your</p>
-                        <p className="text-right font-bold text-3xl">budget up to</p>
+                <div className="flex w-full">
+                    <div className="mx-auto my-auto flex">
+                        <div className="block">
+                            <p className="font-bold text-2xl">You {isOptimizedHigher ? 'need to add' : 'can save'} your</p>
+                            <p className="text-right font-bold text-xl">budget up to</p>
+                        </div>
+                        <p className="font-bold text-6xl ml-2">{savingPercentage}%</p>
                     </div>
-                    <p className="font-bold text-7xl ml-2">14.15%</p>
                 </div>
             </div>
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    financialReport: state.financialReport.financialReport
+})
+
+export default connect(mapStateToProps)(FinancialSummaryContent);

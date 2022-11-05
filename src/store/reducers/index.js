@@ -5,7 +5,8 @@ import UsageCategoryReducer from "./usageCategoryReducer"
 import getloginuserReducer from "./getloginuserReducer";
 import RegistrationReducer from "./registrationReducer";
 import UserInfoReducer from './userInfoReducer';
-import TestReducer from "./testReducer";
+import OptimizedReducer from './optimizedReducer';
+import FinancialReportReducer from "./financialReportReducer";
 
 export default combineReducers({
     instance: instanceReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     getloginuser: getloginuserReducer,
     registration:RegistrationReducer,
     userinfo:UserInfoReducer,
-    instanceType: TestReducer
+    optimizedInstance: OptimizedReducer,
+    financialReport: FinancialReportReducer
 })
