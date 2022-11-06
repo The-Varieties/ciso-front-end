@@ -2,12 +2,10 @@ import './index.css';
 import BackArrow from "../../components/backArrow";
 import {connect} from "react-redux";
 import {getAllInstanceFinancialReport} from "../../store/actions/financialReportAction";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {CircularProgress, Dialog} from "@mui/material";
 
 const FinancialReport = (props) => {
-    const [isOptimizedHigher] = useState(false)
-
     useEffect(() => {
         if(props.financialReport == null) {
             props.getAllInstanceFinancialReport();
@@ -36,7 +34,12 @@ const FinancialReport = (props) => {
                         <tr>
                             <th>Current Spending</th>
                             <th>Optimized Spending</th>
-                            <th>{isOptimizedHigher ? 'Extra Expenses' : 'Potential Saving'}</th>
+                            <th>{
+                                props.financialReport &&
+                                props.financialReport['total_optimized_montly_price'] > props.financialReport['total_current_monthly_price']
+                                    ? 'Extra Expenses'
+                                    : 'Potential Saving'
+                            }</th>
                         </tr>
                     </thead>
                     <tbody>
