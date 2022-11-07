@@ -27,11 +27,17 @@ const FinancialSummaryContent = (props) => {
 
                 <div className="flex w-full">
                     <div className="mx-auto my-auto flex">
-                        <div className="block">
-                            <p className="font-bold text-2xl">You {isOptimizedHigher ? 'need to add' : 'can save'} your</p>
-                            <p className="text-right font-bold text-xl">budget up to</p>
-                        </div>
-                        <p className="font-bold text-6xl ml-2">{savingPercentage}%</p>
+                        {props.financialReport &&
+                            props.financialReport['optimized_monthly_price'] !== props.financialReport['current_monthly_price']
+                            ?   <>
+                                    <div className="block">
+                                        <p className="font-bold text-2xl">You {isOptimizedHigher ? 'need to add' : 'can save'} your</p>
+                                        <p className="text-right font-bold text-xl">budget up to</p>
+                                    </div>
+                                    <p className="font-bold text-6xl ml-2">{savingPercentage}%</p>
+                                </>
+                            :   <></>
+                        }
                     </div>
                 </div>
             </div>
