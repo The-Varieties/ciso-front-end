@@ -32,6 +32,8 @@ function DataVisPage(props) {
     const [isButtonClicked, setIsButtonClicked] = useState(false);
     const userId = GetUserIdFromToken();
 
+    console.log(recommendationsList);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
@@ -186,6 +188,14 @@ function DataVisPage(props) {
 
     return (
         <div className="mx-16 my-5">
+            {/* <Dialog open = {props.visualization == null && props.instance.instance_status == null && props.usageCategory.recommendations == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+                <CircularProgress color = "warning"/>
+            </Dialog>   */}
+
+            <Dialog open = {recommendationsList == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+                <CircularProgress color = "warning"/>
+            </Dialog>       
+
             <Dialog open = {isButtonClicked} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
                 <CircularProgress color = "warning"/>
             </Dialog>
