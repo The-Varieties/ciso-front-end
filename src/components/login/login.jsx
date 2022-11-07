@@ -45,7 +45,7 @@ function LoginModule(props){
       </p>
         <form onSubmit={handleSubmit} className="flex mt-5 justify-center items-center flex-col">
           <div className="mx-2.5 md:mx-6">
-            <label className="block text-white text-lg mt-4">User Name </label>
+            <label className="block text-white text-lg mt-4">Username </label>
             <input className="mt-2 h-12 text-left p-4 rounded-lg" type="text" name="uname" required size={45}/>
           </div>
           <div className="mx-2.5 md:mx-6">
