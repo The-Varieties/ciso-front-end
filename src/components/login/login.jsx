@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 function LoginModule(props){
   const [loginRes, setLoginRes] = useState(true);
+  //const [accountRes, setAccountRes] = useState(true);
 
   useEffect(() => {
     if(props.userData == null){
@@ -55,6 +56,11 @@ function LoginModule(props){
             :
               <div className="error h-1">Username or Password invalid</div>
             }
+            {/* {accountRes ?
+              <div className="h-1"></div>
+            :
+              <div className="error h-1">No account available</div>
+            } */}
           </div>
           <div className="block text-center m-2.5 md:mx-6">
               <input className="mt-3 cursor-pointer text-lg bg-yellow-300 rounded-lg text-black py-2 px-[185px]" type="submit" value="Sign In"/>
