@@ -188,13 +188,9 @@ function DataVisPage(props) {
 
     return (
         <div className="mx-16 my-5">
-            {/* <Dialog open = {props.visualization == null && props.instance.instance_status == null && recommendationsList == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
-                <CircularProgress color = "warning"/>
-            </Dialog>   */}
-
             <Dialog open = {recommendationsList == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
                 <CircularProgress color = "warning"/>
-            </Dialog>       
+            </Dialog>     
 
             <Dialog open = {isButtonClicked} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
                 <CircularProgress color = "warning"/>
