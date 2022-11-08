@@ -18,7 +18,15 @@ export const InstanceDetail = (props) => {
             {instanceMap && instanceMap.value.map((instance, index) => (
                 <p key={index} className="text-base">
                     <span className="font-bold">{instance.title}:</span> {instance.content}
-                    <span className="font-medium">{instance.title === 'Instance Type' ? ` (recommended: ${props.recommendedInstanceType !== undefined ? props.recommendedInstanceType : ''})` : ''}</span>
+                    <span className="font-medium">
+                        {instance.title === 'Instance Type' && instance.content !== props.recommendedInstanceType
+                            ? ` (recommended: ${props.recommendedInstanceType !== undefined 
+                                    ? props.recommendedInstanceType 
+                                    : ''
+                                })`
+                            : ''
+                        }
+                    </span>
                 </p>
             ))}
         </div>
