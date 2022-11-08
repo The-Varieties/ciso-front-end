@@ -45,9 +45,9 @@ const FinancialReport = (props) => {
                     <tbody>
                         {props.financialReport &&
                             <tr>
-                                <td>{props.financialReport['total_current_monthly_price']}</td>
-                                <td>{props.financialReport['total_optimized_montly_price']}</td>
-                                <td>{props.financialReport['total_potential_savings']}</td>
+                                <td>${props.financialReport['total_current_monthly_price'].toFixed(2)}</td>
+                                <td>${props.financialReport['total_optimized_montly_price'].toFixed(2)}</td>
+                                <td>${props.financialReport['total_potential_savings'].toFixed(2)}</td>
                             </tr>
                         }
                     </tbody>
@@ -76,12 +76,14 @@ const FinancialReport = (props) => {
                             <td></td>
                         </tr>
                         {props.financialReport && props.financialReport.data.map((instanceFinancialReport) => {
+                            console.log(instanceFinancialReport)
                             return(
+                                instanceFinancialReport.instance['instance_status'] !== 'Pending' &&
                                 <tr>
                                     <td>{instanceFinancialReport.instance['instance_name']}</td>
                                     <td>{instanceFinancialReport.instance['instance_type']}</td>
-                                    <td>{instanceFinancialReport['current_hourly_price']}</td>
-                                    <td>{instanceFinancialReport['current_monthly_price']}</td>
+                                    <td>${instanceFinancialReport['current_hourly_price'].toFixed(2)}</td>
+                                    <td>${instanceFinancialReport['current_monthly_price'].toFixed(2)}</td>
 
                                     <td className={`
                                         ${textColorDefiner(
@@ -89,7 +91,7 @@ const FinancialReport = (props) => {
                                             instanceFinancialReport['current_hourly_price']
                                         )}
                                     `}>
-                                        {instanceFinancialReport['optimized_hourly_price']}
+                                        ${instanceFinancialReport['optimized_hourly_price'].toFixed(2)}
                                     </td>
 
                                     <td className={`
@@ -98,7 +100,7 @@ const FinancialReport = (props) => {
                                             instanceFinancialReport['current_monthly_price']
                                         )}
                                     `}>
-                                        {instanceFinancialReport['optimized_monthly_price']}
+                                        ${instanceFinancialReport['optimized_monthly_price'].toFixed(2)}
                                     </td>
 
                                     <td className={`
@@ -107,7 +109,7 @@ const FinancialReport = (props) => {
                                             instanceFinancialReport['current_monthly_price']
                                         )}
                                     `}>
-                                        {instanceFinancialReport['potential_savings']}
+                                        ${instanceFinancialReport['potential_savings'].toFixed(2)}
                                     </td>
                                 </tr>
                             )
@@ -118,7 +120,6 @@ const FinancialReport = (props) => {
 
             <div className='ml-10'>
                 <p className='text-gray-400 text-sm mt-5'>*report is valid for the last 30 days</p>
-                <p className='text-gray-400 text-sm'>**currency is in USD</p>
             </div>
         </div>
     )
