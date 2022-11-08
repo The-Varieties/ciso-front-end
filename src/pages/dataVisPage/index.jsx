@@ -188,7 +188,7 @@ function DataVisPage(props) {
 
     return (
         <div className="mx-16 my-5">
-            <Dialog open = {recommendationsList == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+            <Dialog open = {recommendationsList == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none', width:"5rem", height:'5rem'}}}>
                 <CircularProgress color = "warning"/>
             </Dialog>     
 
