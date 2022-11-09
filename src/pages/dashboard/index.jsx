@@ -57,7 +57,7 @@ function Dashboard(props){
 
 	return (
 		<div className='block'>
-			<div className="flex mr-16 xl:mr-0 mt-14">
+			<div className="block sm:flex mr-16 xl:mr-0 mt-14">
 				<div className="w-96 ml-12 pl-1">
 					<img src={logo} alt='logo'></img>
 				</div>
@@ -68,7 +68,7 @@ function Dashboard(props){
 				<h1 className={`w-fit text-white text-3xl font-bold`}>{contentMap.length > 0 ? `${props.userData.user_lastname}'s List of Instances` : "Loading..."}</h1>
 			</div>
 
-			<div className={`flex w-full mt-6 delay-300 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
+			<div className={`block flex w-full mt-6 delay-300 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
 				{contentMap.length > 0 
 					? 	<table className='border w-full mx-16 text-white' ref={tableRef}>
 							<thead className='border'>
