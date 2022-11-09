@@ -8,7 +8,7 @@ const FinancialSummaryContent = (props) => {
 
     useEffect(() => {
         if (props.financialReport !== null) {
-            const percentage = (props.financialReport['optimized_monthly_price'] / props.financialReport['current_monthly_price']) * 100
+            const percentage = ((props.financialReport['optimized_monthly_price'] / props.financialReport['current_monthly_price']) * 100).toFixed(2)
             setSavingPercentage(percentage)
 
             if (props.financialReport['optimized_monthly_price'] > props.financialReport['current_monthly_price']) {
