@@ -6,7 +6,7 @@ import {
     GET_VIS,
     GET_USAGE_CATEGORY,
     OPTIMIZED_INSTANCE,
-    RESET_INSTANCE_TYPE
+    RESET_INSTANCE_TYPE, RESET_INSTANCE_LIST
 } from "../types";
 import axios from 'axios';
 
@@ -114,6 +114,13 @@ export const getInstanceList = () => async dispatch => {
             payload: console.log(e)
         })
     }
+}
+
+export const resetInstanceList = () => async dispatch => {
+    console.log('called')
+    dispatch({
+        type: RESET_INSTANCE_LIST
+    })
 }
 
 export const deleteInstance = (targetId) => async dispatch => {

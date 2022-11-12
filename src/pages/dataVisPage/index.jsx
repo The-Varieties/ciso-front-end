@@ -4,12 +4,12 @@ import RightSizingComponent from "../../components/rightSizingComponent";
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { connect } from "react-redux";
 import {
     getInstance,
     getDataVis,
-    getUsageCategory, optimizeInstance
+    getUsageCategory, optimizeInstance, resetInstanceList
 } from "../../store/actions/instanceAction";
 import FinancialSummaryContent from "../../components/financialSummaryContent";
 import * as ChartSetting from '../../utils'
@@ -30,6 +30,7 @@ function DataVisPage(props) {
     const [vis_cpu, setVis_cpu] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_ram, setVis_ram] = useState(<h2 className="text-white">Loading...</h2>);
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const navigate = useNavigate();
     const userId = GetUserIdFromToken();
 
     useEffect(() => {
@@ -170,7 +171,7 @@ function DataVisPage(props) {
 
     Chart.register(ChartSetting.annotationLineSetting);
 
-    const handleChangeInstanceType = async () => {
+    const handleChangeInstanceType = async (instanceName, instanceId) => {
         setIsButtonClicked(true)
 
         const optimizedInstanceData = {
@@ -181,12 +182,19 @@ function DataVisPage(props) {
 
         await props.optimizeInstance(optimizedInstanceData)
 
-        window.location.reload();
+        props.resetInstanceList()
+
+        navigate('/')
     }
 
     return (
         <div className="mx-16 my-5">
-            <Dialog open = {recommendationsList == null || props.financialReport == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+            <Dialog
+                open = {recommendationsList == null
+                    ?? props.visualization === undefined
+                    ?? props.instance.instance_status === 'Pending'}
+                PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}
+            >
                 <CircularProgress color = "warning"/>
             </Dialog>     
 
@@ -200,7 +208,7 @@ function DataVisPage(props) {
                 dropdownCallback = {changeTime} 
                 dataVisTimeList = {dataVisTimeList}
                 loadingSetter = {setIsButtonClicked}
-                optimizeButtonHandle = {handleChangeInstanceType}
+                optimizeButtonHandle = {() => handleChangeInstanceType(instanceName, instanceId)}
             />
 
             <div className="grid grid-cols-2 gap-16 mt-28 w-full">
@@ -232,16 +240,15 @@ function DataVisPage(props) {
 const mapStateToProps = (state) => ({
     instance: state.instance.instance,
     visualization: state.visualization.visualization,
-    usageCategory: state.usageCategory.usageCategory,
-    optimizedInstance: state.optimizedInstance.optimizedInstance,
-    financialReport: state.financialReport.financialReport
+    usageCategory: state.usageCategory.usageCategory
 })
 
 const mapDispatchToProps = {
     getInstance,
     getDataVis,
     getUsageCategory,
-    optimizeInstance
+    optimizeInstance,
+    resetInstanceList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);

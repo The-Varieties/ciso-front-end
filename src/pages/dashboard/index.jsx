@@ -15,10 +15,13 @@ function Dashboard(props){
 	const tableRef = useRef(null);
 	const [contentMap, setContentMap] = useState([]);
 	const userId = GetUserIdFromToken();
+	const [isValid, setIsValid] = useState(false);
 
 	let navigate = useNavigate();
 
 	const goNextPage = (instance_name, instance_id) => {
+		setContentMap([])
+		setIsValid(false)
 		navigate('/data-vis-page', { 
 			state: {
 				instanceName: instance_name, 
@@ -32,10 +35,18 @@ function Dashboard(props){
 			props.getInstanceList();
 			props.getUser(userId);
 			setContentMap(props.instanceList);
+
+			if (props.instanceList.length > 0) {
+				props.instanceList.forEach((instance) => {
+					if (instance.instance_status !== 'Pending') {
+						setIsValid(true)
+					}
+				})
+			}
 		}, 3000)
-		
+
 		return () => clearInterval(intervalId);
-	})
+	}, [props, userId, contentMap])
 
 	useEffect(() => {
 		if(tableRef.current != null) {
@@ -55,6 +66,8 @@ function Dashboard(props){
 		'Detail'
 	]}
 
+	console.log(isValid)
+
 	return (
 		<div className='block'>
 			<div className="block sm:flex mr-16 xl:mr-0 mt-14">
@@ -65,38 +78,38 @@ function Dashboard(props){
 			</div>
 
 			<div className='mx-16 mt-20'>
-				<h1 className={`w-fit text-white text-3xl font-bold`}>{contentMap.length > 0 ? `${props.userData.user_lastname}'s List of Instances` : "Loading..."}</h1>
+				<h1 className={`w-fit text-white text-3xl font-bold`}>{isValid ? `${props.userData.user_lastname}'s List of Instances` : "Loading..."}</h1>
 			</div>
 
-			<div className={`block flex w-full mt-6 delay-300 duration-1000 transform transition-all ease-out ${loaded ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
-				{contentMap.length > 0 
-					? 	<table className='border w-full mx-16 text-white' ref={tableRef}>
-							<thead className='border'>
-								<tr>
-									{tableHeadingList.values.map((heading) => {
-										return(
-											<th className='border' key={heading}>{heading}</th>
-										)
-									})}
-								</tr>
-							</thead>
-							<tbody className='border'>
-								{props.instanceList.map((data, index) => {
+			<div className={`block flex w-full mt-6 delay-300 duration-1000 transform transition-all ease-out ${isValid ? "opacity-1 translate-y-0" : "opacity-0 translate-y-20"}`}>
+				{isValid &&
+					<table className='border w-full mx-16 text-white' ref={tableRef}>
+						<thead className='border'>
+							<tr>
+								{tableHeadingList.values.map((heading) => {
 									return(
-										data.instance_status !== 'Pending' && <tr className='border text-center' key={data.instance_id}>
-											<td className='border'>{data.instance_id}</td>
-											<td className='border'>{data.instance_name}</td>
-											<td className='border'>{data.instance_ipv4}</td>
-											<td className='border'>{data.instance_region}</td>
-											<td className='border'>{data.instance_type}</td>
-											<td className={`border ${data.instance_status === 'Optimized' ? "text-green-500" : [data.instance_status === 'UnderUtilized' ? "text-yellow-300" : "text-red-600"]}`}>{data.instance_status}</td>
-											<td className='border cursor-pointer font-bold hover:text-card-blue duration-300' onClick={() => goNextPage(data.instance_name, data.instance_id)}>View More</td>
-										</tr>
+										<th className='border' key={heading}>{heading}</th>
 									)
 								})}
-							</tbody>
-						</table>
-					:	<div></div>
+							</tr>
+						</thead>
+						<tbody className='border'>
+							{props.instanceList.map((data, index) => {
+								return(
+									data.instance_status !== 'Pending' &&
+									<tr className='border text-center' key={data.instance_id}>
+										<td className='border'>{data.instance_id}</td>
+										<td className='border'>{data.instance_name}</td>
+										<td className='border'>{data.instance_ipv4}</td>
+										<td className='border'>{data.instance_region}</td>
+										<td className='border'>{data.instance_type}</td>
+										<td className={`border ${data.instance_status === 'Optimized' ? "text-green-500" : [data.instance_status === 'UnderUtilized' ? "text-yellow-300" : "text-red-600"]}`}>{data.instance_status}</td>
+										<td className='border cursor-pointer font-bold hover:text-card-blue duration-300' onClick={() => goNextPage(data.instance_name, data.instance_id)}>View More</td>
+									</tr>
+								)
+							})}
+						</tbody>
+					</table>
 				}
 			</div>
 		</div>
