@@ -66,8 +66,6 @@ function Dashboard(props){
 		'Detail'
 	]}
 
-	console.log(isValid)
-
 	return (
 		<div className='block'>
 			<div className="block sm:flex mr-16 xl:mr-0 mt-14">

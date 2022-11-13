@@ -16,7 +16,7 @@ import * as ChartSetting from '../../utils'
 import { InstanceDetail } from "../../components/instanceDetail";
 import { RecommendationContent } from "../../components/recommendationContent";
 import React from 'react';
-import {CircularProgress, Dialog} from '@mui/material';
+import {CircularProgress, Dialog, DialogTitle} from '@mui/material';
 import {GetUserIdFromToken} from "../../utils/tokenDecoder";
 
 function DataVisPage(props) {
@@ -30,6 +30,7 @@ function DataVisPage(props) {
     const [vis_cpu, setVis_cpu] = useState(<h2 className="text-white">Loading...</h2>);
     const [vis_ram, setVis_ram] = useState(<h2 className="text-white">Loading...</h2>);
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isOptimizeInstance, setIsOptimizeInstance] = useState(false);
     const navigate = useNavigate();
     const userId = GetUserIdFromToken();
 
@@ -172,19 +173,20 @@ function DataVisPage(props) {
     Chart.register(ChartSetting.annotationLineSetting);
 
     const handleChangeInstanceType = async (instanceName, instanceId) => {
-        setIsButtonClicked(true)
+        if (props.instance.instance_status === 'Optimized') {
+            setIsOptimizeInstance(true)
+        } else {
+            const optimizedInstanceData = {
+                "user_id": userId,
+                "instance_id": props.instance.instance_id,
+                "target_instance_type": props.usageCategory.recommended_instance_family
+            }
 
-        const optimizedInstanceData = {
-            "user_id": userId,
-            "instance_id": props.instance.instance_id,
-            "target_instance_type": props.usageCategory.recommended_instance_family
+            setIsButtonClicked(true)
+            await props.optimizeInstance(optimizedInstanceData)
+            props.resetInstanceList()
+            navigate('/')
         }
-
-        await props.optimizeInstance(optimizedInstanceData)
-
-        props.resetInstanceList()
-
-        navigate('/')
     }
 
     return (
@@ -200,6 +202,10 @@ function DataVisPage(props) {
 
             <Dialog open = {isButtonClicked} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
                 <CircularProgress color = "warning"/>
+            </Dialog>
+
+            <Dialog open={isOptimizeInstance} onClose={() => setIsOptimizeInstance(false)}>
+                <DialogTitle>{"This instance is already optimized"}</DialogTitle>
             </Dialog>
 
             <RightSizingComponent 
