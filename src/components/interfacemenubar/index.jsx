@@ -8,7 +8,6 @@ function InterfaceDropdownMenu(props) {
     const dropdownRef = useRef(null);
     const [dropdownIsActive, setActive] = useState(false);
     const toogleDropdown = () => {setActive(!dropdownIsActive)};
-    const rotatingAnimation = `${dropdownIsActive ? 'rotate-180' : 'rotate-0'} transition-transform duration-200 transform`;
     
     useEffect(() => {
         const closeDropdown = (e) => {
@@ -27,22 +26,21 @@ function InterfaceDropdownMenu(props) {
     }, [dropdownIsActive, dropdownRef])
 
     const instancemodule = {name: "actionDropdownList", values: [
-        {nextRoute: "/add-new-instance", menuName: "Adding Instance"},
-        {nextRoute: "/financial-report", menuName: "Financial Report"},
-        {nextRoute: "/database-page", menuName: "Database"},
-    ]
-}
+            {nextRoute: "/add-new-instance", menuName: "Adding Instance"},
+            {nextRoute: "/financial-report", menuName: "Financial Report"}
+        ]
+    }
 
     const profileDropdownList ={name:"profileDropdownList", values:[
-        {nextRoute:"/profile", menuName: "Profile"},
-        {nextRoute:"/", menuName:"Log Out"},
-    ]
-}
+            {type: "route", nextRoute:"/profile", menuName: "Profile"},
+            {type: "action", menuName:"Log Out"},
+        ]
+    }
     
     return(
-    <div className="relative w-full">
+        <div className="flex w-full mt-6 md:mt-0 mr-0 xl:mr-16 justify-end">
             <div className="flex">
-                <DropdownMenu menuTitle="Instance Module" dropdownList={instancemodule} roundedCornerStyling={"rounded-md"}/>
+                <DropdownMenu menuTitle="Instance Module" dropdownType='routing' dropdownList={instancemodule} roundedCornerStyling={"rounded-md"}/>
 
                 <div className="block my-auto">
                     <img src={ProfileIcon} alt="Profile Icon" className="ml-14 h-6 cursor-pointer mx-auto my-auto" ref={dropdownRef} onClick={toogleDropdown}/>
@@ -51,7 +49,10 @@ function InterfaceDropdownMenu(props) {
                             <div className="bg-white rounded-md shadow block px-5 pt-5 pb-0.5 text-sm" >
                                 {profileDropdownList.values.map((instance, index) => (
                                     <div className="mb-5 text-center" key={index}>
-                                        <Link to={instance.nextRoute} className="w-full font-semibold" state={{from: "dashboard"}}>{instance.menuName}</Link>
+                                        {instance.type === 'route' 
+                                        ? <Link to={instance.nextRoute} className="w-full font-semibold" state={{from: "dashboard"}}>{instance.menuName}</Link>
+                                        : <div className="w-full font-semibold cursor-pointer" onClick={props.resetToken}>{instance.menuName}</div>
+                                        }
                                     </div>  
                                 ))}           
                             </div>
@@ -59,7 +60,7 @@ function InterfaceDropdownMenu(props) {
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     )
 }
 

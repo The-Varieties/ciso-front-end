@@ -4,22 +4,35 @@ import RightSizingComponent from "../../components/rightSizingComponent";
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { connect } from "react-redux";
-import { getInstance, getDataVis } from "../../store/actions/instanceAction";
+import {
+    getInstance,
+    getDataVis,
+    getUsageCategory, optimizeInstance, resetInstanceList
+} from "../../store/actions/instanceAction";
+import FinancialSummaryContent from "../../components/financialSummaryContent";
+import * as ChartSetting from '../../utils'
+import { InstanceDetail } from "../../components/instanceDetail";
+import { RecommendationContent } from "../../components/recommendationContent";
+import React from 'react';
+import {CircularProgress, Dialog, DialogTitle} from '@mui/material';
+import {GetUserIdFromToken} from "../../utils/tokenDecoder";
 
 function DataVisPage(props) {
-    const [checked, setChecked] = useState("cpu");
-    const [chosenRadio, setChosenRadio] = useState(0);
+    const [checked, setChecked] = useState("24 hours");
     const [labels, setLabels] = useState([]);
     const [values, setValues] = useState([]);
     const {state} = useLocation();
     const {instanceName, instanceId} = state;
     const [rightsizingCat, setRightsizingCat] = useState([]);
     const [recommendationsList, setRecommendationsList] = useState(null);
-    const [vis_24, setVis_24] = useState(<h2 className="text-white">Loading...</h2>);
-    const [vis_7d, setVis_7d] = useState(<h2 className="text-white">Loading...</h2>);
-    const [vis_30d, setVis_30d] = useState(<h2 className="text-white">Loading...</h2>);
+    const [vis_cpu, setVis_cpu] = useState(<h2 className="text-white">Loading...</h2>);
+    const [vis_ram, setVis_ram] = useState(<h2 className="text-white">Loading...</h2>);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isOptimizeInstance, setIsOptimizeInstance] = useState(false);
+    const navigate = useNavigate();
+    const userId = GetUserIdFromToken();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -27,12 +40,13 @@ function DataVisPage(props) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            props.getInstance(instanceId);
-            props.getDataVis(instanceName, checked)
-            setRightsizingCat(props.instance.instance_status[2]);
-
-            setRecommendationsList(null)
-            setRecommendationsList(props.instance.instance_status[3]);
+            if(!isButtonClicked) {
+                props.getInstance(instanceId);
+                props.getDataVis(instanceName, checked)
+                props.getUsageCategory(instanceName)
+            }
+            setRightsizingCat(props.instance.instance_status);
+            setRecommendationsList(props.usageCategory.recommendations);
 
             if(props.visualization) {
                 setLabels([])
@@ -41,148 +55,79 @@ function DataVisPage(props) {
                     for(let j = 0; j < props.visualization[i].data.results[0]['values'].length; j++) {
                         const rawLabel = props.visualization[i].data.results[0]['values'][j][0];
 
-                        if(i == 0) {
-                            labelArr.push(rawLabel.split("T")[1].split("+")[0])
+                        if(i === 0) {
+                            let splitLabel = rawLabel.split("T")
+                            let dateInfo = splitLabel[0].split('-')
+                            labelArr.push(`${dateInfo[1]}-${dateInfo[2]} ${splitLabel[1].split("+")[0]}`)
                         } else {
                             labelArr.push(rawLabel.split("T")[0])
                         }
                     }
                     setLabels(labels => [...labels, labelArr]);
                 }
-            }
 
-            const valArr = [];
-            const valArr7 = [];
-            const valArr30 = [];
+                const valArrCPU = [];
+                const valArrRAM = [];
 
-            let chosenData = props.visualization[0].data;
-            let chosenData7 = props.visualization[1].data;
-            let chosenData30 = props.visualization[2].data;
+                let chosenDataCPU = props.visualization[0].data;
+                let chosenDataRAM = props.visualization[1].data;
 
-            if(chosenData) {
-                for(let i = 0; i < chosenData.results.length; i++) {
-                    for(let j = 0; j < chosenData.results[i]['values'].length; j++) {
-                        const value = chosenData.results[i]['values'][j][1].split(" ")[0];
+                if(chosenDataCPU) {
+                    for(let i = 0; i < chosenDataCPU.results.length; i++) {
+                        for(let j = 0; j < chosenDataCPU.results[i]['values'].length; j++) {
+                            const value = chosenDataCPU.results[i]['values'][j][1].split(" ")[0];
+            
+                            valArrCPU.push(value);
+                        }
+                    }
+                }
+                
+                if(chosenDataRAM) {
+                    for(let i = 0; i < chosenDataRAM.results.length; i++) {
+                        for(let j = 0; j < chosenDataRAM.results[i]['values'].length; j++) {
+                            const value = chosenDataRAM.results[i]['values'][j][1].slice(0, -3);
         
-                        valArr.push(value);
+                            valArrRAM.push(value);
+                        }
                     }
                 }
-            }
-            
-            if(chosenData7) {
-                for(let i = 0; i < chosenData7.results.length; i++) {
-                    for(let j = 0; j < chosenData7.results[i]['values'].length; j++) {
-                        const value = chosenData7.results[i]['values'][j][1].slice(0, -3);
-    
-                        valArr7.push(value);
+                
+                const reshapedArrCPU = [];
+                const reshapedArrRAM = [];
+
+                if(chosenDataCPU) {
+                    for(let i  = 0; i < chosenDataCPU.results.length; i++) {
+                        reshapedArrCPU.push(valArrCPU.splice(0, chosenDataCPU.results[0]['values'].length));
                     }
                 }
-            }
-
-            if(chosenData30) {
-                for(let i = 0; i < chosenData30.results.length; i++) {
-                    for(let j = 0; j < chosenData30.results[i]['values'].length; j++) {
-                        const value = chosenData30.results[i]['values'][j][1];
-    
-                        valArr30.push(value);
+                
+                if(chosenDataRAM) {
+                    for(let i  = 0; i < chosenDataRAM.results.length; i++) {
+                        reshapedArrRAM.push(valArrRAM.splice(0, chosenDataRAM.results[0]['values'].length));
                     }
                 }
-            }
-            
-            const reshapedArr = [];
-            const reshapedArr7 = [];
-            const reshapedArr30 = [];
+                
+                setValues([])
 
-            if(chosenData) {
-                for(let i  = 0; i < chosenData.results.length; i++) {
-                    reshapedArr.push(valArr.splice(0, chosenData.results[0]['values'].length));
-                }
+                setValues(values => [...values, reshapedArrCPU]);
+                setValues(values => [...values, reshapedArrRAM]);
             }
-            
-            if(chosenData7) {
-                for(let i  = 0; i < chosenData7.results.length; i++) {
-                    reshapedArr7.push(valArr7.splice(0, chosenData7.results[0]['values'].length));
-                }
-            }
-            
-            if(chosenData30) {
-                for(let i  = 0; i < chosenData30.results.length; i++) {
-                    reshapedArr30.push(valArr30.splice(0, chosenData30.results[0]['values'].length));
-                }
-            }
-            
-            setValues([])
-
-            setValues(values => [...values, reshapedArr]);
-            setValues(values => [...values, reshapedArr7]);
-            setValues(values => [...values, reshapedArr30]);
         }, 2000)
 
         return () => clearInterval(intervalId);
     })
 
     const setLoading = () => {
-        setVis_24(<h2 className="text-white">Loading...</h2>)
-        setVis_7d(<h2 className="text-white">Loading...</h2>)
-        setVis_30d(<h2 className="text-white">Loading...</h2>)
+        setVis_cpu(<h2 className="text-white">Loading...</h2>)
+        setVis_ram(<h2 className="text-white">Loading...</h2>)
     }
 
     const setChartData = (dataset) => {
-        setVis_24( <Line data = {{ labels: labels[0], datasets: dataset[0] }} options= {lineChartOptions}/>)
-        setVis_7d( <Line data = {{ labels: labels[1], datasets: dataset[1] }} options= {lineChartOptions}/>)
-        setVis_30d( <Line data = {{ labels: labels[2], datasets: dataset[2] }} options= {lineChartOptions}/>)
+        setVis_cpu( <Line data = {{ labels: labels[0], datasets: dataset[0] }} options= {ChartSetting.lineChartSetting}/>)
+        setVis_ram( <Line data = {{ labels: labels[1], datasets: dataset[1] }} options= {ChartSetting.lineChartSetting}/>)
     }
 
-    const lineChartOptions = (
-        {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'right',
-                    labels: {
-                        padding: 30,
-                        color: 'white'
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    grid: {
-                        color: 'rgba(47,79,79,0.3)',
-                        borderColor: 'white'
-                    },
-                    ticks: {
-                        color: 'white'
-                    }
-                },
-                x: {
-                    grid: {
-                        color: 'rgba(47,79,79,0.3)',
-                        borderColor: 'white'
-                    },
-                    ticks: {
-                        color: 'white',
-                    }
-                }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false
-            },
-            hover: {
-                mode: 'index',
-                intersect: false
-            }
-        }
-    )
-
     useEffect(() => {
-        console.log(values)
         if(props.visualization && values.length > 0) {
             let dataset = []
             let color_swatches = [
@@ -206,216 +151,110 @@ function DataVisPage(props) {
                 dataset.push(data)
             }
             
-            {props.visualization[0].data.name != checked ? 
-                setLoading()
-            : 
-                setChartData(dataset)
-            }
+            props.visualization[0].data.time !== `last ${checked}` ? setLoading() : setChartData(dataset)
         }
-    }, [values])
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [values])
     
-    const toggleRadio = (e) => {
-        setChecked(e.target.value);
-        
-        if(e.target.value === 'CPU') {
-            setChosenRadio(0)
-            setValues([])
-        } else if(e.target.value === 'Memory') {
-            setChosenRadio(1)
-            setValues([])
-        }
-
+    const changeTime = (e) => {
+        setChecked(e.target.attributes.value.value);
+        setValues([])
         setLoading();
     }
 
-    const instanceDetail = {'name': 'instanceDetail', 'value': [
-        {'title': 'Name', 'content': props.instance.instance_name},
-        {'title': 'IPv4', 'content': props.instance.instance_ipv4},
-        {'title': 'Region', 'content': props.instance.instance_region},
-        {'title': 'Operating System', 'content': props.instance.instance_os},
-        {'title': 'Volume Type', 'content': props.instance.instance_volume_type},
-        {'title': 'Instance Type', 'content': props.instance.instance_type},
-        {'title': 'Pricing Plan', 'content': props.instance.instance_pricing_plan},
-    ]}
+    const dataVisTimeList = {name: "dataVisTimeList", values: [
+            {menuName: "24 hours"},
+            {menuName: '7 days'},
+            {menuName: "30 days"},
+        ]
+    }
 
-    const content = (
-        <div>
-            <h2 className="text-black w-fit font-bold text-2xl">Chosen Component</h2>
+    Chart.register(ChartSetting.annotationLineSetting);
 
-            <div className="flex mt-2">
-                <div className="flex align-baseline mr-12">
-                    <input type="radio" id="cpu_radio" name="cpu_radio" value="cpu" className="w-5 h-5 my-auto" checked={checked === "cpu"} onChange={toggleRadio}/>
-                    <label htmlFor="cpu_radio" className="text-base ml-2">CPU</label>
-                </div>
-
-                <div className="flex align-baseline mr-12">
-                    <input type="radio" id="ram_radio" name="ram_radio" value="ram" className="w-5 h-5 my-auto" checked={checked === "ram"} onChange={toggleRadio}/>
-                    <label htmlFor="ram_radio" className="text-base ml-2">RAM</label>
-                </div>
-            </div>
-
-            <div className="py-8">
-                <div className="w-full border-t border-gray-500"></div>
-            </div>
-
-            <h2 className="text-black w-fit font-bold text-2xl mb-2">Instance Details</h2>
-            {instanceDetail && instanceDetail.value.map((instance, index) => (
-                <p key={index} className="text-base"><span className="font-bold">{instance.title}:</span> {instance.content}</p>
-            ))}
-        </div>
-    )
-
-    const financeTable = (
-        <table>
-            <tbody>
-                <tr>
-                    <td className="font-bold italic">Current Spending</td>
-                </tr>
-                <tr>
-                    <td>Amazon Elastic Block Storage (EBS)</td>
-                    <td className="text-right w-32">703.73 USD</td>
-                </tr>
-                <tr>
-                    <td>Amazon EC2 Instance Savings Plans Instances</td>
-                    <td className="text-right">3.00 USD</td>
-                </tr>
-                <tr>
-                    <td className="font-bold italic text-right">Sub-total:</td>
-                    <td className="font-bold text-right">706.73 USD</td>
-                </tr>
-                <tr className="h-2"></tr>
-                <tr>
-                    <td className="font-bold italic">Recommended Rightsizing with Spending</td>
-                </tr>
-                <tr>
-                    <td>Reduce Number of Allocated CPUs to 2 CPUs</td>
-                    <td className="text-right">-100.00 USD</td>
-                </tr>
-                <tr>
-                    <td className="font-bold italic text-right">Sub-total:</td>
-                    <td className="font-bold text-right">-100.00 USD</td>
-                </tr>
-                <tr className="h-2"></tr>
-                <tr>
-                    <td className="font-bold italic">Spending After Rightsizing</td>
-                </tr>
-                <tr>
-                    <td>Current Spending</td>
-                    <td className="text-right">706.73 USD</td>
-                </tr>
-                <tr>
-                    <td>Recommended Rightsizing Spending</td>
-                    <td className="text-right">-100.00 USD</td>
-                </tr>
-                <tr>
-                    <td className="font-bold italic text-right">Sub-total:</td>
-                    <td className="font-bold text-right">606.73 USD</td>
-                </tr>
-            </tbody>
-        </table>
-    )
-
-    const financialContent = (
-        <div>
-            <h2 className="w-fit font-bold text-2xl mb-2">Financial Report (Year)</h2>
-            <div className="flex w-full">
-                {financeTable}
-
-                <div className="flex mx-auto my-auto">
-                    <div className="block">
-                        <p className="font-bold text-3xl">You can save your</p>
-                        <p className="text-right font-bold text-3xl">budget up to</p>
-                    </div>
-                    <p className="font-bold text-7xl ml-2">14.15%</p>
-                </div>
-            </div>
-        </div>
-    )
-
-    const recommendationContent = (
-        <div>
-            <h2 className="text-black w-fit font-bold font-italic text-2xl">Recommendation</h2>
-
-            {(recommendationsList != null ? 
-                recommendationsList.map((recommendation, index) => {
-                    const stepsArr = [];
-
-                    for(let i = 0; i < recommendation.steps.length; i++) {
-                        stepsArr.push(<li className="text-sm" key={i}>{recommendation.steps[i]}</li>)
-                    }
-                    
-                    return (
-                        <div className="mt-3" key={index}>
-                            <h2 className="text-indigo-800 w-fit font-black text-base">{recommendation.recommendation}</h2>
-                            <p className="text-black w-fit text-sm">{recommendation.details}</p>
-                            <p className="text-black w-fit text-sm italic font-bold">How-to:</p>
-                            <div className="ml-1"> {stepsArr} </div>
-                        </div>
-                    )
-                })
-            : 
-                null
-            )}
-        </div>
-    )
-
-    Chart.register({
-        id: 'annotationLine',
-        afterDraw: function(chart, easing) {
-            if(chart.tooltip._active && chart.tooltip._active.length) {
-                const context = chart.ctx;
-                const x = chart.tooltip._active[0].element.x;
-                const topY = chart.scales.y.top;
-                const bottomY = chart.scales.y.bottom;
-
-                for(let i = 0; i < chart.tooltip.labelColors.length; i++) {
-                    chart.tooltip.labelColors[i]['backgroundColor'] = chart.tooltip.labelColors[i]['borderColor']
-                }
-
-                context.save();
-                context.beginPath();
-                context.moveTo(x, topY);
-                context.lineTo(x, bottomY);
-                context.lineWidth = 2;
-                context.strokeStyle = 'rgba(255,255,255,0.7)';
-                context.stroke();
-                context.restore();
+    const handleChangeInstanceType = async (instanceName, instanceId) => {
+        if (props.instance.instance_status === 'Optimized') {
+            setIsOptimizeInstance(true)
+        } else {
+            const optimizedInstanceData = {
+                "user_id": userId,
+                "instance_id": props.instance.instance_id,
+                "target_instance_type": props.usageCategory.recommended_instance_family
             }
+
+            setIsButtonClicked(true)
+            await props.optimizeInstance(optimizedInstanceData)
+            props.resetInstanceList()
+            navigate('/')
         }
-    });
+    }
 
     return (
         <div className="mx-16 my-5">
-            <RightSizingComponent rightsizingCat = {rightsizingCat} />
+            <Dialog
+                open = {recommendationsList == null
+                    ?? props.visualization === undefined
+                    ?? props.instance.instance_status === 'Pending'}
+                PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}
+            >
+                <CircularProgress color = "warning"/>
+            </Dialog>     
 
-            <div className="block mt-20">
-                <div className="w-full ml-2">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 24 Hours - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
-                    <div className="h-72">{vis_24}</div>
+            <Dialog open = {isButtonClicked} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+                <CircularProgress color = "warning"/>
+            </Dialog>
+
+            <Dialog open={isOptimizeInstance} onClose={() => setIsOptimizeInstance(false)}>
+                <DialogTitle>{"This instance is already optimized"}</DialogTitle>
+            </Dialog>
+
+            <RightSizingComponent 
+                rightsizingCat = {rightsizingCat} 
+                checked = {checked} 
+                dropdownCallback = {changeTime} 
+                dataVisTimeList = {dataVisTimeList}
+                loadingSetter = {setIsButtonClicked}
+                optimizeButtonHandle = {() => handleChangeInstanceType(instanceName, instanceId)}
+            />
+
+            <div className="grid grid-cols-2 gap-16 mt-28 w-full">
+                <div className="w-full">
+                    <h2 className="text-white text-xl font-medium mb-4">Last {checked} - CPU%</h2>
+                    <div className="h-72">{vis_cpu}</div>
                 </div>
                 
-                <div className="w-full mt-10">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 7 Days - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
-                    <div className="h-72">{vis_7d}</div>
-                </div>
-
-                <div className="w-full mt-10">
-                    <h2 className="text-white text-xl font-medium mb-4">Last 30 Days - {checked.toUpperCase()}{checked === "cpu" ? "%" : " (MB)"}</h2>
-                    <div className="h-72">{vis_30d}</div>
+                <div className="w-full">
+                    <h2 className="text-white text-xl font-medium mb-4">Last {checked} - RAM (MB)</h2>
+                    <div className="h-72">{vis_ram}</div>
                 </div>
             </div>
 
-            <div className="mt-20 mb-10 grid grid-cols-5 gap-5">
-                <div className="col-span-3"> <Card cardContent = {content} /> </div>
-                <div className="col-span-2"> <Card cardContent = {recommendationContent} /> </div>
-                <div className="col-span-5"> <Card cardContent = {financialContent} /> </div>
+            <div className="mt-20 mb-10 grid grid-cols-6 gap-5">
+                <div className="col-span-3"> <Card cardContent = {
+                    <InstanceDetail
+                        instance = {props.instance}
+                        recommendedInstanceType = {props.usageCategory.recommended_instance_family}
+                    />
+                }/> </div>
+                <div className="col-span-3"> <Card cardContent = {<RecommendationContent recommendationsList = {recommendationsList} />} /> </div>
+                <div className="col-span-6"> <Card cardContent = {<FinancialSummaryContent />} /> </div>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({instance: state.instance.instance, visualization: state.visualization.visualization})
+const mapStateToProps = (state) => ({
+    instance: state.instance.instance,
+    visualization: state.visualization.visualization,
+    usageCategory: state.usageCategory.usageCategory
+})
 
-const mapDispatchToProps = {getInstance, getDataVis}
+const mapDispatchToProps = {
+    getInstance,
+    getDataVis,
+    getUsageCategory,
+    optimizeInstance,
+    resetInstanceList
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVisPage);

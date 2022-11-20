@@ -1,38 +1,74 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './index.css';
-import profile from '../../assets/Images/profile.jpg'
-import BackArrow from "../../components/backArrow";
+import profile from '../../assets/Images/profile.png'
+import BackArrow from "../backArrow";
 import {useLocation} from 'react-router-dom';
+import { getUser } from "../../store/actions/userAction";
+import { connect } from "react-redux";
+import {GetUserIdFromToken} from "../../utils/tokenDecoder";
 
-function ProfilePage() {
-  const location = useLocation()
-  const { from } = location.state
+function ProfilePage(props) {
+    const location = useLocation()
+    const { from } = location.state
+    const [profiledata, setProfileData] = useState(null)
+    const userId = GetUserIdFromToken();
 
-  return (
-    <div class="container">
-        <div class="backarrow">
+    useEffect(() => {
+        if(profiledata === null || profiledata.length === 0) {
+            props.getUser(userId);
+            setProfileData(props.userData);
+        }
+    }, //eslint-disable-next-line
+        [props.userData])
+
+    return (
+    <div className="m-0 p-0">
+        <div className="m-10">
             <BackArrow backPath = {`/${from}`} />
         </div>
-        <div class="profile_detail">
-            <img src={profile} alt="Profile"/>
-            <h1 class="membername">NeXphos Member</h1>
-            <hr/>
-            <div class="first-container">
-                <h3>First Name</h3>
-                <p>Jentz</p>
-                <h3 class="username">Username</h3>
-                <p>Jentz_Chua</p>
+        <div className="flex font-medium items-center justify-center">
+        <div className="mx-auto mb-10 bg-[#20354b] rounded-2xl px-10 py-8 shadow-lg">
+            <img src={profile} alt="Profile" className="mt-3 mx-auto md:flex"/>
+            <h1 className="pt-4 text-center space-y-4 text-[36px]">NeXphos Member</h1>
+            <hr className="border-2 border-black bg-black"/>
+            <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">First Name</h2>
+                    {profiledata != null
+                        ? <p className="text-emerald-400 text-[18px]">{profiledata.user_firstname}</p>
+                        : <div></div>
+                    }
+                </div>
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">Last Name</h2>
+                    {profiledata != null
+                        ? <p className="text-emerald-400 text-[18px]">{profiledata.user_lastname}</p>
+                        : <div></div>
+                    }
+                </div>
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">Username</h2>
+                    {profiledata != null
+                        ? <p className="text-emerald-400 text-[18px]">{profiledata.user_username}</p>
+                        : <div></div>
+                    }
+                </div>
+                <div className="">
+                    <h2 className="text-emerald-400 font-semibold text-[20px]">Email</h2>
+                    {profiledata != null
+                        ? <p className="text-emerald-400 text-[18px]">{profiledata.user_email}</p>
+                        : <div></div>
+                    }
+                </div>
             </div>
-            <div class="second-container">
-                <h3>Last Name</h3>
-                <p>Chua</p>
-                <h3 class="email">Email</h3>
-                <p>123@gmail.com</p>
-            </div>
-            <button class="edit-button">Edit Profile</button>
+        </div>
         </div>
     </div>
   )
 }
 
-export default ProfilePage;
+const mapStateToProps = (state) => ({userData:state.userinfo.userinfo});
+
+const mapDispatchToProps = {getUser}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

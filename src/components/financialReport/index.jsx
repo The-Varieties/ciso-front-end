@@ -1,61 +1,132 @@
-// It will show the financial report of the instance by taking the data as parameter
-import React from "react";
 import './index.css';
 import BackArrow from "../../components/backArrow";
+import {connect} from "react-redux";
+import {getAllInstanceFinancialReport} from "../../store/actions/financialReportAction";
+import React, {useEffect} from "react";
+import {CircularProgress, Dialog} from "@mui/material";
 
+const FinancialReport = (props) => {
+    useEffect(() => {
+        if(props.financialReport == null) {
+            props.getAllInstanceFinancialReport();
+        }
+    }, //eslint-disable-next-line
+    [props.financialReport])
 
-
-function FinancialReport(){
-
+    const textColorDefiner = (optimizedCost, currentCost) => {
+        if (optimizedCost > currentCost) return "text-red-700"
+        return "text-black"
+    }
 
     return(
         <div>
-        <div class="backarrow">
-            <BackArrow backPath = "/dashboard" />
-        </div>
+            <Dialog open = {props.financialReport == null} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+                <CircularProgress color = "warning"/>
+            </Dialog>
 
-        <form class="choose_instance">
-            
-            <label class="groupby">Group By:</label>
-                <select id="instance_type">
-                    <option value="t2.micro">t2.micro</option>
-                    <option value="t1.small">t1.small</option>
-                    <option value="t2.medium">t2.medium</option>
-                </select>
-
-            <label class="groupby">Sort By:</label>
-                <select id="instance_sort">
-                    <option value="red">Ascending Order</option>
-                    <option value="orange">Descending Order</option>
-                </select>
-        </form>
-
-        <div class="total_spent">
-            <div class="check_spent">
-                <p>Current Spent: </p>
-                <p>Optimized Spent:</p>
-                <p>Potential Saving:</p>
+            <div className="mt-6 ml-8">
+                <BackArrow backPath = "/dashboard" />
             </div>
-            <div class="cost_spent">
-                <p>$100 </p>
-                <p>$100 </p>
-                <p>$100 </p>
-            </div>
-        </div>
 
-        <div className="mx-16 relative flex-wrap item-start my-10">
-            <div className="lg:w-1/4 w-full lg:pr-3">
-                <div className="bg-gray-200 rounded-xl p-6">
-                    <h2 className="text-2xl font-bold mb-5">t2.medium</h2>
-                    <div className="text-grey-800 leading-relaxed mb-6">
-
-                    </div>
-                </div>
+            <div className="financial-container">
+                <table className="findata-table">
+                    <thead>
+                        <tr>
+                            <th>Current Spending</th>
+                            <th>Optimized Spending</th>
+                            <th>{
+                                props.financialReport &&
+                                props.financialReport['total_optimized_montly_price'] > props.financialReport['total_current_monthly_price']
+                                    ? 'Extra Expenses'
+                                    : 'Potential Saving'
+                            }</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {props.financialReport &&
+                            <tr>
+                                <td>${props.financialReport['total_current_monthly_price'].toFixed(2)}</td>
+                                <td>${props.financialReport['total_optimized_montly_price'].toFixed(2)}</td>
+                                <td>${props.financialReport['total_potential_savings'].toFixed(2)}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-        </div>
-        
+
+            <div class="financiallist-container">
+                <table class="findatalist-table">
+                    <thead>
+                        <tr>
+                            <th rowSpan="2">Instance Name</th>
+                            <th rowSpan="2">Instance Type</th>
+                            <th colSpan="2">Current</th>
+                            <th colSpan="2">Optimized</th>
+                            <th rowSpan="2">Optimized Cost Change</th>
+                        </tr>
+                        <tr>
+                            <th>Hourly Cost</th>
+                            <th>Monthly Cost</th>
+                            <th>Hourly Cost</th>
+                            <th>Monthly Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr className='h-5'> {/*This one is used to give some spaces to the table*/}
+                            <td></td>
+                        </tr>
+                        {props.financialReport && props.financialReport.data.map((instanceFinancialReport) => {
+                            console.log(instanceFinancialReport)
+                            return(
+                                instanceFinancialReport.instance['instance_status'] !== 'Pending' &&
+                                <tr>
+                                    <td>{instanceFinancialReport.instance['instance_name']}</td>
+                                    <td>{instanceFinancialReport.instance['instance_type']}</td>
+                                    <td>${instanceFinancialReport['current_hourly_price'].toFixed(2)}</td>
+                                    <td>${instanceFinancialReport['current_monthly_price'].toFixed(2)}</td>
+
+                                    <td className={`
+                                        ${textColorDefiner(
+                                            instanceFinancialReport['optimized_hourly_price'],
+                                            instanceFinancialReport['current_hourly_price']
+                                        )}
+                                    `}>
+                                        ${instanceFinancialReport['optimized_hourly_price'].toFixed(2)}
+                                    </td>
+
+                                    <td className={`
+                                        ${textColorDefiner(
+                                            instanceFinancialReport['optimized_monthly_price'],
+                                            instanceFinancialReport['current_monthly_price']
+                                        )}
+                                    `}>
+                                        ${instanceFinancialReport['optimized_monthly_price'].toFixed(2)}
+                                    </td>
+
+                                    <td className={`
+                                        ${textColorDefiner(
+                                            instanceFinancialReport['optimized_monthly_price'],
+                                            instanceFinancialReport['current_monthly_price']
+                                        )}
+                                    `}>
+                                        ${instanceFinancialReport['potential_savings'].toFixed(2)}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+
+            <div className='ml-10'>
+                <p className='text-gray-400 text-sm mt-5'>*report is valid for the last 30 days</p>
+            </div>
         </div>
     )
 }
 
-export default FinancialReport;
+const mapStateToProps = (state) => ({
+    financialReport: state.financialReport.financialReport
+})
+
+export default connect(mapStateToProps, {getAllInstanceFinancialReport})(FinancialReport);

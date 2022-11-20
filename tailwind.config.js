@@ -17,6 +17,8 @@ module.exports = {
         'card-yellow': '#FDF44D',
         'card-red': '#FF2929',
         'card-blue': '#7C7CFA',
+        'pinky-red': '#F1356D',
+        'pink': '#DDD',
       },
     },
   },
